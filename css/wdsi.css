@@ -1,0 +1,91 @@
+/* ----- Basic box ----- */
+#wdsi-slide_in {
+	
+	/* Basic */
+	
+	display: none;
+	position: fixed;	
+	bottom: 30px;
+	overflow: hidden;
+	
+	/* Overridables */
+	
+	width: 33%;
+	min-width: 300px;
+	height: 150px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 5px 0 #aaa;
+	background: #eee;
+	background-image: linear-gradient(top, #f7f7f7, #eee);
+	background-image: -moz-linear-gradient(top, #f7f7f7, #eee);
+	background-image: -o-linear-gradient(top, #f7f7f7, #eee);
+	background-image: -ms-linear-gradient(top, #f7f7f7, #eee);
+	background-image: -webkit-linear-gradient(top, #f7f7f7, #eee);
+}
+
+#wdsi-close_box {
+	
+	/* Basic */
+	
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	
+	/* Overridables */
+	
+	background: url(../img/gray-close.png) top left no-repeat;
+	width: 16px;
+	height: 16px;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+#wdsi-close_box span {
+	display: block;
+	visibility: hidden;
+	position: absolute;
+	left: -12000000000px;
+}
+
+/* ----- Box conditional appearance ----- */
+#wdsi-slide_in.left {
+	left: 0;
+	padding-left: 10px;
+	border-radius: 0 10px 10px 0;
+}
+#wdsi-slide_in.right {
+	right: 0;
+	padding-right: 10px;
+	border-radius: 10px 0 0 10px;
+}
+
+/* ----- Box content appearance ----- */
+
+#wdsi-static-services {
+	overflow: hidden;
+	margin: 5px;
+}
+
+#wdsi-slide_in ul, #wdsi-slide_in ul li {
+	margin: 0 !important; padding: 0 !important;
+	list-style-type: none !important;
+	display: inline;
+}
+.wdsi-item {
+	display: block;
+	float: left;
+	height: 25px;
+	width: 140px;
+	overflow: hidden;
+}
+#wdsi-service-related_posts {
+	width: 100%;
+	height: auto;
+	float: none;
+}
+#wdsi-service-related_posts h3 {
+	font-size: 1em;
+	margin: 0;
+	margin-right: 1em;
+	float: left;
+}
