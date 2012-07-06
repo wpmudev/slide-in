@@ -65,6 +65,8 @@ Slide In plugin stylesheet
 .slidein-wrap {
 	width: 80%; /* the default width, should be customizable */
 	margin: 0 auto;
+	position: relative;
+	z-index: 1000;
 }
 .slidein-full .slidein-wrap {
 	width: 100%;
@@ -77,7 +79,7 @@ Slide In plugin stylesheet
 	float: left;
 }
 .slidein-close {
-	font: bold 12px/24px Helvetica, Arial, sans-serif;
+	font: bold 12px/24px Arial, sans-serif;
 }
 .slidein-close a {
 	text-decoration: none;
@@ -89,10 +91,10 @@ Slide In plugin stylesheet
 .slidein-close a:before {
 	content: "\00d7";
 	font-size: 24px;
-	line-height: 15px;
+	line-height: 24px;
 	letter-spacing: 4px;
-	display: block;
-	float: left;
+	position: relative;
+	top: 4px;
 }
 .slidein-content {
 	clear: both;
@@ -119,12 +121,14 @@ Slide In plugin stylesheet
 	padding: 0;
 	margin: 0 0 14px;
 }
-.slidein-content h2 {
+.slidein-content h2,
+.slidein-content h3 {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
 }
-.slidein-content h2 a {
+.slidein-content h2 a,
+.slidein-content h3 a {
 	text-decoration: none;
 }
 .slidein-columns {
@@ -144,13 +148,15 @@ Slide In plugin stylesheet
 	width: 45px;
 	height: 45px;
 }
-.slidein-columns .slidein-col-thumb h2 {
+.slidein-columns .slidein-col-thumb h2,
+.slidein-columns .slidein-col-thumb h3 {
 	display: table;
 	height: 59px;
 	margin: -5px 0 0 59px;
 	overflow: hidden;
 }
-.slidein-columns .slidein-col-thumb h2 a {
+.slidein-columns .slidein-col-thumb h2 a,
+.slidein-columns .slidein-col-thumb h3 a {
 	display: table-cell;
 	vertical-align: middle;
 }
@@ -163,10 +169,16 @@ Default color to red
 --------------------------------------------------------------*/
 
 .slidein-minimal .slidein-wrap {
+	background: #fff;
 	background: rgba(255, 255, 255, 0.9);
 	border-top: 3px solid #ed1f24;
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	-ms-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	-o-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 	color: #000;
+	position: relative;
 }
 .slidein-minimal .slidein-share {
 	float: left;
@@ -257,6 +269,7 @@ Default color to red
 2.1 - Minimal Dark
 --------------------------------------------------------------*/
 .slidein-minimal-dark .slidein-wrap {
+	background: #000;
 	background: rgba(0, 0, 0, 0.9);
 	color: #e6e6e6;
 }
