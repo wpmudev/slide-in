@@ -87,6 +87,7 @@ Slide In plugin stylesheet
 	letter-spacing: 1px;
 	display: block;
 	padding: 10px 18px;
+	height: 29px;
 }
 .slidein-close a:before {
 	content: "\00d7";
@@ -142,9 +143,9 @@ Slide In plugin stylesheet
 }
 .slidein-columns .slidein-col .slidein-thumb {
 	float: left;
-	margin: 0 10px 0 0;
+	margin: 0;
 }
-.slidein-columns .slidein-col .slidein-thumb img {
+.slidein-columns .slidein-col img.slidein-thumb  {
 	width: 45px;
 	height: 45px;
 }
