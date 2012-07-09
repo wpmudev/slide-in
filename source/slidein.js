@@ -86,7 +86,7 @@ jQuery(document).ready(function($){
 					end_at = Math.round( parseInt(timeout.replace(/h$/, ''))*3600 );
 				end_at += start_at;
 			}
-			console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
+			//console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
 			if ( $(obj).hasClass('slidein-active') ){
 				// Check if the end position is reached
 				if ( current_pos > end_pos || current_pos < start_pos )

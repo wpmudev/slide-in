@@ -325,6 +325,7 @@ Default color to red
 	-ms-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 	-o-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	-moz-border-radius-bottomleft: 6px;
 	border-bottom-left-radius: 6px;
 	color: #000;
 	position: relative;
@@ -346,7 +347,9 @@ Default color to red
 	-ms-box-shadow: 0 -20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
 	-o-box-shadow: 0 -20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 -20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
+	-moz-border-radius-bottomleft: 6px;
 	border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomright: 6px;
 	border-bottom-right-radius: 6px;
 	right: 0;
 	bottom: -46px;
@@ -355,6 +358,7 @@ Default color to red
 	display: block;
 	width: 10px;
 	height: 5px;
+	-moz-border-radius-topright: 6px;
 	border-top-right-radius: 6px;
 	border-top: 3px solid #f13030;
 	border-right: 3px solid #f13030;
@@ -367,6 +371,7 @@ Default color to red
 	display: block;
 	width: 16px;
 	height: 16px;
+	-moz-border-radius-topright: 16px;
 	border-top-right-radius: 16px;
 	border-top: 10px solid #fff;
 	border-right: 10px solid #fff;
@@ -385,11 +390,15 @@ Default color to red
 	border-bottom: none;
 }
 .slidein-rounded.slidein-left .slidein-wrap {
+	-moz-border-radius-bottomleft: 0;
 	border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 6px;
 	border-bottom-right-radius: 6px;
 }
 .slidein-rounded.slidein-bottom .slidein-wrap {
+	-moz-border-radius-bottomleft: 0;
 	border-bottom-left-radius: 0;
+	-moz-border-radius-topleft: 6px;
 	border-top-left-radius: 6px;
 }
 .slidein-rounded.slidein-right .slidein-close,
@@ -404,15 +413,21 @@ Default color to red
 	-ms-box-shadow: 0 20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
 	-o-box-shadow: 0 20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 20px 0 #fff, 0 0 20px rgba(0, 0, 0, 0.3);
+	-moz-border-radius-topleft: 6px;
 	border-top-left-radius: 6px;
+	-moz-border-radius-topright: 6px;
 	border-top-right-radius: 6px;
+	-moz-border-radius-bottomleft: 0;
 	border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
 	border-bottom-right-radius: 0;
 }
 .slidein-rounded.slidein-right .slidein-close:before,
 .slidein-rounded.slidein-left .slidein-close:before,
 .slidein-rounded.slidein-bottom .slidein-close:before {
+	-moz-border-radius-bottomright: 6px;
 	border-bottom-right-radius: 6px;
+	-moz-border-radius-topright: 0;
 	border-top-right-radius: 0;
 	border-top: none;
 	border-bottom: 3px solid #f13030;
@@ -425,7 +440,9 @@ Default color to red
 .slidein-rounded.slidein-right .slidein-close:after,
 .slidein-rounded.slidein-left .slidein-close:after,
 .slidein-rounded.slidein-bottom .slidein-close:after {
+	-moz-border-radius-bottomright: 16px;
 	border-bottom-right-radius: 16px;
+	-moz-border-radius-topright: 0;
 	border-top-right-radius: 0;
 	border-top: none;
 	border-bottom: 10px solid #fff;
@@ -435,7 +452,9 @@ Default color to red
 	left: -16px;
 }
 .slidein-rounded.slidein-right .slidein-close:before {
+	-moz-border-radius-bottomleft: 6px;
 	border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomright: 0;
 	border-bottom-right-radius: 0;
 	border-right: none;
 	border-left: 3px solid #f13030;
@@ -444,7 +463,9 @@ Default color to red
 	
 }
 .slidein-rounded.slidein-right .slidein-close:after {
+	-moz-border-radius-bottomleft: 16px;
 	border-bottom-left-radius: 16px;
+	-moz-border-radius-bottomright: 0;
 	border-bottom-right-radius: 0;
 	border-right: none;
 	border-left: 10px solid #fff;
@@ -464,6 +485,7 @@ Default color to red
 }
 .slidein-rounded .slidein-thumb {
 	border: 3px solid #f12525;
+	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
 .slidein-rounded.slidein-full .slidein-content,
