@@ -14,3 +14,22 @@
 .wdsi-disabled {
 	background: #ccc;
 }
+
+/* ----- Post editor metabox settings ----- */
+
+#wdsi-conditions-container fieldset, #wdsi-show_after_overrides-container fieldset {
+	border: 1px solid #eee;
+	margin-bottom: 1em;
+	padding: .5em 1em;
+}
+#wdsi-conditions-container fieldset legend, #wdsi-show_after_overrides-container fieldset legend {
+	/*text-align: center;*/
+	padding: 0 1em;
+	font-style: italic;
+	font-size: .9em;
+	color: #ccc;
+}
+
+#wdsi-conditions-container fieldset a.wdsi-clear_set {
+	font-size: .8em;
+}

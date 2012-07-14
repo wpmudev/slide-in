@@ -34,6 +34,17 @@ $(".wdsi_remove_service").click(function() {
 	return false;
 });
 
+/* ----- Toggleables ----- */
+$('[name="wdsi[show_after-condition]"]').on("change", function () {
+	$('[name="wdsi[show_after-rule]"]').attr("disabled", true);
+	$(this).parent("div").find('[name="wdsi[show_after-rule]"]').attr("disabled", false);
+});
+
+$("#wdsi-full_width").on("change", function () {
+	if (!$("#wdsi-full_width").is(":checked")) $("#wdsi-custom_width").show().find("input").attr("disabled", false);
+	else $("#wdsi-custom_width").hide().find("input").attr("disabled", true);
+});
+
 });
 })(jQuery);
 </script>

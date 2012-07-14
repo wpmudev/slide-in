@@ -24,8 +24,50 @@ class Wdsi_AdminPages {
 		$hook = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'network_admin_menu' : 'admin_menu';
 		add_action($hook, array($this, 'create_admin_menu_entry'));
 
+		// Post meta boxes
+		add_action('admin_init', array($this, 'add_meta_boxes'));
+		add_action('save_post', array($this, 'save_meta'));
+
 		add_action('admin_print_scripts', array($this, 'js_print_scripts'));
 		add_action('admin_print_styles', array($this, 'css_print_styles'));
+	}
+
+	function add_meta_boxes () {
+		add_meta_box(
+			'wdsi_message_override',
+			__('Slide-In Message Override', 'wdsm'),
+			array($this, 'render_message_override_box'),
+			'post',
+			'side',
+			'low'
+		);
+	}
+
+	function render_message_override_box () {
+		global $post;
+		$msg_id = get_post_meta($post->ID, 'wdsi_message_id', true);
+		$query = new WP_Query(array(
+			'post_type' => Wdsi_SlideIn::POST_TYPE,
+			'post_status' => Wdsi_SlideIn::NOT_IN_POOL_STATUS,
+		));
+		$messages = $query->posts;
+
+		_e('This post will not get a slide-in message from the pool - it will always use this message', 'wdsi');
+		echo '<select name="wdsi-message_override">';
+		echo '<option value=""></option>';
+		foreach ($messages as $message) {
+			$selected = ($message->ID == $msg_id) ? 'selected="selected"' : '';
+			echo "<option value='{$message->ID}'>{$message->post_title}</option>";
+		}
+		echo '</select>';
+	}
+
+	function save_meta () {
+		global $post;
+		if ('post' != $post->post_type) return false;
+		if (isset($_POST['wdsi-message_override'])) {
+			if ($_POST['wdsi-message_override']) update_post_meta($post->ID, 'wdsi_message_id', $_POST['wdsi-message_override']);
+		}
 	}
 	
 	function register_settings () {
@@ -34,11 +76,14 @@ class Wdsi_AdminPages {
 		register_setting('wdsi', 'wdsi');
 		add_settings_section('wdsi_settings', __('General settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
 		add_settings_field('wdsi_show_after', __('Show after', 'wdsi'), array($form, 'create_show_after_box'), 'wdsi_options_page', 'wdsi_settings');
+		add_settings_field('wdsi_show_for', __('Auto-hide message after', 'wdsi'), array($form, 'create_show_for_box'), 'wdsi_options_page', 'wdsi_settings');
 		add_settings_field('wdsi_position', __('Position', 'wdsi'), array($form, 'create_position_box'), 'wdsi_options_page', 'wdsi_settings');
+		add_settings_field('wdsi_appearance', __('Appearance', 'wdsi'), array($form, 'create_appearance_box'), 'wdsi_options_page', 'wdsi_settings');
+		
 		add_settings_field('wdsi_services', __('Services', 'wdsi'), array($form, 'create_services_box'), 'wdsi_options_page', 'wdsi_settings');
 		add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_settings');
 
-		add_settings_section('wdsi_conditions', __('Conditions', 'wdsi'), create_function('', ''), 'wdsi_options_page');
+		//add_settings_section('wdsi_conditions', __('Conditions', 'wdsi'), create_function('', ''), 'wdsi_options_page');
 		add_settings_field('wdsi_postitive_conditions', __('Show message box if...', 'wdsi'), array($form, 'create_conditions_box'), 'wdsi_options_page', 'wdsi_conditions');
 		
 	}
@@ -67,7 +112,7 @@ class Wdsi_AdminPages {
 				die;
 			}
 		}
-		$page = "edit.php?post_type=slide_in";
+		$page = "edit.php?post_type=" . Wdsi_SlideIn::POST_TYPE;
 		$perms = is_multisite() ? 'manage_network_options' : 'manage_options';
 		add_submenu_page($page, __('Settings', 'wdsi'), __('Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
 	}
@@ -77,13 +122,26 @@ class Wdsi_AdminPages {
 	}
 	
 	function js_print_scripts () {
-		if (!isset($_GET['page']) || 'wdsi' != $_GET['page']) return false;
-		wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
+		if (isset($_GET['page']) && 'wdsi' == $_GET['page']) {
+			wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
+		}
+		global $post;
+		if (is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type) {
+			wp_enqueue_script('wdsi-admin', WDSI_PLUGIN_URL . '/js/wdsi-admin.js', array('jquery'));
+			wp_localize_script('wdsi-admin', 'l10nWdsi', array(
+				'clear_set' => __('Clear this set', 'wdsi'),
+			));
+		}
 	}
 
 	function css_print_styles () {
-		if (!isset($_GET['page']) || 'wdsi' != $_GET['page']) return false;
-		wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
+		if (isset($_GET['page']) && 'wdsi' == $_GET['page']) {
+			wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
+		}
+		global $post;
+		if (is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type) {
+			wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
+		}
 		//wp_enqueue_style('jquery-ui-dialog', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 	}
 

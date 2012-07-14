@@ -25,24 +25,10 @@ class Wdsi_PublicPages {
 	}
 	
 	function add_hooks () {
-		add_action('wp_head', array($this, 'js_set_up_globals'));
 		add_action('wp_print_scripts', array($this, 'js_load_scripts'));
 		add_action('wp_print_styles', array($this, 'css_load_styles'));
 
 		add_action('loop_end', array($this, 'add_message'));
-	}
-
-	function js_set_up_globals () {
-		$opts = get_option('wdsi');
-		printf(
-			'<script type="text/javascript">var _wdsi_data={
-				"root_url": "%s", 
-				"ajax_url": "%s",
-				"after_percent": %d
-			};</script>',
-			WDSI_PLUGIN_URL, admin_url('admin-ajax.php'),
-			((int)@$opts['show_after'] ? (int)@$opts['show_after'] : 66) 
-		);
 	}
 
 	function js_load_scripts () {
@@ -57,28 +43,98 @@ class Wdsi_PublicPages {
 	}
 	
 	function add_message () {
-		if (!is_singular()) return false;
+		//if (!is_singular()) return false;
 		// if is selected as no show, also return false
 		if (defined('WDSI_BOX_RENDERED')) return false;
 		
 		global $post, $current_user;
 		$opts = get_option('wdsi');
 		
-		// Check general settings
-		if (@$opts['show_if_logged_in'] && !$current_user->id) return false;
-		if (@$opts['show_if_not_logged_in'] && $current_user->id) return false;
-		if (@$opts['show_if_never_commented'] && isset($_COOKIE['comment_author_'.COOKIEHASH])) return false;
-		
 		$message = $this->_wdsi->get_message_data($post);
+		if (!$message) return false;
+		$msg = get_post_meta($message->ID, 'wdsi', true);
 		
 		$services = @$opts['services'];
 		$services = is_array($services) ? $services : array();
 
 		$skip_script = @$opts['skip_script'];
 		$skip_script = is_array($skip_script) ? $skip_script : array();
+
+		$position = @$msg['position'] ? $msg['position'] : @$opts['position'];
+		$position = $position ? $position : 'left';
+
+		$percentage = $selector = $timeout = false;
+		$condition =  @$msg['show_after-condition'] ? $msg['show_after-condition'] : @$opts['show_after-condition'];
+		$value = @$msg['show_after-rule'] ? $msg['show_after-rule'] : @$opts['show_after-rule'];
+		switch ($condition) {
+			case "selector":
+				$selector = "#{$value}";
+				$percentage = '0%';
+				$timeout = '0s';
+				break;
+			case "timeout":
+				$selector = false;
+				$percentage = '0%';
+				$timeout = sprintf('%ds', (int)$value);
+				break;
+			case "percentage":
+			default:
+				$selector = false;
+				$percentage = sprintf('%d%%', (int)$value);
+				$timeout = '0s';
+				break;
+		}
+
+		$_theme = @$msg['theme'] ? $msg['theme'] : @$opts['theme'];
+		$theme =$_theme && in_array($_theme, array_keys(Wdsi_SlideIn::get_appearance_themes())) ? $_theme : 'minimal';
+
+		$_variation = @$msg['variation'] ? $msg['variation'] : @$opts['variation'];
+		$variation =$_variation && in_array($_variation, array_keys(Wdsi_SlideIn::get_theme_variations())) ? $_variation : 'light';
+		
+		$_scheme = @$msg['scheme'] ? $msg['scheme'] : @$opts['scheme'];
+		$scheme = $_scheme && in_array($_scheme, array_keys(Wdsi_SlideIn::get_variation_schemes())) ? $_scheme : 'red';
+
+		$expire_after = @$msg['show_for-time'] ? @$msg['show_for-time'] : @$opts['show_for-time'];
+		$expire_after = $expire_after ? $expire_after : 10;
+		$expire_unit = @$msg['show_for-unit'] ? @$msg['show_for-unit'] : @$opts['show_for-unit'];
+		$expire_unit = $expire_unit ? $expire_unit : 's';
+		$expire_timeout = sprintf("%d%s", $expire_after, $expire_unit);
+
+		$full_width = $width = false;
+		$_width = @$msg['width'] ? $msg['width'] : @$opts['width'];
+		if (!(int)$_width || 'full' == $width) {
+			$full_width = 'slidein-full';
+		} else {
+			$width = 'style="width:' . (int)$_width . 'px;"';
+		}
 		
 		require_once (WDSI_PLUGIN_BASE_DIR . '/lib/forms/box_output.php');
+		//$this->_js_set_up_globals($message->ID);
 		define ('WDSI_BOX_RENDERED', true);
 	}
+/*
+	private function _js_set_up_globals ($post_id) {
+		if (defined('WDSI_BOX_RENDERED')) return false;
+		
+		$opts = get_option('wdsi');
+		$msg = get_post_meta($post_id, 'wdsi', true);
 
+		$rule = @$msg['show_after-rule'] ? $msg['show_after-rule'] : @$opts['show_after-rule'];
+		$condition = @$msg['show_after-condition'] ? $msg['show_after-condition'] : @$opts['show_after-condition'];
+
+		printf(
+			'<script type="text/javascript">var _wdsi_data={
+				"root_url": "%s", 
+				"ajax_url": "%s",
+				"show_after": {
+					"rule": "%s",
+					"condition": "%s"
+				}
+			};</script>',
+			WDSI_PLUGIN_URL, admin_url('admin-ajax.php'),
+			$rule,
+			$condition
+		);
+	}
+*/
 }

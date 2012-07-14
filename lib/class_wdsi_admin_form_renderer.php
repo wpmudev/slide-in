@@ -26,28 +26,141 @@ class Wdsi_AdminFormRenderer {
 	}
 	
 	function create_show_after_box () {
-		$after = (int)$this->_get_option('show_after');
-		$after = $after ? $after : 66;
+		$percentage = $selector = $timeout = false;
+		$condition = $this->_get_option('show_after-condition');
+		$value = $this->_get_option('show_after-rule');
 		
-		$percentage = '<select name="wdsi[show_after]" id="wdsi-show_after">';
-		for ($i=1; $i<100; $i++) {
-			$selected = ($i == $after) ? 'selected="selected"' : '';
-			$percentage .= "<option value='{$i}' {$selected}>{$i}&nbsp;</option>";
+		switch ($condition) {
+			case "selector":
+				$selector = 'checked="checked"';
+				break;
+			case "timeout":
+				$timeout = 'checked="checked"';
+				$value = (int)$value;
+				break;
+			case "percentage":
+			default:
+				$percentage = 'checked="checked"';
+				$value = (int)$value;
+				break;
 		}
-		$percentage .= '</select>';
-		echo '<label for="wdsi-show_after">' . 
-			sprintf(__('Show message after %s%% of my page has been viewed', 'wdsi'), $percentage) . 
-		'</label>';
+		
+		$percentage_select = '<select name="wdsi[show_after-rule]" ' . ($percentage ? '' : 'disabled="disabled"') . '>';
+		for ($i=1; $i<100; $i++) {
+			$selected = ($i == $value) ? 'selected="selected"' : '';
+			$percentage_select .= "<option value='{$i}' {$selected}>{$i}&nbsp;</option>";
+		}
+		$percentage_select .= '</select>%';
+		echo '<div>' .
+			'<input type="radio" name="wdsi[show_after-condition]" value="percentage" id="wdsi-show_after-percentage" ' . $percentage . ' /> ' .
+			'<label for="wdsi-show_after-percentage">' . 
+				__('Show message after this much of my page has been viewed', 'wdsi') .
+				': ' .
+			'</label>' .
+			$percentage_select .
+		'</div>';
+
+		echo '<div>' .
+			'<input type="radio" name="wdsi[show_after-condition]" value="selector" id="wdsi-show_after-selector" ' . $selector . ' /> ' .
+			'<label for="wdsi-show_after-selector">' .
+				__('Show message after scrolling past element with this ID', 'wdsi') .
+				': #' .
+			'</label>' .
+			'<input type="text" size="8" name="wdsi[show_after-rule]" id="" value="' . ($selector ? esc_attr($value) : '') . '" ' . ($selector ? '' : 'disabled="disabled"') . ' />' .
+		'</div>';
+
+		echo '<div>' .
+			'<input type="radio" name="wdsi[show_after-condition]" value="timeout" id="wdsi-show_after-timeout" ' . $timeout . ' /> ' .
+			'<label for="wdsi-show_after-timeout">' .
+				__('Show message after this many seconds', 'wdsi') .
+				': ' .
+			'</label>' .
+			'<input type="text" size="2" name="wdsi[show_after-rule]" id="" value="' . ($timeout ? esc_attr($value) : '') . '" ' . ($timeout ? '' : 'disabled="disabled"') . ' />' .
+		'</div>';
+	}
+
+	function create_show_for_box () {
+		$time = $this->_get_option('show_for-time');
+		$unit = $this->_get_option('show_for-unit');
+
+		$_times = array_combine(range(1,59), range(1,59));
+		$_units = array(
+			's' => __('Seconds', 'wdsi'),
+			'm' => __('Minutes', 'wdsi'),
+			'h' => __('Hours', 'wdsi'),
+		);
+
+		// Time
+		echo "<select name='wdsi[show_for-time]'>";
+		foreach ($_times as $_time) {
+			$selected = $_time == $time ? 'selected="selected"' : '';
+			echo "<option value='{$_time}' {$selected}>{$_time}</option>";
+		}
+		echo "</select>";
+
+		// Unit
+		echo "<select name='wdsi[show_for-unit]'>";
+		foreach ($_units as $key => $_unit) {
+			$selected = $key == $unit ? 'selected="selected"' : '';
+			echo "<option value='{$key}' {$selected}>{$_unit}</option>";
+		}
+		echo "</select>";
 	}
 	
 	function create_position_box () {
 		echo '' . 
-		$this->_create_radiobox('position', 'left') . 
+			$this->_create_radiobox('position', 'left') . 
 			'<label for="position-left">' . __('Left', 'wdsi') . '</label>' .
 			'<br />' .
 			$this->_create_radiobox('position', 'right') . 
 			'<label for="position-right">' . __('Right', 'wdsi') . '</label>' .
+			'<br />' .
+			$this->_create_radiobox('position', 'top') . 
+			'<label for="position-top">' . __('Top', 'wdsi') . '</label>' .
+			'<br />' .
+			$this->_create_radiobox('position', 'bottom') . 
+			'<label for="position-bottom">' . __('Bottom', 'wdsi') . '</label>' .
+		
 		'';
+		
+		echo '<h4>' . __('Width', 'wdsi') . '</h4>';
+		$width = $this->_get_option('width');
+		$checked = (!(int)$width || 'full' == 'width') ? 'checked="checked"' : '';
+		echo '' .
+			'<input type="checkbox" name="wdsi[width]" value="full" id="wdsi-full_width" ' . $checked . ' autocomplete="off" />' .
+			'&nbsp;' .
+			'<label for="wdsi-full_width">' . __('Full width', 'wdsi') . '</label>' .
+		'';
+		$display = $checked ? 'style="display:none"' : '';
+		echo '<div id="wdsi-custom_width" ' . $display . '>';
+		$disabled = $checked ? 'disabled="disabled"' : '';
+		echo '' .
+			'<label for="wdsi-width">' . __('Message width', 'wdsi') . '</label>' .
+			'&nbsp;' .
+			'<input type="text" size="8" name="wdsi[width]" id="wdsi-width" value="' . (int)$width . '" ' . $disabled . ' />px' .
+		'';
+		echo '</div>';
+	}
+
+	function create_appearance_box () {
+		echo '<h4>' . __('Theme', 'wdsi') . '</h4>';
+		$_themes = Wdsi_SlideIn::get_appearance_themes();
+		foreach ($_themes as $theme => $label) {
+			echo $this->_create_radiobox('theme', $theme) .
+				'<label for="theme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
+		}
+		echo '<h4>' . __('Variation', 'wdsi') . '</h4>';
+		$_themes = Wdsi_SlideIn::get_theme_variations();
+		foreach ($_themes as $theme => $label) {
+			echo $this->_create_radiobox('variation', $theme) .
+				'<label for="variation-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
+		}
+		echo '<h4>' . __('Color Scheme', 'wdsi') . '</h4>';
+		$_themes = Wdsi_SlideIn::get_variation_schemes();
+		foreach ($_themes as $theme => $label) {
+			echo $this->_create_radiobox('scheme', $theme) .
+				'<label for="scheme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
+		}
 	}
 	
 	function create_services_box () {
@@ -126,7 +239,7 @@ class Wdsi_AdminFormRenderer {
 		'</p>';
 		'';
 	}
-	
+/*	
 	function create_conditions_box () {
 		echo '' .
 			'<label for="show_if_logged_in-yes">' . __('... the user is logged in:', 'wdsi') . '</label> ' .
@@ -141,4 +254,5 @@ class Wdsi_AdminFormRenderer {
 			$this->_create_checkbox('show_if_never_commented') .
 		'<br />';
 	}
+*/
 }
