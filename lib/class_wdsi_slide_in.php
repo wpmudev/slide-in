@@ -190,7 +190,7 @@ class Wdsi_SlideIn {
 		}
 
 		$override_checked = ($percentage || $timeout || $selector) ? 'checked="checked"' : '';
-		echo '<input type="checkbox" id="wdsi-override_show_if" value="1" ' . $override_checked . ' /> ' .
+		echo '<input type="checkbox" id="wdsi-override_show_if" name="wsdi-appearance_override" value="1" ' . $override_checked . ' /> ' .
 			'<label for="wdsi-override_show_if">' . __('Override message display rule', 'wdsi') . '</label>' .
 		'';
 
@@ -332,13 +332,15 @@ class Wdsi_SlideIn {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
 			update_post_meta($post->ID, "wdsi_show_if", @$_POST["show_if"]);
-		}		
+		}
+
 		if (@$_POST['wdsi']) {
 			// If we have Post Indexer present, remove the post save action for the moment.
 			if (function_exists('post_indexer_post_insert_update')) {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
-			update_post_meta($post->ID, "wdsi", @$_POST["wdsi"]);
+			if (!empty($_POST['wsdi-appearance_override'])) update_post_meta($post->ID, "wdsi", @$_POST["wdsi"]);
+			else update_post_meta($post->ID, "wdsi", false);
 		}
 
 	}
