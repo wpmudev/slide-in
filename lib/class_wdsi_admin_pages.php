@@ -135,6 +135,18 @@ class Wdsi_AdminPages {
 	}
 
 	function css_print_styles () {
+		// Menu icon hack goes into all admin pages, so add it inline instead of queueing up yet another stylehseet just for this
+		$base_url = WDSI_PLUGIN_URL;
+		echo <<<EoWdsiAdminCss
+<style type="text/css">
+li.menu-icon-slide_in div.wp-menu-image { background: url({$base_url}/img/admin-menu-icon.png) no-repeat bottom; }
+li.menu-icon-slide_in:hover div.wp-menu-image, 
+li.menu-icon-slide_in.wp-has-current-submenu div.wp-menu-image 
+{ background-position: top; }
+li.menu-icon-slide_in div.wp-menu-image img { display: none; }
+</style>
+EoWdsiAdminCss;
+		// The rest is slide in specific, enqueue only when needed
 		if (isset($_GET['page']) && 'wdsi' == $_GET['page']) {
 			wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
 		}

@@ -85,7 +85,7 @@ class Wdsi_SlideIn {
 				'add_new_item' => __('Add new Slide In Message', 'wdsi'),
 				'edit_item' => __('Edit Slide In Message', 'wdsi'),
 			),
-			'menu_icon' => WDSM_PLUGIN_URL . '/img/menu_inactive.png',
+			'menu_icon' => WDSI_PLUGIN_URL . '/img/admin-menu-icon.png',
 			'public' => false,
 			'show_ui' => true,
 			'supports' => $supports,

@@ -1,4 +1,5 @@
 <div class="wrap">
+	<div class="icon32 icon32-settings-slide_in" id="icon-settings"><br></div>
 	<h2><?php echo __('Settings', 'wdsi');?></h2>
 
 	<form action="" method="post">
