@@ -12,6 +12,7 @@ Slide In plugin stylesheet
 2.1 - Minimal Dark
 3.0 - Rounded
 3.1 - Rounded Dark
+4.0 - Helpers
 ----------------------------------------------------------*/
 
 
@@ -631,3 +632,10 @@ Default color to red
 	color: #7ccefd;
 }
 
+/*--------------------------------------------------------------
+4.0 - Helpers
+--------------------------------------------------------------*/
+
+.clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden;}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1;}
