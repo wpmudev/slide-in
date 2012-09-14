@@ -3,6 +3,7 @@
 Slide In plugin stylesheet
 *************************************************
 */
+
 /*----------------------------------------------------------
 >>> TABLE OF CONTENTS
 -----------------
@@ -168,6 +169,10 @@ Slide In plugin stylesheet
 
 Default color to red
 --------------------------------------------------------------*/
+.slidein-minimal .wdsi-item {  
+	width: auto;
+	float: right;
+}
 
 .slidein-minimal .slidein-wrap {
 	background: #fff;
@@ -194,6 +199,7 @@ Default color to red
 	float: right;
 	border-left: none;
 	border-right: 1px solid #f8d0d2;
+	width: 75%;
 }
 .slidein-minimal.slidein-right .slidein-close {
 	float: left;
