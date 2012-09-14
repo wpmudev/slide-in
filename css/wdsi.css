@@ -29,6 +29,7 @@ Slide In plugin stylesheet
 	-ms-transition: all 1s;
 	-o-transition: all 1s;
 	transition: all 1s;
+	z-index: 100000;
 }
 .slidein-active {
 	visibility: visible;
@@ -175,6 +176,10 @@ Default color to red
 	margin-left: 10px;
 }
 
+.slidein-minimal .slidein-share {
+	width: 75%;
+}
+
 .slidein-minimal .slidein-wrap {
 	background: #fff;
 	background: rgba(255, 255, 255, 0.9);
@@ -200,7 +205,6 @@ Default color to red
 	float: right;
 	border-left: none;
 	border-right: 1px solid #f8d0d2;
-	width: 75%;
 }
 .slidein-minimal.slidein-right .slidein-close {
 	float: left;
