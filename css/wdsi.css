@@ -172,6 +172,7 @@ Default color to red
 .slidein-minimal .wdsi-item {  
 	width: auto;
 	float: right;
+	margin-left: 10px;
 }
 
 .slidein-minimal .slidein-wrap {
