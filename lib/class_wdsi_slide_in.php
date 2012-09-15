@@ -128,7 +128,7 @@ class Wdsi_SlideIn {
 		
 		echo '<h4>' . __('Show message if...', 'wdsi') . '</h4>';
 
-		$show_if = @$show_options['user'];
+		$show_if = wdsi_getval($show_options, 'user');
 		echo '<fieldset id="wdsi-user_rules"><legend>' . __('User rules', 'wdsi') . '</legend>';
 		echo '' .
 			'<input type="radio" name="show_if[user]" value="show_if_logged_in" id="show_if_logged_in-yes" ' .
@@ -150,7 +150,7 @@ class Wdsi_SlideIn {
 		'<br />';
 		echo '</fieldset>';
 
-		$show_if = @$show_options['page'];
+		$show_if = wdsi_getval($show_options, 'page');
 		echo '<fieldset id="wdsi-page_rules"><legend>' . __('Page rules', 'wdsi') . '</legend>';
 		echo '' .
 			'<input type="radio" name="show_if[page]" value="show_if_singular" id="show_if_singular-yes" ' .
@@ -172,8 +172,8 @@ class Wdsi_SlideIn {
 	function render_show_after_box () {
 		global $post;
 		$opts = get_post_meta($post->ID, 'wdsi', true);
-		$condition = @$opts['show_after-condition'];
-		$value = @$opts['show_after-rule'];
+		$condition = wdsi_getval($opts, 'show_after-condition');
+		$value = wdsi_getval($opts, 'show_after-rule');
 		
 		switch ($condition) {
 			case "selector":
@@ -235,8 +235,8 @@ class Wdsi_SlideIn {
 
 		// Timeout
 		echo '<fieldset id="wdsi-show_for"><legend>' . __('Show for', 'wdsi') . '</legend>';
-		$time = @$opts['show_for-time'];
-		$unit = @$opts['show_for-unit'];
+		$time = wdsi_getval($opts, 'show_for-time');
+		$unit =wdsi_getval($opts, 'show_for-unit');
 
 		$_times = array_combine(range(1,59), range(1,59));
 		$_units = array(
@@ -263,21 +263,21 @@ class Wdsi_SlideIn {
 		// Position
 		echo '<fieldset id="wdsi-position"><legend>' . __('Position', 'wdsi') . '</legend>';
 		echo '' . 
-			$this->_create_radiobox('position', 'left', @$opts['position']) . 
+			$this->_create_radiobox('position', 'left', wdsi_getval($opts, 'position')) . 
 			'<label for="position-left">' . __('Left', 'wdsi') . '</label>' .
 			'<br />' .
-			$this->_create_radiobox('position', 'right', @$opts['position']) . 
+			$this->_create_radiobox('position', 'right', wdsi_getval($opts, 'position')) . 
 			'<label for="position-right">' . __('Right', 'wdsi') . '</label>' .
 			'<br />' .
-			$this->_create_radiobox('position', 'top', @$opts['position']) . 
+			$this->_create_radiobox('position', 'top', wdsi_getval($opts, 'position')) . 
 			'<label for="position-top">' . __('Top', 'wdsi') . '</label>' .
 			'<br />' .
-			$this->_create_radiobox('position', 'bottom', @$opts['position']) . 
+			$this->_create_radiobox('position', 'bottom', wdsi_getval($opts, 'position')) . 
 			'<label for="position-bottom">' . __('Bottom', 'wdsi') . '</label>' .
 		
 		'';
 		echo '<h4>' . __('Width', 'wdsi') . '</h4>';
-		$width = @$opts['width'];
+		$width = wdsi_getval($opts, 'width');
 		$checked = (!(int)$width || 'full' == 'width') ? 'checked="checked"' : '';
 		echo '' .
 			'<input type="checkbox" name="wdsi[width]" value="full" id="wdsi-full_width" ' . $checked . ' autocomplete="off" />' .
@@ -300,19 +300,19 @@ class Wdsi_SlideIn {
 		echo '<h4>' . __('Theme', 'wdsi') . '</h4>';
 		$_themes = self::get_appearance_themes();
 		foreach ($_themes as $theme => $label) {
-			echo $this->_create_radiobox('theme', $theme, @$opts['theme']) .
+			echo $this->_create_radiobox('theme', $theme, wdsi_getval($opts, 'theme')) .
 				'<label for="theme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
 		}
 		echo '<h4>' . __('Variation', 'wdsi') . '</h4>';
 		$_themes = self::get_theme_variations();
 		foreach ($_themes as $theme => $label) {
-			echo $this->_create_radiobox('variation', $theme, @$opts['variation']) .
+			echo $this->_create_radiobox('variation', $theme, wdsi_getval($opts, 'variation')) .
 				'<label for="variation-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
 		}
 		echo '<h4>' . __('Color Scheme', 'wdsi') . '</h4>';
 		$_themes = self::get_variation_schemes();
 		foreach ($_themes as $theme => $label) {
-			echo $this->_create_radiobox('scheme', $theme, @$opts['scheme']) .
+			echo $this->_create_radiobox('scheme', $theme, wdsi_getval($opts, 'scheme')) .
 				'<label for="scheme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
 		}
 		echo '</fieldset>';
@@ -326,20 +326,20 @@ class Wdsi_SlideIn {
 	function save_meta () {
 		global $post;
 		if (self::POST_TYPE != $post->post_type) return false;
-		if (@$_POST['show_if']) {
+		if (wdsi_getval($_POST, 'show_if')) {
 			// If we have Post Indexer present, remove the post save action for the moment.
 			if (function_exists('post_indexer_post_insert_update')) {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
-			update_post_meta($post->ID, "wdsi_show_if", @$_POST["show_if"]);
+			update_post_meta($post->ID, "wdsi_show_if", wdsi_getval($_POST, "show_if"));
 		}
 
-		if (@$_POST['wdsi']) {
+		if (wdsi_getval($_POST, 'wdsi')) {
 			// If we have Post Indexer present, remove the post save action for the moment.
 			if (function_exists('post_indexer_post_insert_update')) {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
-			if (!empty($_POST['wsdi-appearance_override'])) update_post_meta($post->ID, "wdsi", @$_POST["wdsi"]);
+			if (!empty($_POST['wsdi-appearance_override'])) update_post_meta($post->ID, "wdsi", wdsi_getval($_POST, "wdsi"));
 			else update_post_meta($post->ID, "wdsi", false);
 		}
 
@@ -350,7 +350,7 @@ class Wdsi_SlideIn {
 	 */
 	function set_up_post_status ($data) {
 		if (self::POST_TYPE != $data['post_type']) return $data;
-		if (@$_POST['not_in_the_pool']) {
+		if (wdsi_getval($_POST, 'not_in_the_pool')) {
 			$data['post_status'] = self::NOT_IN_POOL_STATUS;
 		}
 		return $data;
@@ -377,7 +377,7 @@ class Wdsi_SlideIn {
 					break;
 				}
 				$show = get_post_meta($post->ID, 'wdsi_show_if', true);
-				switch (@$show['user']) {
+				switch (wdsi_getval($show, 'user')) {
 					case "show_if_logged_in":
 						_e("Shown for logged in users", 'wdsi');
 						break;
@@ -391,7 +391,7 @@ class Wdsi_SlideIn {
 						_e("Can appear for all users", 'wdsi');
 				}
 				echo '<br />';
-				switch (@$show['page']) {
+				switch (wdsi_getval($show, 'page')) {
 					case "show_if_singular":
 						_e("Shown on singular pages", 'wdsi');
 						break;
@@ -451,7 +451,7 @@ class Wdsi_SlideIn {
 	function _filter_active_messages_pool ($msg) {
 		$use = true;
 		$show = get_post_meta($msg->ID, 'wdsi_show_if', true);
-		switch (@$show['user']) {
+		switch (wdsi_getval($show, 'user')) {
 			case "show_if_logged_in":
 				$use = is_user_logged_in(); break;
 			case "show_if_not_logged_in":
@@ -460,7 +460,7 @@ class Wdsi_SlideIn {
 				$use = isset($_COOKIE['comment_author_'.COOKIEHASH]); break;
 		}
 		if (!$use) return $use;
-		switch (@$show['page']) {
+		switch (wdsi_getval($show, 'page')) {
 			case "show_if_singular":
 				$use = is_singular(); break;
 			case "show_if_not_singular":

@@ -54,18 +54,18 @@ class Wdsi_PublicPages {
 		if (!$message) return false;
 		$msg = get_post_meta($message->ID, 'wdsi', true);
 		
-		$services = @$opts['services'];
+		$services = wdsi_getval($opts, 'services');
 		$services = is_array($services) ? $services : array();
 
-		$skip_script = @$opts['skip_script'];
+		$skip_script = wdsi_getval($opts, 'skip_script');
 		$skip_script = is_array($skip_script) ? $skip_script : array();
 
-		$position = @$msg['position'] ? $msg['position'] : @$opts['position'];
+		$position = wdsi_getval($msg, 'position') ? $msg['position'] : wdsi_getval($opts, 'position');
 		$position = $position ? $position : 'left';
 
 		$percentage = $selector = $timeout = false;
-		$condition =  @$msg['show_after-condition'] ? $msg['show_after-condition'] : @$opts['show_after-condition'];
-		$value = @$msg['show_after-rule'] ? $msg['show_after-rule'] : @$opts['show_after-rule'];
+		$condition =  wdsi_getval($msg, 'show_after-condition') ? $msg['show_after-condition'] :wdsi_getval($opts, 'show_after-condition');
+		$value = wdsi_getval($msg, 'show_after-rule') ? $msg['show_after-rule'] : wdsi_getval($opts, 'show_after-rule');
 		switch ($condition) {
 			case "selector":
 				$selector = "#{$value}";
@@ -85,23 +85,23 @@ class Wdsi_PublicPages {
 				break;
 		}
 
-		$_theme = @$msg['theme'] ? $msg['theme'] : @$opts['theme'];
-		$theme =$_theme && in_array($_theme, array_keys(Wdsi_SlideIn::get_appearance_themes())) ? $_theme : 'minimal';
+		$_theme = wdsi_getval($msg, 'theme') ? $msg['theme'] : wdsi_getval($opts, 'theme');
+		$theme = $_theme && in_array($_theme, array_keys(Wdsi_SlideIn::get_appearance_themes())) ? $_theme : 'minimal';
 
-		$_variation = @$msg['variation'] ? $msg['variation'] : @$opts['variation'];
-		$variation =$_variation && in_array($_variation, array_keys(Wdsi_SlideIn::get_theme_variations())) ? $_variation : 'light';
+		$_variation = wdsi_getval($msg, 'variation') ? $msg['variation'] : wdsi_getval($opts, 'variation');
+		$variation = $_variation && in_array($_variation, array_keys(Wdsi_SlideIn::get_theme_variations())) ? $_variation : 'light';
 		
-		$_scheme = @$msg['scheme'] ? $msg['scheme'] : @$opts['scheme'];
+		$_scheme = wdsi_getval($msg, 'scheme') ? $msg['scheme'] : wdsi_getval($opts, 'scheme');
 		$scheme = $_scheme && in_array($_scheme, array_keys(Wdsi_SlideIn::get_variation_schemes())) ? $_scheme : 'red';
 
-		$expire_after = @$msg['show_for-time'] ? @$msg['show_for-time'] : @$opts['show_for-time'];
+		$expire_after = wdsi_getval($msg, 'show_for-time') ? $msg['show_for-time'] : wdsi_getval($opts, 'show_for-time');
 		$expire_after = $expire_after ? $expire_after : 10;
-		$expire_unit = @$msg['show_for-unit'] ? @$msg['show_for-unit'] : @$opts['show_for-unit'];
+		$expire_unit = wdsi_getval($msg, 'show_for-unit') ? $msg['show_for-unit'] : wdsi_getval($opts, 'show_for-unit');
 		$expire_unit = $expire_unit ? $expire_unit : 's';
 		$expire_timeout = sprintf("%d%s", $expire_after, $expire_unit);
 
 		$full_width = $width = false;
-		$_width = @$msg['width'] ? $msg['width'] : @$opts['width'];
+		$_width = wdsi_getval($msg, 'width') ? $msg['width'] : wdsi_getval($opts, 'width');
 		if (!(int)$_width || 'full' == $width) {
 			$full_width = 'slidein-full';
 		} else {

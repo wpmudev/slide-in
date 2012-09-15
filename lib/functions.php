@@ -85,3 +85,12 @@ function wdsi_get_related_posts ($post_id) {
 		apply_filters('wdsi-media-related_posts-posts', $query->posts)
 	);
 }
+
+/**
+ * General purpose shorthand getter.
+ */
+function wdsi_getval ($from, $what, $default=false) {
+	if (is_object($from) && isset($from->$what)) return $from->$what;
+	else if (is_array($from) && isset($from[$what])) return $from[$what];
+	else return $default;
+}

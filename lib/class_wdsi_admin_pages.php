@@ -91,7 +91,7 @@ class Wdsi_AdminPages {
 	function create_admin_menu_entry () {
 		if (@$_POST && isset($_POST['option_page'])) {
 			$changed = false;
-			if ('wdsi_options_page' == @$_POST['option_page']) {
+			if ('wdsi_options_page' == wdsi_getval($_POST, 'option_page')) {
 				$services = $_POST['wdsi']['services'];
 				$services = is_array($services) ? $services : array();
 				if (@$_POST['wdsi']['new_service']['name'] && @$_POST['wdsi']['new_service']['code']) {
