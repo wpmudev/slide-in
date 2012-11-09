@@ -635,7 +635,7 @@ Default color to red
 /*--------------------------------------------------------------
 4.0 - Helpers
 --------------------------------------------------------------*/
-.wdsi-item {
+.slidein-rounded .wdsi-item {
 	float:left;
 	margin-right: 10px;
 	width: auto;
