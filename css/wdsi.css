@@ -14,7 +14,7 @@ Slide In plugin stylesheet
 3.1 - Rounded Dark
 4.0 - Helpers
 ----------------------------------------------------------*/
-/*test*/
+
 
 /*--------------------------------------------------------------
 1.0 - Basic
@@ -171,15 +171,6 @@ Slide In plugin stylesheet
 
 Default color to red
 --------------------------------------------------------------*/
-.slidein-minimal .wdsi-item {  
-	width: auto;
-	float: right;
-	margin-left: 10px;
-}
-
-.slidein-minimal .slidein-share {
-	width: 75%;
-}
 
 .slidein-minimal .slidein-wrap {
 	background: #fff;
@@ -193,12 +184,22 @@ Default color to red
 	color: #000;
 	position: relative;
 }
+.slidein-minimal .slidein-control {
+	position: relative;
+}
 .slidein-minimal .slidein-share {
-	float: left;
 	border-left: 1px solid #f8d0d2;
+	margin: 0 100px 0 0;
+	height: 25px;
+}
+.slidein-minimal .wdsi-item {  
+	width: auto;
+	float: left;
 }
 .slidein-minimal .slidein-close {
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 0;
 	border-left: 1px solid #f8d0d2;
 	border-right: 1px solid #f8d0d2;
 }
@@ -206,9 +207,12 @@ Default color to red
 	float: right;
 	border-left: none;
 	border-right: 1px solid #f8d0d2;
+	margin-right: 0;
+	margin-left: 100px;
 }
 .slidein-minimal.slidein-right .slidein-close {
-	float: left;
+	left: 0;
+	right: auto;
 }
 .slidein-minimal a {
 	color: #ed1f24;
@@ -348,6 +352,7 @@ Default color to red
 	bottom: 0;
 	left: 0;
 	width: 100%;
+	z-index: 1;
 }
 .slidein-rounded .slidein-close {
 	position: absolute;
@@ -365,6 +370,7 @@ Default color to red
 	border-bottom-right-radius: 6px;
 	right: 0;
 	bottom: -46px;
+	z-index: 0;
 }
 .slidein-rounded .slidein-close:before {
 	display: block;
@@ -494,6 +500,7 @@ Default color to red
 .slidein-rounded .slidein-content {
 	padding: 15px 18px 0;
 	position: relative;
+	z-index: 1;
 }
 .slidein-rounded .slidein-thumb {
 	border: 3px solid #f12525;
@@ -608,7 +615,7 @@ Default color to red
 .slidein-rounded-dark.slidein-right .slidein-close:after,
 .slidein-rounded-dark.slidein-left .slidein-close:after,
 .slidein-rounded-dark.slidein-bottom .slidein-close:after {
-	border-color: #000; 
+	border-color: #000;
 }
 
 .slidein-rounded-dark.slidein-rounded-blue .slidein-wrap,
