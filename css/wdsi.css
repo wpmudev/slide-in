@@ -189,28 +189,29 @@ Default color to red
 }
 .slidein-minimal .slidein-share {
 	border-left: 1px solid #f8d0d2;
+	border-right: 1px solid #f8d0d2;
 	margin: 0 100px 0 0;
-	height: 25px;
+	height: auto;
 }
 .slidein-minimal .wdsi-item {  
 	width: auto;
 	float: left;
+	height: 20px;
+	margin: 0 10px 10px 0;
 }
 .slidein-minimal .slidein-close {
 	position: absolute;
 	top: 0;
 	right: 0;
-	border-left: 1px solid #f8d0d2;
 	border-right: 1px solid #f8d0d2;
 }
 .slidein-minimal.slidein-right .slidein-share {
-	float: right;
-	border-left: none;
-	border-right: 1px solid #f8d0d2;
 	margin-right: 0;
 	margin-left: 100px;
 }
 .slidein-minimal.slidein-right .slidein-close {
+	border-left: 1px solid #f8d0d2;
+	border-right: none;
 	left: 0;
 	right: auto;
 }
