@@ -608,7 +608,7 @@ Default color to red
 .slidein-rounded-dark.slidein-right .slidein-close:after,
 .slidein-rounded-dark.slidein-left .slidein-close:after,
 .slidein-rounded-dark.slidein-bottom .slidein-close:after {
-	border-color: #000;
+	border-color: #000; 
 }
 
 .slidein-rounded-dark.slidein-rounded-blue .slidein-wrap,
