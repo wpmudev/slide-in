@@ -185,9 +185,10 @@ Default color to red
 }
 .slidein-minimal .slidein-control {
 	position: relative;
+	border-left: 1px solid #f8d0d2;
+	border-right: 1px solid #f8d0d2;
 }
 .slidein-minimal .slidein-share {
-	border-left: 1px solid #f8d0d2;
 	border-right: 1px solid #f8d0d2;
 	margin: 0 100px 0 0;
 }
@@ -201,15 +202,14 @@ Default color to red
 	position: absolute;
 	top: 0;
 	right: 0;
-	border-right: 1px solid #f8d0d2;
 }
 .slidein-minimal.slidein-right .slidein-share {
+	border-left: 1px solid #f8d0d2;
+	border-right: none;
 	margin-right: 0;
 	margin-left: 100px;
 }
 .slidein-minimal.slidein-right .slidein-close {
-	border-left: 1px solid #f8d0d2;
-	border-right: none;
 	left: 0;
 	right: auto;
 }
