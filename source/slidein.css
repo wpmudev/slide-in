@@ -11,6 +11,7 @@ Slide In plugin stylesheet
 2.1 - Minimal Dark
 3.0 - Rounded
 3.1 - Rounded Dark
+3.2 - Fixes etc.
 ----------------------------------------------------------*/
 
 
@@ -618,4 +619,14 @@ Default color to red
 }
 .slidein-rounded-dark.slidein-rounded-blue a {
 	color: #7ccefd;
+}
+
+/*--------------------------------------------------------------
+3.1 - Fixes etc.
+--------------------------------------------------------------*/
+
+.wdsi-item {
+	float:left;
+	margin-right: 10px;
+	width: auto;
 }
