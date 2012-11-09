@@ -4,7 +4,7 @@
 	$url = apply_filters('wdsi-url-current_url', ($url ? $url : site_url($wp->request))); // Fix for empty URLs
 ?>
 <div class="slidein-control">
-	<div class="slidein-share">
+	<div class="slidein-share clearfix">
 		<?php if ($services) foreach ($services as $key=>$service) { ?>
 			<?php $idx = is_array($service) ? strtolower(preg_replace('/[^-a-zA-Z0-9_]/', '', $service['name'])) : $key;?>
 			<div class="wdsi-item" id="wdsi-service-<?php echo $idx;?>">

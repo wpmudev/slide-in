@@ -76,7 +76,6 @@ Slide In plugin stylesheet
 }
 .slidein-share {
 	padding: 12px 18px 12px;
-	height: 20px;
 }
 .slidein-share .fb-like, .slidein-share iframe {
 	float: left;
@@ -191,7 +190,6 @@ Default color to red
 	border-left: 1px solid #f8d0d2;
 	border-right: 1px solid #f8d0d2;
 	margin: 0 100px 0 0;
-	height: auto;
 }
 .slidein-minimal .wdsi-item {  
 	width: auto;
@@ -346,14 +344,18 @@ Default color to red
 	border-bottom-left-radius: 6px;
 	color: #000;
 	position: relative;
-	padding: 0 0 40px;
+	padding: 0;
 }
 .slidein-rounded .slidein-share {
-	position: absolute;
-	bottom: 0;
-	left: 0;
+	position: relative;
 	width: 100%;
 	z-index: 1;
+}
+.slidein-rounded .wdsi-item {
+	float: left;
+	margin: 0 10px 10px 0;
+	height: 20px;
+	width: auto;
 }
 .slidein-rounded .slidein-close {
 	position: absolute;
@@ -643,11 +645,6 @@ Default color to red
 /*--------------------------------------------------------------
 4.0 - Helpers
 --------------------------------------------------------------*/
-.slidein-rounded .wdsi-item {
-	float:left;
-	margin-right: 10px;
-	width: auto;
-}
 
 .clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden;}
 .clearfix:after{clear:both;}
