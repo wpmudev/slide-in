@@ -124,7 +124,7 @@ class Wdsi_SlideIn {
 			'<label for="wdsi-not_in_the_pool">' . __('Not in the pool', 'wdsi') . '</label>' .
 		'</p>';
 
-		echo '<div id="wdsi-conditions-container" style="display:none">';
+		echo '<div id="wdsi-conditions-container" class="wpmudev-ui" style="display:none">';
 		
 		echo '<h4>' . __('Show message if...', 'wdsi') . '</h4>';
 
@@ -194,17 +194,17 @@ class Wdsi_SlideIn {
 			'<label for="wdsi-override_show_if">' . __('Override message display rule', 'wdsi') . '</label>' .
 		'';
 
-		echo '<div id="wdsi-show_after_overrides-container" style="display:none">';
+		echo '<div id="wdsi-show_after_overrides-container" class="wpmudev-ui" style="display:none">';
 
 		// Initial condition
 		echo '<fieldset id="wdsi-show_after"><legend>' . __('Show after', 'wdsi') . '</legend>';
 		
-		$percentage_select = '<select name="wdsi[show_after-rule]" ' . ($percentage ? '' : 'disabled="disabled"') . '>';
+		$percentage_select = '<div class="wpmudev-ui-select"><select name="wdsi[show_after-rule]" ' . ($percentage ? '' : 'disabled="disabled"') . '>';
 		for ($i=1; $i<100; $i++) {
 			$selected = ($i == $value) ? 'selected="selected"' : '';
 			$percentage_select .= "<option value='{$i}' {$selected}>{$i}&nbsp;</option>";
 		}
-		$percentage_select .= '</select>%';
+		$percentage_select .= '</select></div>%';
 		echo '<div>' .
 			'<input type="radio" name="wdsi[show_after-condition]" value="percentage" id="wdsi-show_after-percentage" ' . $percentage . ' /> ' .
 			'<label for="wdsi-show_after-percentage">' . 
@@ -236,7 +236,7 @@ class Wdsi_SlideIn {
 		// Timeout
 		echo '<fieldset id="wdsi-show_for"><legend>' . __('Show for', 'wdsi') . '</legend>';
 		$time = wdsi_getval($opts, 'show_for-time');
-		$unit =wdsi_getval($opts, 'show_for-unit');
+		$unit = wdsi_getval($opts, 'show_for-unit');
 
 		$_times = array_combine(range(1,59), range(1,59));
 		$_units = array(
@@ -245,37 +245,33 @@ class Wdsi_SlideIn {
 			'h' => __('Hours', 'wdsi'),
 		);
 
-		echo "<select name='wdsi[show_for-time]'>";
+		echo "<div class='wpmudev-ui-select'><select name='wdsi[show_for-time]'>";
 		foreach ($_times as $_time) {
 			$selected = $_time == $time ? 'selected="selected"' : '';
 			echo "<option value='{$_time}' {$selected}>{$_time}</option>";
 		}
-		echo "</select>";
+		echo "</select></div>";
 
-		echo "<select name='wdsi[show_for-unit]'>";
+		echo "<div class='wpmudev-ui-select'><select name='wdsi[show_for-unit]'>";
 		foreach ($_units as $key => $_unit) {
 			$selected = $key == $unit ? 'selected="selected"' : '';
 			echo "<option value='{$key}' {$selected}>{$_unit}</option>";
 		}
-		echo "</select>";
+		echo "</select></div>";
 		echo '</fieldset>';
 
 		// Position
 		echo '<fieldset id="wdsi-position"><legend>' . __('Position', 'wdsi') . '</legend>';
-		echo '' . 
-			$this->_create_radiobox('position', 'left', wdsi_getval($opts, 'position')) . 
-			'<label for="position-left">' . __('Left', 'wdsi') . '</label>' .
-			'<br />' .
-			$this->_create_radiobox('position', 'right', wdsi_getval($opts, 'position')) . 
-			'<label for="position-right">' . __('Right', 'wdsi') . '</label>' .
-			'<br />' .
-			$this->_create_radiobox('position', 'top', wdsi_getval($opts, 'position')) . 
-			'<label for="position-top">' . __('Top', 'wdsi') . '</label>' .
-			'<br />' .
-			$this->_create_radiobox('position', 'bottom', wdsi_getval($opts, 'position')) . 
-			'<label for="position-bottom">' . __('Bottom', 'wdsi') . '</label>' .
-		
-		'';
+		echo '<div  class="wpmudev-ui-element_container">';
+		$pos = wdsi_getval($opts, 'position');
+		echo '<div class="position-control">' .
+			$this->_create_radiobox('position', 'left', $pos) .
+			$this->_create_radiobox('position', 'top', $pos) .
+			$this->_create_radiobox('position', 'right', $pos) .
+			$this->_create_radiobox('position', 'bottom', $pos) .
+		'</div>';
+		echo '</div>';
+
 		echo '<h4>' . __('Width', 'wdsi') . '</h4>';
 		$width = wdsi_getval($opts, 'width');
 		$checked = (!(int)$width || 'full' == 'width') ? 'checked="checked"' : '';
@@ -290,7 +286,7 @@ class Wdsi_SlideIn {
 		echo '' .
 			'<label for="wdsi-width">' . __('Message width', 'wdsi') . '</label>' .
 			'&nbsp;' .
-			'<input type="text" size="8" name="wdsi[width]" id="wdsi-width" value="' . (int)$width . '" ' . $disabled . ' />px' .
+			'<input type="text" size="8" class="medium" name="wdsi[width]" id="wdsi-width" value="' . (int)$width . '" ' . $disabled . ' />px' .
 		'';
 		echo '</div>';
 		echo '</fieldset>';
@@ -310,11 +306,14 @@ class Wdsi_SlideIn {
 				'<label for="variation-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
 		}
 		echo '<h4>' . __('Color Scheme', 'wdsi') . '</h4>';
+		echo '<div class="wdsi-complex_element-container">';
 		$_themes = self::get_variation_schemes();
 		foreach ($_themes as $theme => $label) {
-			echo $this->_create_radiobox('scheme', $theme, wdsi_getval($opts, 'scheme')) .
-				'<label for="scheme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />';
+			echo $this->_create_color_radiobox('scheme', $theme, $label, wdsi_getval($opts, 'scheme')) .
+				//'<label for="scheme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />' .
+			'';
 		}
+		echo '</div>';
 		echo '</fieldset>';
 
 		echo '</div>';
@@ -471,6 +470,16 @@ class Wdsi_SlideIn {
 
 	function _create_radiobox ($name, $value, $option) {
 		$checked = (@$option == $value) ? true : false;
-		return "<input type='radio' name='wdsi[{$name}]' id='{$name}-{$value}' value='{$value}' " . ($checked ? 'checked="checked" ' : '') . " /> ";
+		$class = $value ? "class='{$value}'" : '';
+		return "<input type='radio' name='wdsi[{$name}]' {$class} id='{$name}-{$value}' value='{$value}' " . ($checked ? 'checked="checked" ' : '') . " /> ";
+	}
+
+	function _create_color_radiobox ($name, $value, $label, $option) {
+		$color = esc_attr($value);
+		$label= esc_attr($label);
+		return "<label class='wdsi-color-container' for='{$name}-{$value}'>" .
+			$this->_create_radiobox($name, $value, $option) .
+			"<div class='wdsi-color wdsi-{$color}' title='{$label}'></div>" .
+		'</label>';
 	}
 }

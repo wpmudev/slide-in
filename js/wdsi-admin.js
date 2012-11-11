@@ -39,8 +39,13 @@ $(function () {
 
 	// Width toggling
 	$("#wdsi-full_width").on("change", function () {
-		if (!$("#wdsi-full_width").is(":checked")) $("#wdsi-custom_width").show().find("input").attr("disabled", false);
-		else $("#wdsi-custom_width").hide().find("input").attr("disabled", true);
+		if (!$("#wdsi-full_width").is(":checked")) {
+			$("#wdsi-custom_width").show().find("input").attr("disabled", false);
+			$('label[for="wdsi-full_width"]').addClass("wdsi-not_applicable");
+		} else {
+			$("#wdsi-custom_width").hide().find("input").attr("disabled", true);
+			$('label[for="wdsi-full_width"]').removeClass("wdsi-not_applicable");
+		}
 	});
 });
 

@@ -74,17 +74,23 @@ class Wdsi_AdminPages {
 		$form = new Wdsi_AdminFormRenderer;
 		
 		register_setting('wdsi', 'wdsi');
-		add_settings_section('wdsi_settings', __('General settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
-		add_settings_field('wdsi_show_after', __('Show after', 'wdsi'), array($form, 'create_show_after_box'), 'wdsi_options_page', 'wdsi_settings');
-		add_settings_field('wdsi_show_for', __('Auto-hide message after', 'wdsi'), array($form, 'create_show_for_box'), 'wdsi_options_page', 'wdsi_settings');
-		add_settings_field('wdsi_position', __('Position', 'wdsi'), array($form, 'create_position_box'), 'wdsi_options_page', 'wdsi_settings');
-		add_settings_field('wdsi_appearance', __('Appearance', 'wdsi'), array($form, 'create_appearance_box'), 'wdsi_options_page', 'wdsi_settings');
 		
-		add_settings_field('wdsi_services', __('Services', 'wdsi'), array($form, 'create_services_box'), 'wdsi_options_page', 'wdsi_settings');
-		add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_settings');
+		add_settings_section('wdsi_behavior', __('Behaviour settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
+		add_settings_field('wdsi_show_after', __('Show message', 'wdsi'), array($form, 'create_show_after_box'), 'wdsi_options_page', 'wdsi_behavior');
+		add_settings_field('wdsi_show_for', __('Hide message after', 'wdsi'), array($form, 'create_show_for_box'), 'wdsi_options_page', 'wdsi_behavior');
+
+
+		add_settings_section('wdsi_appearance', __('Appearance settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
+		add_settings_field('wdsi_position', __('Message position', 'wdsi'), array($form, 'create_position_box'), 'wdsi_options_page', 'wdsi_appearance');
+		add_settings_field('wdsi_width', __('Message width', 'wdsi'), array($form, 'create_msg_width_box'), 'wdsi_options_page', 'wdsi_appearance');
+		add_settings_field('wdsi_appearance', __('Message style', 'wdsi'), array($form, 'create_appearance_box'), 'wdsi_options_page', 'wdsi_appearance');
+		add_settings_field('wdsi_color_scheme', __('Color scheme', 'wdsi'), array($form, 'create_color_scheme_box'), 'wdsi_options_page', 'wdsi_appearance');
+		
+		add_settings_field('wdsi_services', __('Social media services', 'wdsi'), array($form, 'create_services_box'), 'wdsi_options_page', 'wdsi_appearance');
+		//add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_appearance');
 
 		//add_settings_section('wdsi_conditions', __('Conditions', 'wdsi'), create_function('', ''), 'wdsi_options_page');
-		add_settings_field('wdsi_postitive_conditions', __('Show message box if...', 'wdsi'), array($form, 'create_conditions_box'), 'wdsi_options_page', 'wdsi_conditions');
+		//add_settings_field('wdsi_postitive_conditions', __('Show message box if...', 'wdsi'), array($form, 'create_conditions_box'), 'wdsi_options_page', 'wdsi_conditions');
 		
 	}
 	
