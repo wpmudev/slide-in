@@ -15,7 +15,43 @@ function toggle_show_after_overrides () {
 
 }
 
+function init_services () {
+	/* ----- Sortables ----- */
+	var $lis = $("#wdsi-services li"),
+		$old = $("#wdsi-services").replaceWith("<ul id='wdsi-services' class='wdsi-services-service_hub' /><ul id='wdsi-disabled_services' class='wdsi-services-service_hub' />")
+		$enabled = $("#wdsi-services"),
+		$disabled = $("#wdsi-disabled_services")
+	;
+	function init_sortables () {
+		$(".wdsi-services-service_hub").empty();
+		$lis.each(function () {
+			var $me = $(this),
+				$hub = $me.is(".wdsi-disabled") ? $disabled : $enabled
+			;
+			$hub.append($me);
+			$me.find('input[name*="services"]').off("change").on("change", function () {
+				var $in = $(this);
+				if ($in.is(":checked")) $me.removeClass("wdsi-disabled");
+				else $me.addClass("wdsi-disabled");
+				init_sortables();
+			});
+		});
+		$enabled.sortable("destroy").sortable({});
+	}
+	init_sortables();
+
+	$(".wdsi_remove_service").click(function() {
+		$(this).parents('li.wdsi-service-item').remove();
+		return false;
+	});
+}
+
 $(function () {
+
+init_services();
+
+
+
 	$("#wdsi-not_in_the_pool").on("change", toggle_pool_conditions);
 	toggle_pool_conditions();
 

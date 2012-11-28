@@ -9,9 +9,7 @@ class Wdsi_AdminPages {
 
 	private function __construct () {
 		$this->_wdsi = Wdsi_SlideIn::get_instance();
-		/*
 		$this->_data = new Wdsi_Options;
-		*/
 	}
 
 	public static function serve () {
@@ -30,6 +28,27 @@ class Wdsi_AdminPages {
 
 		add_action('admin_print_scripts', array($this, 'js_print_scripts'));
 		add_action('admin_print_styles', array($this, 'css_print_styles'));
+
+		// AJAX actions
+		add_action('wp_ajax_wdsi_mailchimp_subscribe', array($this, 'json_mailchimp_subscribe'));
+		add_action('wp_ajax_nopriv_wdsi_mailchimp_subscribe', array($this, 'json_mailchimp_subscribe'));
+	}
+
+	function json_mailchimp_subscribe () {
+		$api_key = $this->_data->get_option('mailchimp-api_key');
+		if (!$api_key) die('MailChimp not configured');
+
+		$list = $this->_data->get_option('mailchimp-default_list');
+		if (!$list) die('Unknown list');
+
+		$email = wdsi_getval($_POST, 'email');
+		if (!is_email($email)) die('Invalid email');
+
+		$mailchimp = new Wdsi_Mailchimp($api_key);
+		$result = $mailchimp->subscribe_to($list, $email);
+
+		//if ($result)
+		die;
 	}
 
 	function add_meta_boxes () {
@@ -87,6 +106,8 @@ class Wdsi_AdminPages {
 		add_settings_field('wdsi_color_scheme', __('Color scheme', 'wdsi'), array($form, 'create_color_scheme_box'), 'wdsi_options_page', 'wdsi_appearance');
 		
 		add_settings_field('wdsi_services', __('Social media services', 'wdsi'), array($form, 'create_services_box'), 'wdsi_options_page', 'wdsi_appearance');
+		add_settings_field('wdsi_mailchimp', __('MailChimp subscriptions', 'wdsi'), array($form, 'create_mailchimp_box'), 'wdsi_options_page', 'wdsi_appearance');
+
 		//add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_appearance');
 
 		//add_settings_section('wdsi_conditions', __('Conditions', 'wdsi'), create_function('', ''), 'wdsi_options_page');

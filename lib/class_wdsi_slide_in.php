@@ -189,7 +189,9 @@ class Wdsi_SlideIn {
 				break;
 		}
 
-		$override_checked = ($percentage || $timeout || $selector) ? 'checked="checked"' : '';
+		$services = wdsi_getval($opts, 'services');
+
+		$override_checked = ($percentage || $timeout || $selector || $services) ? 'checked="checked"' : '';
 		echo '<input type="checkbox" id="wdsi-override_show_if" name="wsdi-appearance_override" value="1" ' . $override_checked . ' /> ' .
 			'<label for="wdsi-override_show_if">' . __('Override message display rule', 'wdsi') . '</label>' .
 		'';
@@ -316,7 +318,57 @@ class Wdsi_SlideIn {
 		echo '</div>';
 		echo '</fieldset>';
 
+
+		$this->render_services_box();
 		echo '</div>';
+	}
+
+	function render_services_box () {
+		global $post;
+		$data = new Wdsi_Options;
+		$opts = get_post_meta($post->ID, 'wdsi', true);
+
+		$services = array (
+			'google' => 'Google +1',
+			'facebook' => 'Facebook Like',
+			'twitter' => 'Tweet this',
+			'stumble_upon' => 'Stumble upon',
+			'delicious' => 'Del.icio.us',
+			'reddit' => 'Reddit',
+			'linkedin' => 'LinkedIn',
+			'pinterest' => 'Pinterest',
+			'related_posts' => __('Related posts', 'wdsi'),
+			'mailchimp' => __('MailChimp subscription form', 'wdsi'),
+		);
+		if (function_exists('wdpv_get_vote_up_ms')) $services['post_voting'] = 'Post Voting'; 
+
+		$load = wdsi_getval($opts, 'services');
+		$load = is_array($load) ? $load : array();
+
+		echo "<ul id='wdsi-services'>";
+		foreach ($services as $key => $name) {
+			$disabled = isset($load[$key]) ? '' : 'wdsi-disabled';
+			if ('post_voting' === $key && !function_exists('wdpv_get_vote_up_ms')) continue;
+			echo "<li class='wdsi-service-item {$disabled}'>";
+			if (is_array($name)) {
+				echo $name['name'] .
+					"<br/><a href='#' class='wdsi_remove_service'>" . __('Remove this service', 'wdsi') . '</a>' .
+					'<input type="hidden" name="wdsi[services][' . $key . '][name]" value="' . esc_attr($name['name']) . '" />' .
+					'<input type="hidden" name="wdsi[services][' . $key . '][code]" value="' . esc_attr($name['code']) . '" />' .
+				'</div>';
+			} else {
+				echo "<img src='" . WDSI_PLUGIN_URL . "/img/{$key}.png' width='50px' />" .
+					"<input type='checkbox' name='wdsi[services][{$key}]' value='{$key}' " .
+						"id='wdsi-services-{$key}' " .
+						(in_array($key, $load) ? "checked='checked'" : "") .
+					"/> " .
+						"<label for='wdsi-services-{$key}'>{$name}</label>" .
+					'<br />';
+			}
+
+			echo "<div class='clear'></div></li>";
+		}
+		echo "</ul><div class='clear'></div>";
 	}
 
 	/**

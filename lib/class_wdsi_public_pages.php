@@ -54,7 +54,8 @@ class Wdsi_PublicPages {
 		if (!$message) return false;
 		$msg = get_post_meta($message->ID, 'wdsi', true);
 		
-		$services = wdsi_getval($opts, 'services');
+		$services = wdsi_getval($msg, 'services');
+		$services = $services ? $services : wdsi_getval($opts, 'services');
 		$services = is_array($services) ? $services : array();
 
 		$skip_script = wdsi_getval($opts, 'skip_script');

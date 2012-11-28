@@ -3,7 +3,7 @@
 Plugin Name: Slide-In
 Plugin URI: http://premium.wpmudev.org/project/
 Description: Too awesome for a proper description
-Version: 0.6
+Version: 0.7
 Text Domain: wdsi
 Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub),  Ve Bailovity (Incsub)
 Author URI: http://premium.wpmudev.org
@@ -64,9 +64,10 @@ if (is_multisite() && defined('WPMU_PLUGIN_URL') && defined('WPMU_PLUGIN_DIR') &
 $textdomain_handler('wdsi', false, WDSI_PLUGIN_SELF_DIRNAME . '/languages/');
 
 
+require_once WDSI_PLUGIN_BASE_DIR . '/lib/class_wdsi_mailchimp.php';
+require_once WDSI_PLUGIN_BASE_DIR . '/lib/class_wdsi_options.php';
 require_once WDSI_PLUGIN_BASE_DIR . '/lib/functions.php';
 /*
-require_once WDSI_PLUGIN_BASE_DIR . '/lib/class_wdsi_options.php';
 Wdsi_Options::populate();
 */
 

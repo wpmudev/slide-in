@@ -90,6 +90,42 @@
 								echo '<h3>' . __('Related posts', 'wdsi') . '</h3><ul class="related_posts">' . $out . '<ul>';
 							}
 							break;
+						case "mailchimp":
+							$id = md5(microtime() . rand());
+							$admin_url = admin_url('admin-ajax.php');
+							echo '<form id="wdsi-mailchimp-' . $id . '" class="wdsi-mailchimp-root">';
+							echo '<label for="wdsi-mailchimp-' . $id . '-email">' . __('Email:', 'wdsi') . '</label>';
+							echo '<input type="text" id="wdsi-mailchimp-' . $id . '-email" class="wdsi-mailchimp-email" placeholder="' . __('placeholder@test.com', 'wdsi') . '" />';
+							echo '<button class="wdsi-mailchimp-subscribe">' . __('Subscribe', 'wdsi') . '</button>';
+							echo '<div class="wdsi-mailchimp-result"></div>';
+							echo '</form>';
+							echo <<<EoMailChimpJs
+<script>
+(function ($) {
+
+function mailchimp_subscribe (root) {
+	var email = root.find(".wdsi-mailchimp-email"),
+		result = root.find(".wdsi-mailchimp-result")
+	;
+	if (!email.val()) return false;
+	$.post("{$admin_url}", {
+		"action": "wdsi_mailchimp_subscribe",
+		"email": email.val()
+	}, function (data) {
+		result.html(data);
+	});
+}
+
+$(function () {
+$(".wdsi-mailchimp-subscribe").click(function () {
+	mailchimp_subscribe($(this).parents(".wdsi-mailchimp-root"));
+	return false;
+});
+});
+})(jQuery);
+</script>
+EoMailChimpJs;
+							break;
 					}
 				}
 				?>

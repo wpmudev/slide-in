@@ -188,7 +188,8 @@ class Wdsi_AdminFormRenderer {
 			'reddit' => 'Reddit',
 			'linkedin' => 'LinkedIn',
 			'pinterest' => 'Pinterest',
-			'related_posts' => __('Related posts', 'wdsi')
+			'related_posts' => __('Related posts', 'wdsi'),
+			'mailchimp' => __('MailChimp subscription form', 'wdsi'),
 		);
 		if (function_exists('wdpv_get_vote_up_ms')) $services['post_voting'] = 'Post Voting'; 
 		$externals = array (
@@ -239,19 +240,6 @@ class Wdsi_AdminFormRenderer {
 		}
 		echo "</ul>";
 
-		/*
-		echo '<p>' .
-			'<label for="wdsi_new_custom_service-name">' . __('Name', 'wdsi') . '</label>' .
-			'<input type="text" name="wdsi[new_service][name]" id="wdsi_new_custom_service-name" placeholder="name" class="medium" />' .
-		'</p>';
-		echo '<p>' .
-			'<label for="wdsi_new_custom_service-code">' . __('Code', 'wdsi') . '</label>' .
-			'<textarea rows="1" name="wdsi[new_service][code]" id="wdsi_new_custom_service-code" class="widefat"></textarea>' .
-		'</p>';
-		echo '<p>' .
-			'<input type="submit" class="button" value="' . __('Add', 'wdsi') . '" />' .
-		'</p>';
-		*/
 		echo '<h4>' . __('Add your own:', 'wdsi') . '</h4>';
 		echo '' .
 			'<input type="text" name="wdsi[new_service][name]" id="wdsi_new_custom_service-name" placeholder="' . esc_attr(__('Name', 'wdsi')) . '" class="medium" />' .
@@ -261,20 +249,37 @@ class Wdsi_AdminFormRenderer {
 			'<button type="submit">' . __('Add', 'wdsi') . '</button>' .
 		'';
 	}
-/*	
-	function create_conditions_box () {
-		echo '' .
-			'<label for="show_if_logged_in-yes">' . __('... the user is logged in:', 'wdsi') . '</label> ' .
-			$this->_create_checkbox('show_if_logged_in') .
+
+	function create_mailchimp_box () {
+		/*
+		echo '<label for="mailchimp-enabled-yes">' . __('Enable MailChimp integration:', 'wdsi') . ' </label>' .
+			$this->_create_checkbox('mailchimp-enabled') .
 		'<br />';
-		echo '' .
-			'<label for="show_if_not_logged_in-yes">' . __('... the user is <b>NOT</b> logged in:', 'wdsi') . '</label> ' .
-			$this->_create_checkbox('show_if_not_logged_in') .
+		*/
+		$api_key = $this->_get_option('mailchimp-api_key');
+		echo '<label for="wdsi-mailchimp-api_key">' . __('MailChimp API key:') . '</label>' .
+			'<input type="text" class="long" name="wdsi[mailchimp-api_key]" id="wdsi-mailchimp-api_key" value="' . esc_attr($api_key) . '" />' .
 		'<br />';
-		echo '' .
-			'<label for="show_if_never_commented-yes">' . __('... the user never commented on your site before:', 'wdsi') . '</label> ' .
-			$this->_create_checkbox('show_if_never_commented') .
-		'<br />';
+		if (!$api_key) {
+			echo $this->_create_hint(__('Enter your API key here, then save the settings to continue', 'wdsi'));
+			return false;
+		}
+
+		$mailchimp = new Wdsi_Mailchimp($api_key);
+		$lists = $mailchimp->get_lists();
+		$current = $this->_get_option('mailchimp-default_list');
+
+		echo '<label>' . __('Default subscription list:', 'wdsi') . ' </label>';
+		echo '<div class="wpmudev-ui-select"><select name="wdsi[mailchimp-default_list]">';
+		echo '<option></option>';
+		foreach ($lists as $list) {
+			$selected = $list['id'] == $current ? 'selected="selected"' : '';
+			echo '<option value="' . esc_attr($list['id']) . '" ' . $selected . '>' . $list['name'] . '</option>';
+		}
+		echo '</select></div>';
+
+		// We got this far, we have the API key
+		echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
+		echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
 	}
-*/
 }
