@@ -43,6 +43,33 @@ class Wdsi_Mailchimp {
 	}
 
 	/**
+	 * Remote single list getting.
+	 * @param  string $list_id ID of list to poll
+	 * @return array List data
+	 */
+	public function get_list ($list_id) {
+		$list = $this->_remote_request('lists', array('filters' => array('list_id' => $list_id)));
+
+		return !empty($list['data'])
+			? $list['data']
+			: array()
+		;
+	}
+
+	/**
+	 * Get the count of list subscribers from a particular list.
+	 * @param  string $list_id Id of list to poll
+	 * @return int Number of active subscribers
+	 */
+	public function get_list_subscribers_count ($list_id) {
+		$list = $this->get_list($list_id);
+		return !empty($list['stats']['member_count'])
+			? $list['stats']['member_count']
+			: 0
+		;
+	}
+
+	/**
 	 * Subscribe $email to $list
 	 * @param  string $list  MailChimp list ID
 	 * @param  string $email Valid email address
@@ -98,7 +125,10 @@ class Wdsi_Mailchimp {
 		if (!$args || !is_array($args)) return false;
 		$parsed = array();
 		foreach ($args as $key => $value) {
-			$parsed[] = urlencode($key) . '=' . urlencode($value);
+			if (!is_array($value)) $parsed[] = urlencode($key) . '=' . urlencode($value);
+			else foreach ($value as $vkey => $vvalue) {
+				$parsed[] = "{$key}[{$vkey}]={$vvalue}";
+			}
 		}
 		if (empty($parsed)) return false;
 		return '&' . join('&', $parsed);

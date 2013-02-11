@@ -76,7 +76,7 @@ class Wdsi_AdminPages {
 		echo '<option value=""></option>';
 		foreach ($messages as $message) {
 			$selected = ($message->ID == $msg_id) ? 'selected="selected"' : '';
-			echo "<option value='{$message->ID}'>{$message->post_title}</option>";
+			echo "<option value='{$message->ID}' {$selected}>{$message->post_title}</option>";
 		}
 		echo '</select>';
 	}
@@ -149,12 +149,14 @@ class Wdsi_AdminPages {
 	}
 	
 	function js_print_scripts () {
-		if (isset($_GET['page']) && 'wdsi' == $_GET['page']) {
-			wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
-		}
 		global $post;
-		if (is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type) {
-			wp_enqueue_script('wdsi-admin', WDSI_PLUGIN_URL . '/js/wdsi-admin.js', array('jquery'));
+		if (
+			(isset($_GET['page']) && 'wdsi' == $_GET['page']) 
+			||
+			(is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type)
+		) {
+			wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
+			wp_enqueue_script('wdsi-admin', WDSI_PLUGIN_URL . '/js/wdsi-admin.js', array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog'));
 			wp_localize_script('wdsi-admin', 'l10nWdsi', array(
 				'clear_set' => __('Clear this set', 'wdsi'),
 			));

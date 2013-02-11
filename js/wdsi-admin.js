@@ -36,7 +36,9 @@ function init_services () {
 				init_sortables();
 			});
 		});
-		$enabled.sortable("destroy").sortable({});
+		//$enabled.sortable("destroy").sortable({});
+		if ($enabled.is(".ui-sortable")) $enabled.sortable("destroy");
+		$enabled.sortable({});
 	}
 	init_sortables();
 

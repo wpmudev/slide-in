@@ -3,9 +3,9 @@
 Plugin Name: Slide-In
 Plugin URI: http://premium.wpmudev.org/project/
 Description: Too awesome for a proper description
-Version: 0.7
+Version: 0.8
 Text Domain: wdsi
-Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub),  Ve Bailovity (Incsub)
+Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 Author URI: http://premium.wpmudev.org
 WDP ID: XXX
 

@@ -266,6 +266,7 @@ class Wdsi_AdminFormRenderer {
 		}
 
 		$mailchimp = new Wdsi_Mailchimp($api_key);
+
 		$lists = $mailchimp->get_lists();
 		$current = $this->_get_option('mailchimp-default_list');
 

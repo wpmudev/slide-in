@@ -112,6 +112,10 @@ table.wdsi-position_box, table.wdsi-position_box tr, table.wdsi-position_box td 
 	padding: 24px
 }
 
+.wpmudev-ui label {
+	vertical-align: baseline;
+}
+
 /* ----- Victor's ----- */
 
 
@@ -308,7 +312,7 @@ table.wdsi-position_box, table.wdsi-position_box tr, table.wdsi-position_box td 
 /* mozilla specific */
 @-moz-document url-prefix() {
 	    .wpmudev-ui .position-control .left { left:-22px; top:8px; }
-		.wpmudev-ui .position-control .top { top:-20px; left:5px;  }
+		.wpmudev-ui .position-control .top { top:-20px; left:9px;  }
 		.wpmudev-ui .position-control .right { right:-20px; top:8px; }
-		.wpmudev-ui .position-control .bottom { bottom:-20px; left:5px; }
+		.wpmudev-ui .position-control .bottom { bottom:-20px; left:9px; }
 }

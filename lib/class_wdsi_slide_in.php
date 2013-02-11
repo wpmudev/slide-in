@@ -116,13 +116,14 @@ class Wdsi_SlideIn {
 		global $post;
 		$show_options = get_post_meta($post->ID, 'wdsi_show_if', true);
 		
-		echo '<p>' .
+		echo '<div class="wpmudev-ui">' .
 			'<input type="checkbox" name="not_in_the_pool" id="wdsi-not_in_the_pool" value="1" ' .
 				($post->post_status == self::NOT_IN_POOL_STATUS ? 'checked="checked"' : '') .
 			' />' .
 			'&nbsp;' .
 			'<label for="wdsi-not_in_the_pool">' . __('Not in the pool', 'wdsi') . '</label>' .
-		'</p>';
+			$this->_create_hint(__('Slide-In posts outside the pool can be assigned to your individual posts, overriding the defaults', 'wdsi')) .
+		'</div>';
 
 		echo '<div id="wdsi-conditions-container" class="wpmudev-ui" style="display:none">';
 		
@@ -192,9 +193,10 @@ class Wdsi_SlideIn {
 		$services = wdsi_getval($opts, 'services');
 
 		$override_checked = ($percentage || $timeout || $selector || $services) ? 'checked="checked"' : '';
-		echo '<input type="checkbox" id="wdsi-override_show_if" name="wsdi-appearance_override" value="1" ' . $override_checked . ' /> ' .
+		echo '<p class="wpmudev-ui">' .
+			'<input type="checkbox" id="wdsi-override_show_if" name="wsdi-appearance_override" value="1" ' . $override_checked . ' /> ' .
 			'<label for="wdsi-override_show_if">' . __('Override message display rule', 'wdsi') . '</label>' .
-		'';
+		'</p>';
 
 		echo '<div id="wdsi-show_after_overrides-container" class="wpmudev-ui" style="display:none">';
 
@@ -482,6 +484,7 @@ class Wdsi_SlideIn {
 		$pool = array();
 		$query = new WP_Query(array(
 			'post_type' => self::POST_TYPE,
+			'posts_per_page' => -1,
 		));
 		$pool = $query->posts ? $query->posts : array();
 
@@ -533,5 +536,9 @@ class Wdsi_SlideIn {
 			$this->_create_radiobox($name, $value, $option) .
 			"<div class='wdsi-color wdsi-{$color}' title='{$label}'></div>" .
 		'</label>';
+	}
+
+	function _create_hint ($text) {
+		return "<p><span class='info'></span>{$text}</p>";
 	}
 }
