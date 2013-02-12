@@ -283,4 +283,11 @@ class Wdsi_AdminFormRenderer {
 		echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
 		echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
 	}
+
+	function create_custom_css_box () {
+		$css = esc_textarea(wp_strip_all_tags($this->_get_option('css-custom_styles')));
+		$placeholder = esc_attr(__('Additional CSS styles', 'wdsi'));
+		echo "<textarea class='widefat' rows='8' name='wdsi[css-custom_styles]' placeholder='{$placeholder}'>{$css}</textarea>";
+		echo $this->_create_hint(__('Add the additional CSS rules you wish to include', 'wdsi'));
+	}
 }

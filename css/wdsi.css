@@ -328,6 +328,30 @@ Default color to red
 
 
 /*--------------------------------------------------------------
+A. Titles
+--------------------------------------------------------------*/
+.slidein-minimal-dark.slidein-minimal .slidein-title, 
+.slidein-rounded-dark.slidein-rounded .slidein-title
+{
+	color: #ED1F24;
+}
+.slidein-minimal-dark.slidein-minimal-blue .slidein-title, 
+.slidein-rounded-dark.slidein-rounded-blue .slidein-title
+{
+	color: #7CCEFD;
+}
+.slidein-minimal-dark.slidein-minimal-green .slidein-title, 
+.slidein-rounded-dark.slidein-rounded-green .slidein-title
+{
+	color: #45BF55;
+}
+.slidein-minimal-dark.slidein-minimal-orange .slidein-title, 
+.slidein-rounded-dark.slidein-rounded-orange .slidein-title
+{
+	color: #F27127;
+}
+
+/*--------------------------------------------------------------
 3.0 - Rounded
 --------------------------------------------------------------*/
 

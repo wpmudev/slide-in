@@ -40,6 +40,10 @@ class Wdsi_PublicPages {
 		if (!current_theme_supports('wdsi')) {
 			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css');
 		}
+		$opts = get_option('wdsi');
+		if (empty($opts['css-custom_styles'])) return false;
+		$style = wp_strip_all_tags($opts['css-custom_styles']);
+		echo "<style type='text/css'>{$style}</style>";
 	}
 	
 	function add_message () {

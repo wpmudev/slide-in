@@ -107,6 +107,8 @@ class Wdsi_AdminPages {
 		
 		add_settings_field('wdsi_services', __('Social media services', 'wdsi'), array($form, 'create_services_box'), 'wdsi_options_page', 'wdsi_appearance');
 		add_settings_field('wdsi_mailchimp', __('MailChimp subscriptions', 'wdsi'), array($form, 'create_mailchimp_box'), 'wdsi_options_page', 'wdsi_appearance');
+		
+		add_settings_field('wdsi_css', __('Custom CSS', 'wdsi'), array($form, 'create_custom_css_box'), 'wdsi_options_page', 'wdsi_appearance');
 
 		//add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_appearance');
 
