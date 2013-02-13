@@ -148,7 +148,11 @@ jQuery(document).ready(function($){
 			//console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
 			if ( $(obj).hasClass('slidein-active') ){
 				// Check if the end position is reached
-				if ( current_pos > end_pos || (current_pos >= 0 /* <-- catch imbecile mac behavior */ && current_pos < start_pos) )
+				if ( 
+					(current_pos <= height /* <-- catch imbecile mac behavior */ && current_pos > end_pos)
+					|| 
+					(current_pos >= 0 /* <-- catch imbecile mac behavior */ && current_pos < start_pos) 
+				)
 					slidein_hide(obj);
 			}
 			else {
