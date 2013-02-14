@@ -12,7 +12,15 @@
 		<?php if ("rounded" != $theme) include dirname(__FILE__) . '/box_output-services.php'; ?>
 		<div class="slidein-content">
 			<h1 class="slidein-title slidein-bold slidein-italic"><?php echo $message->post_title;?></h1>
-			<?php echo /*apply_filters('the_content', */$message->post_content/*)*/;?>
+			<?php 
+			if ('related' == $content_type) {
+				include dirname(__FILE__) . '/box_output-content-related_posts.php';
+			} else if ('mailchimp' == $content_type) {
+				include dirname(__FILE__) . '/box_output-content-mailchimp.php';
+			} else {
+				echo $message->post_content;
+			}
+		?>
 		</div>
 		<?php if ("rounded" == $theme) include dirname(__FILE__) . '/box_output-services.php'; ?>
 	</div>

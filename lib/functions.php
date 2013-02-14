@@ -64,7 +64,7 @@ function wdsi_get_url ($post_id=false) {
 /**
  * Attempt to find related posts (by tags)
  */
-function wdsi_get_related_posts ($post_id) {
+function wdsi_get_related_posts ($post_id, $limit=3) {
 	$post_id = (int)$post_id;
 	if (!$post_id) return apply_filters(
 		'wdsi-media-related_posts', array()
@@ -78,12 +78,41 @@ function wdsi_get_related_posts ($post_id) {
 	$query = new WP_Query(array(
 		'post__not_in' => array($post_id),
 		'tag__in' => $raw_tags,
-		'posts_per_page' => 3, // @TODO: expose in settings
+		'posts_per_page' => $limit,
 	));
 	return apply_filters(
 		'wdsi-media-related_posts', 
 		apply_filters('wdsi-media-related_posts-posts', $query->posts)
 	);
+}
+
+/**
+ * Fetching related post excerpt without disturbing the loop.
+ */
+function wdsi_get_related_post_excerpt ($post) {
+	if ($post->post_excerpt) return $post->post_excerpt;
+	$string = $post->post_content;
+	$string = trim(preg_replace('/\r|\n/', ' ', strip_shortcodes(htmlspecialchars(wp_strip_all_tags(strip_shortcodes($string)), ENT_QUOTES))));
+	$string = (preg_match('/.{156,}/um', $string))
+		? preg_replace('/(.{0,152}).*/um', '$1', $string) . '...'
+		: $string
+	;
+	return $string . '&nbsp;' . '<a href="' . get_permalink($post->ID) . '">' . __('Read more', 'wdsi') . '<a>';
+}
+
+function wdsi_get_related_post_thumbnail ($post_id) {
+	$thumb_id = function_exists('get_post_thumbnail_id')
+		? get_post_thumbnail_id($post_id)
+		: false
+	;
+	$image = $thumb_id
+		? wp_get_attachment_image_src($thumb_id, 'thumbnail')
+		: false
+	;
+	return !empty($image[0])
+		? $image[0]
+		: false
+	;
 }
 
 /**

@@ -58,6 +58,39 @@ $(function () {
 })(jQuery);
 */
 jQuery(document).ready(function($){
+
+	// First, if related posts content, fix the width
+	var $root = $("#wdsi-slide_in"),
+		$content = $root.find(".slidein-content"),
+		$related = $root.find(".slidein-columns"),
+		$wrap = $root.find(".slidein-wrap"),
+		$posts = $related.length ? $related.find(".slidein-col") : []
+	;
+	if ($related.length && $posts.length) {
+		var single_width = $posts.outerWidth(),
+			count = $posts.length,
+			window_width = $(window).width(),
+			padding = (count+1.5) * ($posts.outerWidth() - $posts.width()),
+			total_width = (single_width * count) + padding
+		;
+		if (total_width > window_width) {
+			// We are bigger then the screen, ouch! Hide extra posts
+			var delta = Math.ceil((total_width - window_width) / single_width),
+				iter = 0
+			;
+			count -= delta;
+			$($posts.get().reverse()).each(function () {
+				// Hide extra posts
+				if (iter >= delta) return false;
+				$(this).hide();
+				iter++;
+			});
+		} else {
+			// We have less posts then we can - snap width
+			$wrap.width(total_width);
+		}
+	}
+	// Withs fixed, carry on
 	
 	var slidein_obj = [];
 	var legacy = false;

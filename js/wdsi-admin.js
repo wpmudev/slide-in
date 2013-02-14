@@ -1,17 +1,38 @@
 (function ($) {
 
 function toggle_pool_conditions () {
-	var $check = $("#wdsi-not_in_the_pool");
-	var $target = $("#wdsi-conditions-container");
+	var $check = $("#wdsi-not_in_the_pool"),
+		$target = $("#wdsi-conditions-container")
+	;
 	if (!$check.is(":checked")) $target.show();
 	else $target.hide();
 }
 
 function toggle_show_after_overrides () {
-	var $check = $("#wdsi-override_show_if");
-	var $target = $("#wdsi-show_after_overrides-container");
+	var $check = $("#wdsi-override_show_if"),
+		$target = $("#wdsi-show_after_overrides-container")
+	;
 	if ($check.is(":checked")) $target.show();
 	else $target.hide();
+
+}
+
+function toggle_content_types () {
+	var $check = $(':radio[name="wdsi-type[content_type]"]');
+	if (!$check.length) return false;
+
+	var selected = $check.filter(":checked").val(),
+		selected = selected || 'text',
+		$item = $("#wdsi-content_type-options-" + selected),
+		$editor = $(".postarea")
+	;
+	if (!$item.length) return false;
+
+	$('.wdsi-content_type').hide();
+	$item.show();
+
+	if ('related' == selected) $editor.hide();
+	else $editor.show();
 
 }
 
@@ -50,9 +71,10 @@ function init_services () {
 
 $(function () {
 
-init_services();
+	init_services();
 
-
+	$(':radio[name="wdsi-type[content_type]"]').on("change", toggle_content_types);
+	toggle_content_types();
 
 	$("#wdsi-not_in_the_pool").on("change", toggle_pool_conditions);
 	toggle_pool_conditions();

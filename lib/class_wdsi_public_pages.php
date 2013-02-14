@@ -57,6 +57,7 @@ class Wdsi_PublicPages {
 		$message = $this->_wdsi->get_message_data($post);
 		if (!$message) return false;
 		$msg = get_post_meta($message->ID, 'wdsi', true);
+		$type = get_post_meta($message->ID, 'wdsi-type', true);
 		
 		$services = wdsi_getval($msg, 'services');
 		$services = $services ? $services : wdsi_getval($opts, 'services');
@@ -64,6 +65,13 @@ class Wdsi_PublicPages {
 
 		$skip_script = wdsi_getval($opts, 'skip_script');
 		$skip_script = is_array($skip_script) ? $skip_script : array();
+
+		$content_type = wdsi_getval($type, 'content_type', 'text');
+		$related_posts_count = wdsi_getval($type, 'related-posts_count', 3);
+		$related_has_thumbnails = wdsi_getval($type, 'related-has_thumbnails');
+
+		$mailchimp_placeholder = wdsi_getval($type, 'mailchimp-placeholder', 'you@yourdomain.com');
+		$mailchimp_position = wdsi_getval($type, 'mailchimp-position', 'after');
 
 		$position = wdsi_getval($msg, 'position') ? $msg['position'] : wdsi_getval($opts, 'position');
 		$position = $position ? $position : 'left';

@@ -35,10 +35,15 @@ class Wdsi_AdminPages {
 	}
 
 	function json_mailchimp_subscribe () {
-		$api_key = $this->_data->get_option('mailchimp-api_key');
+		$post_id = !empty($_POST['post_id']) ? $_POST['post_id'] : false;
+		$opts = get_post_meta($post_id, 'wdsi-type', true);
+
+		$default_api_key = $this->_data->get_option('mailchimp-api_key');
+		$api_key = wdsi_getval($opts, 'mailchimp-api_key', $default_api_key);
 		if (!$api_key) die('MailChimp not configured');
 
-		$list = $this->_data->get_option('mailchimp-default_list');
+		$default_list = $this->_data->get_option('mailchimp-default_list');
+		$list = wdsi_getval($opts, 'mailchimp-default_list', $default_list);
 		if (!$list) die('Unknown list');
 
 		$email = wdsi_getval($_POST, 'email');
@@ -143,7 +148,7 @@ class Wdsi_AdminPages {
 		}
 		$page = "edit.php?post_type=" . Wdsi_SlideIn::POST_TYPE;
 		$perms = is_multisite() ? 'manage_network_options' : 'manage_options';
-		add_submenu_page($page, __('Settings', 'wdsi'), __('Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
+		add_submenu_page($page, __('Global Settings', 'wdsi'), __('Global Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
 	}
 	
 	function create_admin_page () {

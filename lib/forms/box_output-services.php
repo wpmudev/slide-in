@@ -76,6 +76,7 @@
 								'';	
 							}
 							break;
+						/*
 						case "related_posts":
 							$post_id = is_singular() ? get_the_ID() : false;
 							$posts = wdsi_get_related_posts($post_id);
@@ -90,6 +91,7 @@
 								echo '<h3>' . __('Related posts', 'wdsi') . '</h3><ul class="related_posts">' . $out . '<ul>';
 							}
 							break;
+						*/
 						case "mailchimp":
 							$id = md5(microtime() . rand());
 							$admin_url = admin_url('admin-ajax.php');

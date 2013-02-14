@@ -103,8 +103,16 @@ class Wdsi_SlideIn {
 			'high'
 		);
 		add_meta_box(
+			'wdsi_type',
+			__('Content Type', 'wdsm'),
+			array($this, 'render_content_type'),
+			self::POST_TYPE,
+			'normal',
+			'high'
+		);
+		add_meta_box(
 			'wdsi_show_override',
-			__('Appearance overrides', 'wdsm'),
+			__('Global Settings Override', 'wdsm'),
 			array($this, 'render_show_after_box'),
 			self::POST_TYPE,
 			'normal',
@@ -170,6 +178,101 @@ class Wdsi_SlideIn {
 		echo '</div>';
 	}
 
+	function render_content_type () {
+		global $post;
+		$opts = get_post_meta($post->ID, 'wdsi-type', true);
+		$type = wdsi_getval($opts, 'content_type', 'text');
+
+		echo '<div class="wpmudev-ui">';
+
+		echo '' .
+			'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-text" value="text" ' . ('text' == $type ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-content_type-text">' . __('Text message', 'wdsi') . '</label>' .
+		'<br />';
+		echo '' .
+			'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-mailchimp" value="mailchimp" ' . ('mailchimp' == $type ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-content_type-mailchimp">' . __('MailChimp subscription form', 'wdsi') . '</label>' .
+		'<br />';
+		echo '' .
+			'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-related" value="related" ' . ('related' == $type ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-content_type-related">' . __('Related posts', 'wdsi') . '</label>' .
+		'<br />';
+
+		// --- Message
+		echo '<div id="wdsi-content_type-options-text" class="wdsi-content_type" style="display:none"></div>';
+
+		// --- MailChimp
+		echo '<div id="wdsi-content_type-options-mailchimp" class="wdsi-content_type" style="display:none">';
+		$defaults = get_option('wdsi');
+		$api_key = wdsi_getval($opts, 'mailchimp-api_key', wdsi_getval($defaults, 'mailchimp-api_key'));
+		echo '<label for="wdsi-mailchimp-api_key">' . __('MailChimp API key:') . '</label>' .
+			'<input type="text" class="long" name="wdsi-type[mailchimp-api_key]" id="wdsi-mailchimp-api_key" value="' . esc_attr($api_key) . '" />' .
+		'<br />';
+		if (!$api_key) {
+			echo $this->_create_hint(__('Enter your API key here, then save the post to continue', 'wdsi'));
+			return false;
+		}
+
+		$mailchimp = new Wdsi_Mailchimp($api_key);
+
+		$lists = $mailchimp->get_lists();
+		$current = wdsi_getval($opts, 'mailchimp-default_list', wdsi_getval($defaults, 'mailchimp-default_list'));
+
+		echo '<label>' . __('Default subscription list:', 'wdsi') . ' </label>';
+		echo '<div class="wpmudev-ui-select"><select name="wdsi-type[mailchimp-default_list]">';
+		echo '<option></option>';
+		foreach ($lists as $list) {
+			$selected = $list['id'] == $current ? 'selected="selected"' : '';
+			echo '<option value="' . esc_attr($list['id']) . '" ' . $selected . '>' . $list['name'] . '</option>';
+		}
+		echo '</select></div>';
+
+		// We got this far, we have the API key
+		//echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
+		echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
+
+		$placeholder = wdsi_getval($opts, 'mailchimp-placeholder', 'you@yourdomain.com');
+		echo '<label for="wdsi-mailchimp-placeholder">' . __('Placeholder text:', 'wdsi') . '</label>' .
+			'<input type="text" class="long" name="wdsi-type[mailchimp-placeholder]" id="wdsi-mailchimp-placeholder" value="' . esc_attr($placeholder) . '" />' .
+		'<br />';
+
+		$position = wdsi_getval($opts, 'mailchimp-position', 'after');
+		echo '<label for="wdsi-mailchimp-position-after">' . __('Show my form:', 'wdsi') . '</label><br />';
+		echo '' . 
+			'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-after" value="after" ' . checked('after', $position, false) . ' />' .
+			'<label for="wdsi-mailchimp-position-after">' . __('After the message text', 'wdsi') . '</label>' .
+		'<br />';
+		echo '' . 
+			'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-before" value="before" ' . checked('before', $position, false) . ' />' .
+			'<label for="wdsi-mailchimp-position-before">' . __('Before the message text', 'wdsi') . '</label>' .
+		'<br />';
+		echo '</div>';
+
+		// --- Related posts
+		echo '<div id="wdsi-content_type-options-related" class="wdsi-content_type" style="display:none">';
+		$count = wdsi_getval($opts, 'related-posts_count', 3);
+		echo '<label>' . __('Show this many related posts:', 'wdsi') . ' </label>';
+		echo '<div class="wpmudev-ui-select"><select name="wdsi-type[related-posts_count]">';
+		foreach (range(1, 10) as $item) {
+			$selected = $item == $count ? 'selected="selected"' : '';
+			echo '<option value="' . esc_attr($item) . '" ' . $selected . '>' . $item . '</option>';
+		}
+		echo '</select></div><br />';
+		$has_thumbnails = wdsi_getval($opts, 'related-has_thumbnails');
+		echo '' .
+			'<input type="hidden" name="wdsi-type[related-has_thumbnails]" value="" />' .
+			'<input type="checkbox" id="wdsi-has_thumbnails" name="wdsi-type[related-has_thumbnails]" value="1" ' . ($has_thumbnails ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-has_thumbnails">' . __('Show thumbnails?', 'wdsi') . '</label>' .
+		'<br />';
+		echo '</div>';
+
+		echo '</div>';
+	}
+
 	function render_show_after_box () {
 		global $post;
 		$opts = get_post_meta($post->ID, 'wdsi', true);
@@ -191,11 +294,13 @@ class Wdsi_SlideIn {
 		}
 
 		$services = wdsi_getval($opts, 'services');
+		$pos = wdsi_getval($opts, 'position');
+		$width = wdsi_getval($opts, 'width');
 
-		$override_checked = ($percentage || $timeout || $selector || $services) ? 'checked="checked"' : '';
+		$override_checked = ($percentage || $timeout || $selector || $services || $pos || $width) ? 'checked="checked"' : '';
 		echo '<p class="wpmudev-ui">' .
 			'<input type="checkbox" id="wdsi-override_show_if" name="wsdi-appearance_override" value="1" ' . $override_checked . ' /> ' .
-			'<label for="wdsi-override_show_if">' . __('Override message display rule', 'wdsi') . '</label>' .
+			'<label for="wdsi-override_show_if">' . __('Override Global Settings', 'wdsi') . '</label>' .
 		'</p>';
 
 		echo '<div id="wdsi-show_after_overrides-container" class="wpmudev-ui" style="display:none">';
@@ -267,7 +372,6 @@ class Wdsi_SlideIn {
 		// Position
 		echo '<fieldset id="wdsi-position"><legend>' . __('Position', 'wdsi') . '</legend>';
 		echo '<div  class="wpmudev-ui-element_container">';
-		$pos = wdsi_getval($opts, 'position');
 		echo '<div class="position-control">' .
 			$this->_create_radiobox('position', 'left', $pos) .
 			$this->_create_radiobox('position', 'top', $pos) .
@@ -277,7 +381,6 @@ class Wdsi_SlideIn {
 		echo '</div>';
 
 		echo '<h4>' . __('Width', 'wdsi') . '</h4>';
-		$width = wdsi_getval($opts, 'width');
 		$checked = (!(int)$width || 'full' == 'width') ? 'checked="checked"' : '';
 		echo '' .
 			'<input type="checkbox" name="wdsi[width]" value="full" id="wdsi-full_width" ' . $checked . ' autocomplete="off" />' .
@@ -392,10 +495,12 @@ class Wdsi_SlideIn {
 			if (function_exists('post_indexer_post_insert_update')) {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
+
 			if (!empty($_POST['wsdi-appearance_override'])) update_post_meta($post->ID, "wdsi", wdsi_getval($_POST, "wdsi"));
 			else update_post_meta($post->ID, "wdsi", false);
-		}
 
+		}
+		if (!empty($_POST['wdsi-type']['content_type'])) update_post_meta($post->ID, "wdsi-type", wdsi_getval($_POST, "wdsi-type"));
 	}
 
 	/**
