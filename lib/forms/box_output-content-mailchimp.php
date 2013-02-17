@@ -2,17 +2,17 @@
 $id = md5(microtime() . rand());
 $admin_url = admin_url('admin-ajax.php');
 
-if ('after' == $mailchimp_position) echo $message->post_content;
+if ('after' == $mailchimp_position) echo apply_filters('wdsi_content', $message->post_content);
 
-echo '<form id="wdsi-mailchimp-' . $id . '" class="wdsi-mailchimp-root">';
+echo '<form id="wdsi-mailchimp-' . $id . '" class="wdsi-mailchimp-root wdsi-clearfix">';
 echo '<input type="hidden" class="wdsi-mailchimp-post_id" value="' . esc_attr($message->ID) . '" />';
-echo '<label for="wdsi-mailchimp-' . $id . '-email">' . __('Email:', 'wdsi') . '</label>';
+echo '<label for="wdsi-mailchimp-' . $id . '-email" class="wdsi-mailchimp-label">' . __('Email:', 'wdsi') . '</label>';
 echo '<input type="text" id="wdsi-mailchimp-' . $id . '-email" class="wdsi-mailchimp-email" placeholder="' . esc_attr($mailchimp_placeholder) . '" />';
 echo '<button class="wdsi-mailchimp-subscribe" type="button">' . __('Subscribe', 'wdsi') . '</button>';
 echo '<div class="wdsi-mailchimp-result"></div>';
 echo '</form>';
 
-if ('before' == $mailchimp_position) echo $message->post_content;
+if ('before' == $mailchimp_position) echo apply_filters('wdsi_content', $message->post_content);
 
 ?>
 

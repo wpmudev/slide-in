@@ -61,10 +61,10 @@ jQuery(document).ready(function($){
 
 	// First, if related posts content, fix the width
 	var $root = $("#wdsi-slide_in"),
-		$content = $root.find(".slidein-content"),
-		$related = $root.find(".slidein-columns"),
-		$wrap = $root.find(".slidein-wrap"),
-		$posts = $related.length ? $related.find(".slidein-col") : []
+		$content = $root.find(".wdsi-slide-content"),
+		$related = $root.find(".wdsi-slide-columns"),
+		$wrap = $root.find(".wdsi-slide-wrap"),
+		$posts = $related.length ? $related.find(".wdsi-slide-col") : []
 	;
 	if ($related.length && $posts.length) {
 		var single_width = $posts.outerWidth(),
@@ -108,9 +108,9 @@ jQuery(document).ready(function($){
 	
 	function calculate_vertical_side( obj ){
 		var h = $(obj).innerHeight();
-		if ( $(obj).hasClass('slidein-top') )
+		if ( $(obj).hasClass('wdsi-slide-top') )
 			$(obj).css('top', h*-1).data('slidein-pos', h*-1);
-		else if ( $(obj).hasClass('slidein-bottom') )
+		else if ( $(obj).hasClass('wdsi-slide-bottom') )
 			$(obj).css('bottom', h*-1).data('slidein-pos', h*-1);
 	}
 	
@@ -118,9 +118,9 @@ jQuery(document).ready(function($){
 		var h = $(obj).innerHeight();
 		$(obj).css('margin-top', Math.floor(h/2)*-1);
 		var w = $(obj).innerWidth();
-		if ( $(obj).hasClass('slidein-right') )
+		if ( $(obj).hasClass('wdsi-slide-right') )
 			$(obj).css('right', w*-1).data('slidein-pos', w*-1);
-		else if ( $(obj).hasClass('slidein-left') )
+		else if ( $(obj).hasClass('wdsi-slide-left') )
 			$(obj).css('left', w*-1).data('slidein-pos', w*-1);
 	}
 	
@@ -179,7 +179,7 @@ jQuery(document).ready(function($){
 				end_at += start_at;
 			}
 			//console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
-			if ( $(obj).hasClass('slidein-active') ){
+			if ( $(obj).hasClass('wdsi-slide-active') ){
 				// Check if the end position is reached
 				if ( 
 					(current_pos <= height /* <-- catch imbecile mac behavior */ && current_pos > end_pos)
@@ -208,18 +208,18 @@ jQuery(document).ready(function($){
 		$(obj).data( 'slidein-temp-time-hide', setTimeout(function(){
 			if ( legacy && $(obj).data('slidein-running') != '2' ){
 				$(obj).data('slidein-running', '2');
-				$(obj).removeClass('slidein-active');
-				if ( $(obj).hasClass('slidein-top') )
+				$(obj).removeClass('wdsi-slide-active');
+				if ( $(obj).hasClass('wdsi-slide-top') )
 					$(obj).stop(true).animate({top: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('slidein-left') )
+				else if ( $(obj).hasClass('wdsi-slide-left') )
 					$(obj).stop(true).animate({left: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('slidein-right') )
+				else if ( $(obj).hasClass('wdsi-slide-right') )
 					$(obj).stop(true).animate({right: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('slidein-bottom') )
+				else if ( $(obj).hasClass('wdsi-slide-bottom') )
 					$(obj).stop(true).animate({bottom: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
 			}
 			else {
-				$(obj).removeClass('slidein-active');
+				$(obj).removeClass('wdsi-slide-active');
 			}
 		}, timeout*1000) );
 	}
@@ -234,17 +234,17 @@ jQuery(document).ready(function($){
 			if ( legacy && $(obj).data('slidein-running') != '1' ){
 				$(obj).data('slidein-running', '1');
 				$(obj).css('visibility', 'visible');
-				if ( $(obj).hasClass('slidein-top') )
+				if ( $(obj).hasClass('wdsi-slide-top') )
 					$(obj).stop(true).animate({top: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('slidein-left') )
+				else if ( $(obj).hasClass('wdsi-slide-left') )
 					$(obj).stop(true).animate({left: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('slidein-right') )
+				else if ( $(obj).hasClass('wdsi-slide-right') )
 					$(obj).stop(true).animate({right: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('slidein-bottom') )
+				else if ( $(obj).hasClass('wdsi-slide-bottom') )
 					$(obj).stop(true).animate({bottom: 0}, 1000, legacy_show_after);
 			}
 			else {
-				$(obj).addClass('slidein-active');
+				$(obj).addClass('wdsi-slide-active');
 			}
 		}, timeout*1000) );
 	}
@@ -255,17 +255,17 @@ jQuery(document).ready(function($){
 	}
 	
 	function legacy_show_after() {
-		$(this).addClass('slidein-active');
+		$(this).addClass('wdsi-slide-active');
 		$(this).data('slidein-running', '0');
 	}
 
 	$(window).load(function(){
 		// Initiate
-		$('.slidein').each(function(){
-			if ( $(this).is('.slidein-top, .slidein-bottom') ) {
+		$('.wdsi-slide').each(function(){
+			if ( $(this).is('.wdsi-slide-top, .wdsi-slide-bottom') ) {
 				calculate_vertical_side(this);
 			}
-			if ( $(this).is('.slidein-right, .slidein-left') ) {
+			if ( $(this).is('.wdsi-slide-right, .wdsi-slide-left') ) {
 				calculate_horizontal_side(this);
 			}
 			$(this).data('slidein-running', '0');
@@ -278,9 +278,9 @@ jQuery(document).ready(function($){
 		slidein_scroll();
 	});
 	
-	$('.slidein').on('click', '.slidein-close a', function(e){
+	$('.wdsi-slide').on('click', '.wdsi-slide-close a', function(e){
 		e.preventDefault();
-		var obj = $(this).closest('.slidein');
+		var obj = $(this).closest('.wdsi-slide');
 		slidein_hide(obj, 0, true);
 	});
 	

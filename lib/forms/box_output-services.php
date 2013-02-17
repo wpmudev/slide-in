@@ -3,8 +3,8 @@
 	$url = (is_home() || is_front_page()) ? site_url() : get_permalink();
 	$url = apply_filters('wdsi-url-current_url', ($url ? $url : site_url($wp->request))); // Fix for empty URLs
 ?>
-<div class="slidein-control">
-	<div class="slidein-share clearfix">
+<div class="wdsi-slide-control">
+	<div class="wdsi-slide-share wdsi-clearfix">
 		<?php if ($services) foreach ($services as $key=>$service) { ?>
 			<?php $idx = is_array($service) ? strtolower(preg_replace('/[^-a-zA-Z0-9_]/', '', $service['name'])) : $key;?>
 			<div class="wdsi-item" id="wdsi-service-<?php echo $idx;?>">
@@ -134,5 +134,5 @@ EoMailChimpJs;
 			</div>
 		<?php } ?>
 	</div>
-	<div class="slidein-close"><a href="#">Close</a></div>
+	<div class="wdsi-slide-close"><a href="#">Close</a></div>
 </div>

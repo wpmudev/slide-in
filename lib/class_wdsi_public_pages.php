@@ -29,6 +29,8 @@ class Wdsi_PublicPages {
 		add_action('wp_print_styles', array($this, 'css_load_styles'));
 
 		add_action('loop_end', array($this, 'add_message'));
+		
+		add_filter('wdsi_content', 'wpautop');
 	}
 
 	function js_load_scripts () {
