@@ -1,12 +1,4 @@
-<div id="wdsi-slide_in" 
-	class="wdsi-slide <?php echo $full_width; ?> 
-		wdsi-slide-<?php echo $position; ?> 
-		wdsi-slide-<?php echo $theme; ?> wdsi-slide-<?php echo $theme; ?>-<?php echo $variation; ?> wdsi-slide-<?php echo $theme; ?>-<?php echo $scheme; ?>"
-	data-slidein-start="<?php echo $selector ? $selector : $percentage; ?>" 
-	data-slidein-end="100%" 
-	data-slidein-after="<?php echo $timeout; ?>" 
-	data-slidein-timeout="<?php echo $expire_timeout; ?>"
->
+<div id="wdsi-slide_in" class="wdsi-slide <?php echo $full_width; ?> wdsi-slide-<?php echo $position; ?> wdsi-slide-<?php echo $theme; ?> wdsi-slide-<?php echo $theme; ?>-<?php echo $variation; ?> wdsi-slide-<?php echo $theme; ?>-<?php echo $scheme; ?>" data-slidein-start="<?php echo $selector ? $selector : $percentage; ?>"  data-slidein-end="100%" data-slidein-after="<?php echo $timeout; ?>" data-slidein-timeout="<?php echo $expire_timeout; ?>" >
 
 	<div class="wdsi-slide-wrap" <?php echo $width; ?> >
 		<?php if ("rounded" != $theme) include dirname(__FILE__) . '/box_output-services.php'; ?>
