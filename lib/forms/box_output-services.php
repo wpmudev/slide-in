@@ -92,6 +92,7 @@
 							}
 							break;
 						*/
+						/*
 						case "mailchimp":
 							$id = md5(microtime() . rand());
 							$admin_url = admin_url('admin-ajax.php');
@@ -128,6 +129,7 @@ $(".wdsi-mailchimp-subscribe").click(function () {
 </script>
 EoMailChimpJs;
 							break;
+							*/
 					}
 				}
 				?>
