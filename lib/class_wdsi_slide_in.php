@@ -213,42 +213,41 @@ class Wdsi_SlideIn {
 		'<br />';
 		if (!$api_key) {
 			echo $this->_create_hint(__('Enter your API key here, then save the post to continue', 'wdsi'));
-			return false;
+		} else {
+			$mailchimp = new Wdsi_Mailchimp($api_key);
+
+			$lists = $mailchimp->get_lists();
+			$current = wdsi_getval($opts, 'mailchimp-default_list', wdsi_getval($defaults, 'mailchimp-default_list'));
+
+			echo '<label>' . __('Default subscription list:', 'wdsi') . ' </label>';
+			echo '<div class="wpmudev-ui-select"><select name="wdsi-type[mailchimp-default_list]">';
+			echo '<option></option>';
+			foreach ($lists as $list) {
+				$selected = $list['id'] == $current ? 'selected="selected"' : '';
+				echo '<option value="' . esc_attr($list['id']) . '" ' . $selected . '>' . $list['name'] . '</option>';
+			}
+			echo '</select></div>';
+
+			// We got this far, we have the API key
+			//echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
+			echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
+
+			$placeholder = wdsi_getval($opts, 'mailchimp-placeholder', 'you@yourdomain.com');
+			echo '<label for="wdsi-mailchimp-placeholder">' . __('Placeholder text:', 'wdsi') . '</label>' .
+				'<input type="text" class="long" name="wdsi-type[mailchimp-placeholder]" id="wdsi-mailchimp-placeholder" value="' . esc_attr($placeholder) . '" />' .
+			'<br />';
+
+			$position = wdsi_getval($opts, 'mailchimp-position', 'after');
+			echo '<label for="wdsi-mailchimp-position-after">' . __('Show my form:', 'wdsi') . '</label><br />';
+			echo '' . 
+				'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-after" value="after" ' . checked('after', $position, false) . ' />' .
+				'<label for="wdsi-mailchimp-position-after">' . __('After the message text', 'wdsi') . '</label>' .
+			'<br />';
+			echo '' . 
+				'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-before" value="before" ' . checked('before', $position, false) . ' />' .
+				'<label for="wdsi-mailchimp-position-before">' . __('Before the message text', 'wdsi') . '</label>' .
+			'<br />';
 		}
-
-		$mailchimp = new Wdsi_Mailchimp($api_key);
-
-		$lists = $mailchimp->get_lists();
-		$current = wdsi_getval($opts, 'mailchimp-default_list', wdsi_getval($defaults, 'mailchimp-default_list'));
-
-		echo '<label>' . __('Default subscription list:', 'wdsi') . ' </label>';
-		echo '<div class="wpmudev-ui-select"><select name="wdsi-type[mailchimp-default_list]">';
-		echo '<option></option>';
-		foreach ($lists as $list) {
-			$selected = $list['id'] == $current ? 'selected="selected"' : '';
-			echo '<option value="' . esc_attr($list['id']) . '" ' . $selected . '>' . $list['name'] . '</option>';
-		}
-		echo '</select></div>';
-
-		// We got this far, we have the API key
-		//echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
-		echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
-
-		$placeholder = wdsi_getval($opts, 'mailchimp-placeholder', 'you@yourdomain.com');
-		echo '<label for="wdsi-mailchimp-placeholder">' . __('Placeholder text:', 'wdsi') . '</label>' .
-			'<input type="text" class="long" name="wdsi-type[mailchimp-placeholder]" id="wdsi-mailchimp-placeholder" value="' . esc_attr($placeholder) . '" />' .
-		'<br />';
-
-		$position = wdsi_getval($opts, 'mailchimp-position', 'after');
-		echo '<label for="wdsi-mailchimp-position-after">' . __('Show my form:', 'wdsi') . '</label><br />';
-		echo '' . 
-			'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-after" value="after" ' . checked('after', $position, false) . ' />' .
-			'<label for="wdsi-mailchimp-position-after">' . __('After the message text', 'wdsi') . '</label>' .
-		'<br />';
-		echo '' . 
-			'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-before" value="before" ' . checked('before', $position, false) . ' />' .
-			'<label for="wdsi-mailchimp-position-before">' . __('Before the message text', 'wdsi') . '</label>' .
-		'<br />';
 		echo '</div>';
 
 		// --- Related posts
@@ -481,7 +480,7 @@ class Wdsi_SlideIn {
 	 */
 	function save_meta () {
 		global $post;
-		if (self::POST_TYPE != $post->post_type) return false;
+		if ($post && self::POST_TYPE != $post->post_type) return false;
 		if (wdsi_getval($_POST, 'show_if')) {
 			// If we have Post Indexer present, remove the post save action for the moment.
 			if (function_exists('post_indexer_post_insert_update')) {
