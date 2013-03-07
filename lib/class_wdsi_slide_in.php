@@ -442,8 +442,8 @@ class Wdsi_SlideIn {
 			'reddit' => 'Reddit',
 			'linkedin' => 'LinkedIn',
 			'pinterest' => 'Pinterest',
-			'related_posts' => __('Related posts', 'wdsi'),
-			'mailchimp' => __('MailChimp subscription form', 'wdsi'),
+			//'related_posts' => __('Related posts', 'wdsi'),
+			//'mailchimp' => __('MailChimp subscription form', 'wdsi'),
 		);
 		if (function_exists('wdpv_get_vote_up_ms')) $services['post_voting'] = 'Post Voting'; 
 

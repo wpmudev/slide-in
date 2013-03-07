@@ -31,7 +31,7 @@ class Wdsi_PublicPages {
 		add_action('loop_end', array($this, 'add_message'));
 		
 		add_filter('wdsi_content', 'wpautop');
-	}
+	}	
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
