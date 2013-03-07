@@ -20,7 +20,7 @@ class Wdsi_AdminFormRenderer {
 	}
 
 	function _create_hint ($text) {
-		return "<p><span class='info'></span>{$text}</p>";
+		return "<p class='info'><span class='info'></span>{$text}</p>";
 	}
 
 	function _create_radiobox ($name, $value, $value_as_class=false) {

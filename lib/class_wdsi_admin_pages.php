@@ -165,7 +165,7 @@ class Wdsi_AdminPages {
 			wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
 			wp_enqueue_script('wdsi-admin', WDSI_PLUGIN_URL . '/js/wdsi-admin.js', array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog'));
 			wp_localize_script('wdsi-admin', 'l10nWdsi', array(
-				'clear_set' => __('Clear this set', 'wdsi'),
+				'clear_set' => __('<strong>&times;</strong> clear this set', 'wdsi'),
 			));
 		}
 	}

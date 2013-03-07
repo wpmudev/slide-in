@@ -135,7 +135,7 @@ class Wdsi_SlideIn {
 
 		echo '<div id="wdsi-conditions-container" class="wpmudev-ui" style="display:none">';
 		
-		echo '<h4>' . __('Show message if...', 'wdsi') . '</h4>';
+		echo '<h4>' . __('Show message if:', 'wdsi') . '</h4>';
 
 		$show_if = wdsi_getval($show_options, 'user');
 		echo '<fieldset id="wdsi-user_rules"><legend>' . __('User rules', 'wdsi') . '</legend>';
@@ -143,19 +143,19 @@ class Wdsi_SlideIn {
 			'<input type="radio" name="show_if[user]" value="show_if_logged_in" id="show_if_logged_in-yes" ' .
 				('show_if_logged_in' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_logged_in-yes">' . __('... the user is logged in', 'wdsi') . '</label>' .
+			' <label for="show_if_logged_in-yes">' . __('the user is logged in', 'wdsi') . '</label>' .
 		'<br />';
 		echo '' .
 			'<input type="radio" name="show_if[user]" value="show_if_not_logged_in" id="show_if_not_logged_in-yes" ' .
 				('show_if_not_logged_in' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_not_logged_in-yes">' . __('... the user is <b>NOT</b> logged in', 'wdsi') . '</label> ' .
+			' <label for="show_if_not_logged_in-yes">' . __('the user is <b>NOT</b> logged in', 'wdsi') . '</label> ' .
 		'<br />';
 		echo '' .
 			'<input type="radio" name="show_if[user]" value="show_if_never_commented" id="show_if_never_commented-yes" ' .
 				('show_if_never_commented' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_never_commented-yes">' . __('... the user never commented on your site before', 'wdsi') . '</label> ' .
+			' <label for="show_if_never_commented-yes">' . __('the user never commented on your site before', 'wdsi') . '</label> ' .
 		'<br />';
 		echo '</fieldset>';
 
@@ -165,13 +165,13 @@ class Wdsi_SlideIn {
 			'<input type="radio" name="show_if[page]" value="show_if_singular" id="show_if_singular-yes" ' .
 				('show_if_singular' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_singular-yes">' . __('... on singular pages', 'wdsi') . '</label>' .
+			' <label for="show_if_singular-yes">' . __('on singular pages', 'wdsi') . '</label>' .
 		'<br />';
 		echo '' .
 			'<input type="radio" name="show_if[page]" value="show_if_not_singular" id="show_if_not_singular-yes" ' .
 				('show_if_not_singular' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_not_singular-yes">' . __('... on archive pages', 'wdsi') . '</label>' .
+			' <label for="show_if_not_singular-yes">' . __('on archive pages', 'wdsi') . '</label>' .
 		'<br />';
 		echo '</fieldset>';
 		
@@ -643,6 +643,6 @@ class Wdsi_SlideIn {
 	}
 
 	function _create_hint ($text) {
-		return "<p><span class='info'></span>{$text}</p>";
+		return "<p class='info'><span class='info'></span>{$text}</p>";
 	}
 }
