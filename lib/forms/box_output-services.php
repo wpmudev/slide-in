@@ -14,7 +14,7 @@
 					switch ($key) {
 						case "google":
 							if (!in_array('google', $skip_script)) echo '<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>';
-							echo '<g:plusone size="small"></g:plusone>';
+							echo '<g:plusone size="medium"></g:plusone>';
 							break;
 						case "facebook":
 							echo '<iframe src="http://www.facebook.com/plugins/like.php?href=' .
