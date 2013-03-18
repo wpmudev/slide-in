@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Slide-In
-Plugin URI: http://premium.wpmudev.org/project/
+Plugin URI: http://premium.wpmudev.org/project/slide-in/
 Description: Too awesome for a proper description
-Version: 0.8
+Version: 1.0
 Text Domain: wdsi
 Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 Author URI: http://premium.wpmudev.org
-WDP ID: XXX
+WDP ID: 694503
 
 Copyright 2009-2011 Incsub (http://incsub.com)
 
