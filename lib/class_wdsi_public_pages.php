@@ -35,12 +35,12 @@ class Wdsi_PublicPages {
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'));
+		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.0.1');
 	}
 	
 	function css_load_styles () {
 		if (!current_theme_supports('wdsi')) {
-			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css');
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.0.1');
 		}
 		$opts = get_option('wdsi');
 		if (empty($opts['css-custom_styles'])) return false;

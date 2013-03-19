@@ -30,8 +30,18 @@ function mailchimp_subscribe (root) {
 		'post_id': $post_id.val(),
 		"email": $email.val()
 	}, function (data) {
-		$result.html(data);
-	});
+		var is_error = data && data.is_error && parseInt(data.is_error, 10), 
+			msg = (data && data.message ? data.message : "<?php echo esc_js(__('Error', 'wdsi')); ?>"),
+			error_class = 'wdsi-mailchimp_error',
+			success_class = 'wdsi-mailchimp_success', 
+			wrapper = (is_error ? error_class : success_class)
+		;
+		$result
+			.removeClass(error_class).removeClass(success_class)
+			.addClass(wrapper)
+			.html(msg)
+		;
+	}, 'json');
 	return false;
 }
 

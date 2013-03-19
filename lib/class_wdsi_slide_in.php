@@ -247,6 +247,14 @@ class Wdsi_SlideIn {
 				'<input type="radio" name="wdsi-type[mailchimp-position]" id="wdsi-mailchimp-position-before" value="before" ' . checked('before', $position, false) . ' />' .
 				'<label for="wdsi-mailchimp-position-before">' . __('Before the message text', 'wdsi') . '</label>' .
 			'<br />';
+
+			$subscription_message = wdsi_getval($opts, 'mailchimp-subscription_message', wdsi_getval($defaults, 'mailchimp-subscription_message'));
+			$subscription_message = $subscription_message ? $subscription_message : __('All good, thank you!', 'wdsi');
+			$subscription_message = wp_strip_all_tags($subscription_message);
+			echo '<br />' .
+				'<label for="wdsi-mailchimp-subscription_message">' . __('Successful subscription message:', 'wdsi') . '</label>&nbsp;' .
+				'<input type="text" class="long" name="wdsi-type[mailchimp-subscription_message]" id="wdsi-mailchimp-subscription_message" value="' . esc_attr($subscription_message) . '" />' .
+			'';
 		}
 		echo '</div>';
 

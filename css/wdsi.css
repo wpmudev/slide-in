@@ -21,7 +21,7 @@ Slide In plugin stylesheet
 --------------------------------------------------------------*/
 .wdsi-slide {
 	position: fixed;
-	top: 0;
+	top: -1000000000;
 	left: 0;
 	width: 100%;
 	visibility: hidden;
@@ -985,4 +985,16 @@ A. Titles
 
 .wdsi-slide-col-thumb h2 {
 	clear: none;
+}
+
+.wdsi-mailchimp-result {
+    padding-left: 10px;
+    clear: both;
+    font-style: italic;
+}
+.wdsi-mailchimp-result.wdsi-mailchimp_error {
+	color: #FF3333;
+}
+.wdsi-mailchimp-result.wdsi-mailchimp_success {
+	color: #1DB230;
 }

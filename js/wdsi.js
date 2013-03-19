@@ -1,62 +1,3 @@
-/*
-(function ($) {
-	
-function show_message () {
-	var $msg = $("#wdsi-slide_in");
-	if ($msg.is(":visible")) return false;
-	
-	$msg.animate({"width": "show"}, 500);
-	return false;
-}
-
-function hide_message () {
-	var $msg = $("#wdsi-slide_in");
-	if (!$msg.is(":visible")) return false;
-	
-	$msg.animate({"width": "hide"}, 500);
-	return false;
-}
-
-function check_page_scroll_position () {
-	var top = $(window).scrollTop() + ($(window).height()/2);
-	var height = $("body").height();
-	
-	var percent = (top / height) * 100;
-	if (percent > parseInt(_wdsi_data.show_after.rule)) show_message();
-	else hide_message();
-}
-
-function check_scroll_past_selector () {
-	$element = $("#" + _wdsi_data.show_after.rule);
-	if (!$element.length) return false;
-
-	if ($(window).scrollTop() > $element.offset().top) show_message();
-	else hide_message();
-};
-
-// Init
-$(function () {
-	switch (_wdsi_data.show_after.condition) {
-		case "selector":
-			$(window).on("scroll", check_scroll_past_selector);
-			check_scroll_past_selector();
-			break;
-		case "timeout":
-			$(window).on("load", function () {
-				setTimeout(show_message, (parseInt(_wdsi_data.show_after.rule) * 1000));
-			});
-			break;
-		case "percentage":
-		default:
-			$(window).on("scroll", check_page_scroll_position);
-			check_page_scroll_position();
-			break;
-	}
-	$("#wdsi-close_box").on("click", hide_message);
-});
-
-})(jQuery);
-*/
 jQuery(document).ready(function($){
 
 	// First, if related posts content, fix the width
@@ -91,10 +32,10 @@ jQuery(document).ready(function($){
 		}
 	}
 	// Withs fixed, carry on
-	
+
 	var slidein_obj = [];
 	var legacy = false;
-	
+
 	function css_support( property )
 	{
 		var div = document.createElement('div');
@@ -105,7 +46,7 @@ jQuery(document).ready(function($){
 		}
 		return false;
 	}
-	
+
 	function calculate_vertical_side( obj ){
 		var h = $(obj).innerHeight();
 		if ( $(obj).hasClass('wdsi-slide-top') )
@@ -113,7 +54,7 @@ jQuery(document).ready(function($){
 		else if ( $(obj).hasClass('wdsi-slide-bottom') )
 			$(obj).css('bottom', h*-1).data('slidein-pos', h*-1);
 	}
-	
+
 	function calculate_horizontal_side( obj ){
 		var h = $(obj).innerHeight();
 		$(obj).css('margin-top', Math.floor(h/2)*-1);
@@ -123,7 +64,7 @@ jQuery(document).ready(function($){
 		else if ( $(obj).hasClass('wdsi-slide-left') )
 			$(obj).css('left', w*-1).data('slidein-pos', w*-1);
 	}
-	
+
 	function slidein_scroll(){
 		if ( slidein_obj.length == 0 )
 			return; // No slide in element exists
@@ -198,7 +139,7 @@ jQuery(document).ready(function($){
 			}
 		}
 	}
-	
+
 	function slidein_hide(obj, timeout, closed) {
 		if ( ! timeout )
 			timeout = 0;
@@ -223,7 +164,7 @@ jQuery(document).ready(function($){
 			}
 		}, timeout*1000) );
 	}
-	
+
 	function slidein_show(obj, timeout) {
 		if ( $(obj).data('slidein-closed') == '1' )
 			return;
@@ -248,12 +189,12 @@ jQuery(document).ready(function($){
 			}
 		}, timeout*1000) );
 	}
-	
+
 	function legacy_hide_after() {
 		$(this).css('visibility', 'hidden');
 		$(this).data('slidein-running', '0');
 	}
-	
+
 	function legacy_show_after() {
 		$(this).addClass('wdsi-slide-active');
 		$(this).data('slidein-running', '0');
@@ -262,13 +203,15 @@ jQuery(document).ready(function($){
 	$(window).load(function(){
 		// Initiate
 		$('.wdsi-slide').each(function(){
-			if ( $(this).is('.wdsi-slide-top, .wdsi-slide-bottom') ) {
+			var $me = $(this);
+			$me.css("display", '');
+			if ( $me.is('.wdsi-slide-top, .wdsi-slide-bottom') ) {
 				calculate_vertical_side(this);
 			}
-			if ( $(this).is('.wdsi-slide-right, .wdsi-slide-left') ) {
+			if ( $me.is('.wdsi-slide-right, .wdsi-slide-left') ) {
 				calculate_horizontal_side(this);
 			}
-			$(this).data('slidein-running', '0');
+			$me.data('slidein-running', '0');
 			slidein_obj.push(this);
 		});
 		if ( ! css_support('transition') )
@@ -277,11 +220,11 @@ jQuery(document).ready(function($){
 		// Call the slidein_scroll first here, so we don't need to wait for scroll event before it show the slide in :))
 		slidein_scroll();
 	});
-	
+
 	$('.wdsi-slide').on('click', '.wdsi-slide-close a', function(e){
 		e.preventDefault();
 		var obj = $(this).closest('.wdsi-slide');
 		slidein_hide(obj, 0, true);
 	});
-	
+
 });

@@ -282,6 +282,14 @@ class Wdsi_AdminFormRenderer {
 		// We got this far, we have the API key
 		echo '&nbsp;<a href="#mcls-refresh" id="wdcp-mcls-refresh">' . __('Refresh', 'wdsi') . '</a>';
 		echo $this->_create_hint(__('Select a default list you wish to subscribe your visitors to.', 'wdsi'));
+
+		$subscription_message = $this->_get_option('mailchimp-subscription_message');
+		$subscription_message = $subscription_message ? $subscription_message : __('All good, thank you!', 'wdsi');
+		$subscription_message = wp_strip_all_tags($subscription_message);
+		echo '<br />' .
+			'<label for="wdsi-mailchimp-subscription_message">' . __('Successful subscription message:', 'wdsi') . '</label>&nbsp;' .
+			'<input type="text" class="long" name="wdsi[mailchimp-subscription_message]" id="wdsi-mailchimp-subscription_message" value="' . esc_attr($subscription_message) . '" />' .
+		'';
 	}
 
 	function create_custom_css_box () {

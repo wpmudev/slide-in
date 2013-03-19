@@ -35,24 +35,57 @@ class Wdsi_AdminPages {
 	}
 
 	function json_mailchimp_subscribe () {
+		$is_error = 1;
+
 		$post_id = !empty($_POST['post_id']) ? $_POST['post_id'] : false;
 		$opts = get_post_meta($post_id, 'wdsi-type', true);
 
 		$default_api_key = $this->_data->get_option('mailchimp-api_key');
 		$api_key = wdsi_getval($opts, 'mailchimp-api_key', $default_api_key);
-		if (!$api_key) die('MailChimp not configured');
+		if (!$api_key) die(json_encode(array(
+			'is_error' => $is_error,
+			'message' => __('MailChimp not configured', 'wdsi'),
+		)));
 
 		$default_list = $this->_data->get_option('mailchimp-default_list');
 		$list = wdsi_getval($opts, 'mailchimp-default_list', $default_list);
-		if (!$list) die('Unknown list');
+		if (!$list) die(json_encode(array(
+			'is_error' => $is_error,
+			'message' => __('Unknown list', 'wdsi'),
+		)));
 
 		$email = wdsi_getval($_POST, 'email');
-		if (!is_email($email)) die('Invalid email');
+		if (!is_email($email)) die(json_encode(array(
+			'is_error' => $is_error,
+			'message' => __('Invalid email', 'wdsi'),
+		)));
 
 		$mailchimp = new Wdsi_Mailchimp($api_key);
 		$result = $mailchimp->subscribe_to($list, $email);
 
-		//if ($result)
+		if (true === $result) {
+			$global_message = $this->_data->get_option('mailchimp-subscription_message');
+			$subscription_message = wdsi_getval($opts, 'mailchimp-subscription_message', $global_message);
+			$subscription_message = $subscription_message ? $subscription_message : __('All good, thank you!', 'wdsi');
+			$subscription_message = wp_strip_all_tags($subscription_message);
+			die(json_encode(array(
+				'is_error' => 0,
+				'message' => $subscription_message,
+			)));
+		} else if (is_array($result) && isset($result['error'])) {
+			die(json_encode(array(
+				'is_error' => $is_error,
+				'message' => $result['error'],
+			)));
+		} else if (is_string($result)) {
+			die(json_encode(array(
+				'is_error' => $is_error,
+				'message' => $result,
+			)));
+		} else die(json_encode(array(
+				'is_error' => $is_error,
+				'message' => __('Error', 'wdsi'),
+			)));
 		die;
 	}
 
