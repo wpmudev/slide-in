@@ -200,6 +200,28 @@ jQuery(document).ready(function($){
 		$(this).data('slidein-running', '0');
 	}
 
+	// if width defined in pixels on front-end, reset it when widnow width < slider and rely on 100%
+	function responsify( obj ) {
+		if ( obj.find('.wdsi-slide-wrap').attr('style').indexOf('width') >= 0 ) {
+			var $el = obj.find('.wdsi-slide-wrap'),
+				slidewidth = parseInt( $el.attr('style').replace(/\D/g,'') ),
+				winwidth = $(window).width();
+			
+			if ( winwidth <= slidewidth ) {
+				$el.removeAttr('style');
+			}
+
+			$(window).resize(function() {
+  				if ( $(window).width() <= slidewidth ) {
+					$el.removeAttr('style');
+				} else if ( !$el.attr('style') ) {
+					$el.width( slidewidth );
+					console.log( slidewidth );
+				}
+			});
+		}
+	}
+
 	$(window).load(function(){
 		// Initiate
 		$('.wdsi-slide').each(function(){
@@ -213,12 +235,13 @@ jQuery(document).ready(function($){
 			}
 			$me.data('slidein-running', '0');
 			slidein_obj.push(this);
+			responsify( $me );
 		});
 		if ( ! css_support('transition') )
 			legacy = true;
 		$(window).scroll(slidein_scroll);
 		// Call the slidein_scroll first here, so we don't need to wait for scroll event before it show the slide in :))
-		slidein_scroll();
+		slidein_scroll();	
 	});
 
 	$('.wdsi-slide').on('click', '.wdsi-slide-close a', function(e){
