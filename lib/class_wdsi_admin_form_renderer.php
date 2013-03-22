@@ -298,4 +298,13 @@ class Wdsi_AdminFormRenderer {
 		echo "<textarea class='widefat' rows='8' name='wdsi[css-custom_styles]' placeholder='{$placeholder}'>{$css}</textarea>";
 		echo $this->_create_hint(__('Add the additional CSS rules you wish to include', 'wdsi'));
 	}
+
+	function create_advanced_box () {
+		echo '' .
+			'<input type="hidden" name="wdsi[allow_shortcodes]" value="" />' .
+			'<input type="checkbox" name="wdsi[allow_shortcodes]" id="wdsi-allow_shortcodes" value="1" ' . ($this->_get_option('allow_shortcodes') ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-allow_shortcodes">' . __('Allow shortcodes', 'wdsi') . '</label>' . 
+		'';
+	}
 }

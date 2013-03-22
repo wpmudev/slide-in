@@ -9,9 +9,7 @@ class Wdsi_PublicPages {
 
 	private function __construct () {
 		$this->_wdsi = Wdsi_SlideIn::get_instance();
-		/*
 		$this->_data = new Wdsi_Options;
-		*/
 	}
 
 	/**
@@ -31,6 +29,9 @@ class Wdsi_PublicPages {
 		add_action('loop_end', array($this, 'add_message'));
 		
 		add_filter('wdsi_content', 'wpautop');
+		if ($this->_data->get_option('allow_shortcodes')) {
+			add_filter('wdsi_content', 'do_shortcode');
+		}
 	}	
 
 	function js_load_scripts () {
@@ -127,29 +128,4 @@ class Wdsi_PublicPages {
 		//$this->_js_set_up_globals($message->ID);
 		define ('WDSI_BOX_RENDERED', true);
 	}
-/*
-	private function _js_set_up_globals ($post_id) {
-		if (defined('WDSI_BOX_RENDERED')) return false;
-		
-		$opts = get_option('wdsi');
-		$msg = get_post_meta($post_id, 'wdsi', true);
-
-		$rule = @$msg['show_after-rule'] ? $msg['show_after-rule'] : @$opts['show_after-rule'];
-		$condition = @$msg['show_after-condition'] ? $msg['show_after-condition'] : @$opts['show_after-condition'];
-
-		printf(
-			'<script type="text/javascript">var _wdsi_data={
-				"root_url": "%s", 
-				"ajax_url": "%s",
-				"show_after": {
-					"rule": "%s",
-					"condition": "%s"
-				}
-			};</script>',
-			WDSI_PLUGIN_URL, admin_url('admin-ajax.php'),
-			$rule,
-			$condition
-		);
-	}
-*/
 }

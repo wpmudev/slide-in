@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Slide-In\n"
-"POT-Creation-Date: 2013-03-19 16:16+0100\n"
-"PO-Revision-Date: 2013-03-19 16:17+0100\n"
+"POT-Creation-Date: 2013-03-22 15:08+0100\n"
+"PO-Revision-Date: 2013-03-22 15:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -129,6 +129,10 @@ msgstr ""
 msgid "Add the additional CSS rules you wish to include"
 msgstr ""
 
+#: lib/class_wdsi_admin_form_renderer.php:307
+msgid "Allow shortcodes"
+msgstr ""
+
 #: lib/class_wdsi_admin_pages.php:47
 msgid "MailChimp not configured"
 msgstr ""
@@ -196,11 +200,15 @@ msgstr ""
 msgid "Custom CSS"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:184 lib/forms/plugin_settings.php:3
+#: lib/class_wdsi_admin_pages.php:151
+msgid "Advanced"
+msgstr ""
+
+#: lib/class_wdsi_admin_pages.php:180 lib/forms/plugin_settings.php:3
 msgid "Global Settings"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:201
+#: lib/class_wdsi_admin_pages.php:197
 msgid "<strong>&times;</strong> clear this set"
 msgstr ""
 

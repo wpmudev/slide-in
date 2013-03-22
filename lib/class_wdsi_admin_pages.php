@@ -148,11 +148,7 @@ class Wdsi_AdminPages {
 		
 		add_settings_field('wdsi_css', __('Custom CSS', 'wdsi'), array($form, 'create_custom_css_box'), 'wdsi_options_page', 'wdsi_appearance');
 
-		//add_settings_field('wdsi_custom_service', __('Add new Custom Service', 'wdsi'), array($form, 'create_custom_service_box'), 'wdsi_options_page', 'wdsi_appearance');
-
-		//add_settings_section('wdsi_conditions', __('Conditions', 'wdsi'), create_function('', ''), 'wdsi_options_page');
-		//add_settings_field('wdsi_postitive_conditions', __('Show message box if...', 'wdsi'), array($form, 'create_conditions_box'), 'wdsi_options_page', 'wdsi_conditions');
-		
+		add_settings_field('wdsi_advanced', __('Advanced', 'wdsi'), array($form, 'create_advanced_box'), 'wdsi_options_page', 'wdsi_appearance');
 	}
 	
 	function create_admin_menu_entry () {
