@@ -5,6 +5,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.1 - 2013-03-27
+----------------------------------------------------------------------
+- Allowing slide-in metabox to all public post types.
+- Updated social services and options.
+- Added sidebar slide-in content type.
+- Closed message reappearing behaviors.
+
 1.0.2 - 2013-03-22
 ----------------------------------------------------------------------
 - Added optional shortcode processing.

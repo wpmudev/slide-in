@@ -30,7 +30,7 @@ Slide In plugin stylesheet
 	-ms-transition: all 1s;
 	-o-transition: all 1s;
 	transition: all 1s;
-	z-index: 100000;
+	z-index: 999999;
 }
 .wdsi-slide-active {
 	visibility: visible;

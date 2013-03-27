@@ -26,7 +26,8 @@ class Wdsi_AdminFormRenderer {
 	function _create_radiobox ($name, $value, $value_as_class=false) {
 		$opt = $this->_get_option($name);
 		$checked = (@$opt == $value) ? true : false;
-		$class = $value_as_class ? "class='{$value}'" : '';
+		$name = esc_attr($name);
+		$class = $value_as_class ? "class='{$name} {$value}'" : '';
 		return "<input type='radio' name='wdsi[{$name}]' {$class} id='{$name}-{$value}' value='{$value}' " . ($checked ? 'checked="checked" ' : '') . " /> ";
 	}
 
@@ -120,6 +121,52 @@ class Wdsi_AdminFormRenderer {
 		}
 		echo "</select></div>";
 	}
+
+	function create_closing_box () {
+		echo $this->_create_hint(__('When a visitor closes a slide-in message, I want to', 'wdsi'));
+		echo '<div class="wdsi-on_hide-condition">' .
+			$this->_create_radiobox('on_hide', '', true) .
+			'<label for="on_hide-">' . __('Keep showing messages to the visitor', 'wdsi') . '</label>' .
+		'</div>';
+		echo '<div class="wdsi-on_hide-condition">' .
+			$this->_create_radiobox('on_hide', 'page', true) .
+			'<label for="on_hide-page">' . __('Hide messages on that page for the visitor', 'wdsi') . '</label>' .
+		'</div>';
+		echo '<div class="wdsi-on_hide-condition">' .
+			$this->_create_radiobox('on_hide', 'all', true) .
+			'<label for="on_hide-all">' . __('Hide all messages for the visitor', 'wdsi') . '</label>' .
+		'</div>';
+
+		$_times = array_combine(range(1,59), range(1,59));
+		$_units = array(
+			'hours' => __('Hours', 'wdsi'),
+			'days' => __('Days', 'wdsi'),
+			'weeks' => __('Weeks', 'wdsi'),
+		);
+		$on_hide = $this->_get_option('on_hide');
+		$enabled = !empty($on_hide);
+		$reshow_after_time = $enabled ? $this->_get_option('reshow_after-time') : false;
+		$reshow_after_units = $enabled ? $this->_get_option('reshow_after-units') : false;
+
+		$time_box = "<div class='wpmudev-ui-select'><select name='wdsi[reshow_after-time]'><option value=''></option>";
+		foreach ($_times as $_time) {
+			$selected = $_time == $reshow_after_time ? 'selected="selected"' : '';
+			$time_box .= "<option value='{$_time}' {$selected}>{$_time}</option>";
+		}
+		$time_box .= "</select></div>";
+
+		$unit_box = "<div class='wpmudev-ui-select'><select name='wdsi[reshow_after-units]'><option value=''></option>";
+		foreach ($_units as $key => $_unit) {
+			$selected = $key == $reshow_after_units ? 'selected="selected"' : '';
+			$unit_box .= "<option value='{$key}' {$selected}>{$_unit}</option>";
+		}
+		$unit_box .= "</select></div>";
+
+		echo '<div class="wdsi-reshow_after" ' . ($enabled ? '' : 'style="display:none"') . ' >' .
+			'<label for="">' . __('Show the messages again after:', 'wdsi') . '</label><br />' .
+			"{$time_box} {$unit_box}" .
+		'</div>';
+	}
 	
 	function create_position_box () {
 		echo '<div class="position-control">' .
@@ -196,6 +243,12 @@ class Wdsi_AdminFormRenderer {
 			'google',
 			'twitter',
 			'linkedin',
+			'pinterest',
+		);
+		$countable = array(
+			'google',
+			'twitter',
+			'pinterest',
 		);
 
 		$load = $this->_get_option('services');
@@ -205,6 +258,9 @@ class Wdsi_AdminFormRenderer {
 
 		$skip = $this->_get_option('skip_script');
 		$skip = is_array($skip) ? $skip : array();
+
+		$no_count = $this->_get_option('no_count');
+		$no_count = is_array($no_count) ? $no_count : array();
 
 		echo "<ul id='wdsi-services'>";
 		foreach ($services as $key => $name) {
@@ -225,6 +281,15 @@ class Wdsi_AdminFormRenderer {
 					"/> " .
 						"<label for='wdsi-services-{$key}'>{$name}</label>" .
 					'<br />';
+				if (in_array($key, $countable)) echo
+					"<input type='checkbox' name='wdsi[no_count][{$key}]' value='{$key}' " .
+						"id='wdsi-no_count-{$key}' " .
+						(in_array($key, $no_count) ? "checked='checked'" : "") .
+					"/> " .
+						"<label for='wdsi-no_count-{$key}'>" .
+							'<small>' . __('Do not show counts', 'wdsi') . '</small>' .
+						"</label>" .
+					"<br />";
 				if (in_array($key, $externals)) echo
 					"<input type='checkbox' name='wdsi[skip_script][{$key}]' value='{$key}' " .
 						"id='wdsi-skip_script-{$key}' " .
@@ -233,7 +298,7 @@ class Wdsi_AdminFormRenderer {
 						"<label for='wdsi-skip_script-{$key}'>" .
 							'<small>' . __('My page already uses scripts from this service', 'wdsi') . '</small>' .
 						"</label>" .
-					"";
+					"<br />";
 			}
 
 			echo "<div class='clear'></div></li>";
@@ -305,6 +370,14 @@ class Wdsi_AdminFormRenderer {
 			'<input type="checkbox" name="wdsi[allow_shortcodes]" id="wdsi-allow_shortcodes" value="1" ' . ($this->_get_option('allow_shortcodes') ? 'checked="checked"' : '') . ' />' .
 			'&nbsp;' .
 			'<label for="wdsi-allow_shortcodes">' . __('Allow shortcodes', 'wdsi') . '</label>' . 
+			$this->_create_hint(__('Enabling this option will allow processing shortcodes in your slide-in messages.', 'wdsi')) .
+		'';
+		echo '' .
+			'<input type="hidden" name="wdsi[allow_widgets]" value="" />' .
+			'<input type="checkbox" name="wdsi[allow_widgets]" id="wdsi-allow_widgets" value="1" ' . ($this->_get_option('allow_widgets') ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-allow_widgets">' . __('Allow widgets', 'wdsi') . '</label>' . 
+			$this->_create_hint(__('Enabling this option will add a new sidebar that you can populate with widgets in Appearance &gt; Widgets.', 'wdsi')) .
 		'';
 	}
 }

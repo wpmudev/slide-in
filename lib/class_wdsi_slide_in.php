@@ -16,6 +16,7 @@ class Wdsi_SlideIn {
 		if (!isset(self::$_instance)) self::$_instance = new self;
 
 		add_action('init', array(self::$_instance, 'register_post_type'));
+		add_action('widgets_init', array(self::$_instance, 'register_sidebar'));
 		add_action('admin_init', array(self::$_instance, 'add_meta_boxes'));
 		add_action('save_post', array(self::$_instance, 'save_meta'), 9); // Bind it a bit earlier, so we can kill Post Indexer actions.
 		add_action('wp_insert_post_data', array(self::$_instance, 'set_up_post_status'));
@@ -68,6 +69,21 @@ class Wdsi_SlideIn {
 
 	
 /* ----- Handlers ----- */
+
+	function register_sidebar () {
+		$data = new Wdsi_Options;
+		if (!$data->get_option('allow_widgets')) return false;
+		register_sidebar(array(
+			'name' => __('Slide-In', 'wdsi'),
+			'id' => 'slide-in',
+			'description' => __('This sidebar can be used as a slide-in message content.', 'wdsi'),
+			'class' => '',
+			'before_widget' => '<aside id="%1$s" class="wdsi-widget wdsi-slide-col %2$s">',
+			'after_widget' => '</aside>',
+			'before_title' => '<h3 class="wdsi-widget_title">',
+			'after_title' => '</h3>'
+		));
+	}
 	
 	function register_post_type () {
 		$supports = apply_filters(
@@ -200,6 +216,11 @@ class Wdsi_SlideIn {
 			'&nbsp;' .
 			'<label for="wdsi-content_type-related">' . __('Related posts', 'wdsi') . '</label>' .
 		'<br />';
+		echo '' .
+			'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-widgets" value="widgets" ' . ('widgets' == $type ? 'checked="checked"' : '') . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-content_type-widgets">' . __('Sidebar widgets', 'wdsi') . '</label>' .
+		'<br />';
 
 		// --- Message
 		echo '<div id="wdsi-content_type-options-text" class="wdsi-content_type" style="display:none"></div>';
@@ -276,6 +297,9 @@ class Wdsi_SlideIn {
 			'<label for="wdsi-has_thumbnails">' . __('Show thumbnails?', 'wdsi') . '</label>' .
 		'<br />';
 		echo '</div>';
+
+		// --- Widgets
+		echo '<div id="wdsi-content_type-options-widgets" class="wdsi-content_type" style="display:none"></div>';
 
 		echo '</div>';
 	}

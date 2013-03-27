@@ -14,7 +14,11 @@
 					switch ($key) {
 						case "google":
 							if (!in_array('google', $skip_script)) echo '<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>';
-							echo '<g:plusone size="small"></g:plusone>';
+							$count = in_array('google', $no_count)
+								? 'annotation="none"'
+								: 'annotation="bubble"'
+							;
+							echo '<g:plusone size="medium" ' . $count . '></g:plusone>';
 							break;
 						case "facebook":
 							echo '<iframe src="http://www.facebook.com/plugins/like.php?href=' .
@@ -23,8 +27,12 @@
 								'scrolling="no" frameborder="0" style="border:none; width:120px; height:20px;" allowTransparency="true"></iframe>';
 							break;
 						case "twitter":
+							$count = in_array('twitter', $no_count)
+								? 'none'
+								: 'horizontal'
+							;
 							if (!in_array('twitter', $skip_script)) echo '<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>';
-							echo '<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>';
+							echo '<a href="http://twitter.com/share" class="twitter-share-button" data-count="' . $count . '">Tweet</a>';
 							break;
 						case "stumble_upon":
 							echo '<script src="http://www.stumbleupon.com/hostedbadge.php?s=1"></script>';
@@ -54,87 +62,18 @@
 							}
 							break;
 						case "pinterest":
-							$post_id = is_singular() ? get_the_ID() : false;
-							$atts = array();
-							
-							$url = wdsi_get_url($post_id);
-							if ($url) $atts['url'] = 'url=' . rawurlencode($url);
-							
-							$image = wdsi_get_image($post_id);
-							if ($image) $atts['media'] = 'media=' . rawurlencode($image);
-							
-							$description = rawurlencode(wdsi_get_description($post_id));
-							if ($description) $atts['description'] = 'description=' . $description;
-
-							$show = apply_filters('wdsi-services-pinterest', !empty($image), $atts);
-							if ($show) {
-								$atts = join('&', $atts); 
-								echo '<a ' .
-									'href="http://pinterest.com/pin/create/button/?' . $atts . '" ' . 
-									'class="pin-it-button" count-layout="vertical">Pin It</a>' .
-									'<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>' .
-								'';	
-							}
+							if (!in_array('linkedin', $skip_script)) echo '<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>';
+							$count = in_array('pinterest', $no_count)
+								? 'none'
+								: 'beside'
+							;
+							echo '<a data-pin-config="' . $count . '" href="//pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>';
 							break;
-						/*
-						case "related_posts":
-							$post_id = is_singular() ? get_the_ID() : false;
-							$posts = wdsi_get_related_posts($post_id);
-							$show = apply_filters('wdsi-services-related_posts', !empty($posts), $post_id);
-							if ($show) {
-								$out = '';
-								foreach ($posts as $related) {
-									$out .= '<li>' .
-										'<a href="' . get_permalink($related->ID) . '">' . $related->post_title . '</a>' .
-									'</li>';
-								}
-								echo '<h3>' . __('Related posts', 'wdsi') . '</h3><ul class="related_posts">' . $out . '<ul>';
-							}
-							break;
-						*/
-						/*
-						case "mailchimp":
-							$id = md5(microtime() . rand());
-							$admin_url = admin_url('admin-ajax.php');
-							echo '<form id="wdsi-mailchimp-' . $id . '" class="wdsi-mailchimp-root">';
-							echo '<label for="wdsi-mailchimp-' . $id . '-email">' . __('Email:', 'wdsi') . '</label>';
-							echo '<input type="text" id="wdsi-mailchimp-' . $id . '-email" class="wdsi-mailchimp-email" placeholder="' . __('placeholder@test.com', 'wdsi') . '" />';
-							echo '<button class="wdsi-mailchimp-subscribe">' . __('Subscribe', 'wdsi') . '</button>';
-							echo '<div class="wdsi-mailchimp-result"></div>';
-							echo '</form>';
-							echo <<<EoMailChimpJs
-<script>
-(function ($) {
-
-function mailchimp_subscribe (root) {
-	var email = root.find(".wdsi-mailchimp-email"),
-		result = root.find(".wdsi-mailchimp-result")
-	;
-	if (!email.val()) return false;
-	$.post("{$admin_url}", {
-		"action": "wdsi_mailchimp_subscribe",
-		"email": email.val()
-	}, function (data) {
-		result.html(data);
-	});
-}
-
-$(function () {
-$(".wdsi-mailchimp-subscribe").click(function () {
-	mailchimp_subscribe($(this).parents(".wdsi-mailchimp-root"));
-	return false;
-});
-});
-})(jQuery);
-</script>
-EoMailChimpJs;
-							break;
-							*/
 					}
 				}
 				?>
 			</div>
 		<?php } ?>
 	</div>
-	<div class="wdsi-slide-close"><a href="#">Close</a></div>
+	<div class="wdsi-slide-close"><a href="#"><?php _e('Close', 'wdsi'); ?></a></div>
 </div>

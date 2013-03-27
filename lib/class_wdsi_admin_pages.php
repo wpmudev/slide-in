@@ -90,19 +90,25 @@ class Wdsi_AdminPages {
 	}
 
 	function add_meta_boxes () {
-		add_meta_box(
-			'wdsi_message_override',
-			__('Slide-In Message Override', 'wdsm'),
-			array($this, 'render_message_override_box'),
-			'post',
-			'side',
-			'low'
-		);
+		$types = get_post_types(array(
+			'public' => true,
+		));
+		foreach ($types as $type) {
+			add_meta_box(
+				'wdsi_message_override',
+				__('Slide-In Message Override', 'wdsm'),
+				array($this, 'render_message_override_box'),
+				$type,
+				'side',
+				'low'
+			);
+		}
 	}
 
 	function render_message_override_box () {
 		global $post;
 		$msg_id = get_post_meta($post->ID, 'wdsi_message_id', true);
+		$do_not_show = get_post_meta($post->ID, 'wdsi_do_not_show', true);
 		$query = new WP_Query(array(
 			'post_type' => Wdsi_SlideIn::POST_TYPE,
 			'post_status' => Wdsi_SlideIn::NOT_IN_POOL_STATUS,
@@ -117,13 +123,25 @@ class Wdsi_AdminPages {
 			echo "<option value='{$message->ID}' {$selected}>{$message->post_title}</option>";
 		}
 		echo '</select>';
+
+		echo '<br />';
+		echo '' .
+			'<input type="hidden" name="wdsi-do_not_show" value="" />' .
+			'<input type="checkbox" name="wdsi-do_not_show" id="wdsi-do_not_show" value="1"' . checked($do_not_show, true, false) . ' />' .
+			'&nbsp;' .
+			'<label for="wdsi-do_not_show">' . __('Do not show a slide-in on this page', 'wdsi') . '</label>' .
+		'<br />';
 	}
 
 	function save_meta () {
 		global $post;
-		if ('post' != $post->post_type) return false;
+		//if ('post' != $post->post_type) return false; // Deprecated
 		if (isset($_POST['wdsi-message_override'])) {
 			if ($_POST['wdsi-message_override']) update_post_meta($post->ID, 'wdsi_message_id', $_POST['wdsi-message_override']);
+		}
+		if (isset($_POST['wdsi-do_not_show'])) {
+			$do_not_show = !empty($_POST['wdsi-do_not_show']);
+			update_post_meta($post->ID, 'wdsi_do_not_show', $do_not_show);
 		}
 	}
 	
@@ -135,6 +153,7 @@ class Wdsi_AdminPages {
 		add_settings_section('wdsi_behavior', __('Behaviour settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
 		add_settings_field('wdsi_show_after', __('Show message', 'wdsi'), array($form, 'create_show_after_box'), 'wdsi_options_page', 'wdsi_behavior');
 		add_settings_field('wdsi_show_for', __('Hide message after', 'wdsi'), array($form, 'create_show_for_box'), 'wdsi_options_page', 'wdsi_behavior');
+		add_settings_field('wdsi_closing', __('Closing the message', 'wdsi'), array($form, 'create_closing_box'), 'wdsi_options_page', 'wdsi_behavior');
 
 
 		add_settings_section('wdsi_appearance', __('Appearance settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');

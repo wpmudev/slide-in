@@ -14,15 +14,14 @@ function toggle_show_after_overrides () {
 	;
 	if ($check.is(":checked")) $target.show();
 	else $target.hide();
-
 }
 
 function toggle_content_types () {
 	var $check = $(':radio[name="wdsi-type[content_type]"]');
 	if (!$check.length) return false;
 
-	var selected = $check.filter(":checked").val(),
-		selected = selected || 'text',
+	var selected_raw = $check.filter(":checked").val(),
+		selected = selected_raw || 'text',
 		$item = $("#wdsi-content_type-options-" + selected),
 		$editor = $(".postarea")
 	;
@@ -31,15 +30,27 @@ function toggle_content_types () {
 	$('.wdsi-content_type').hide();
 	$item.show();
 
-	if ('related' == selected) $editor.hide();
+	if ('related' == selected || 'widgets' == selected) $editor.hide();
 	else $editor.show();
+}
 
+function toggle_reshow_conditions () {
+	var $check = $(':radio[name="wdsi[on_hide]"]');
+	if (!$check.length) return false;
+
+	var selected = $check.filter(":checked").val(),
+		reshow = !!selected,
+		$item = $(".wdsi-reshow_after")
+	;
+	if (reshow) $item.show('medium');
+	else $item.hide('medium');
+	return false;
 }
 
 function init_services () {
 	/* ----- Sortables ----- */
 	var $lis = $("#wdsi-services li"),
-		$old = $("#wdsi-services").replaceWith("<ul id='wdsi-services' class='wdsi-services-service_hub' /><ul id='wdsi-disabled_services' class='wdsi-services-service_hub' />")
+		$old = $("#wdsi-services").replaceWith("<ul id='wdsi-services' class='wdsi-services-service_hub' /><ul id='wdsi-disabled_services' class='wdsi-services-service_hub' />"),
 		$enabled = $("#wdsi-services"),
 		$disabled = $("#wdsi-disabled_services")
 	;
@@ -85,6 +96,9 @@ $(function () {
 		$(this).parent("div").find('[name="wdsi[show_after-rule]"]').attr("disabled", false);
 	});
 	toggle_show_after_overrides();
+
+	$(':radio[name="wdsi[on_hide]"]').on("change", toggle_reshow_conditions);
+	toggle_reshow_conditions();
 
 	// Add fieldset clearing links
 	$("#wdsi-conditions-container fieldset").each(function () {

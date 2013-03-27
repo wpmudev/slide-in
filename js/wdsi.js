@@ -1,4 +1,82 @@
-jQuery(document).ready(function($){
+(function ($) {
+
+var Cookies = (function () {
+	// Nabbed from MDN
+	var MdnCookies = {
+		getItem: function (sKey) {
+			if (!sKey || !this.hasItem(sKey)) { return null; }
+			return unescape(document.cookie.replace(new RegExp("(?:^|.*;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*((?:[^;](?!;))*[^;]?).*"), "$1"));
+		},
+
+		setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+			if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return; }
+			var sExpires = "";
+			if (vEnd) {
+				switch (vEnd.constructor) {
+					case Number:
+						sExpires = vEnd === Infinity ? "; expires=Tue, 19 Jan 2038 03:14:07 GMT" : "; max-age=" + vEnd;
+						break;
+					case String:
+						sExpires = "; expires=" + vEnd;
+						break;
+					case Date:
+						sExpires = "; expires=" + vEnd.toGMTString();
+						break;
+				}
+			}
+			document.cookie = escape(sKey) + "=" + escape(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+		},
+
+		removeItem: function (sKey, sPath) {
+			if (!sKey || !this.hasItem(sKey)) { return; }
+			document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sPath ? "; path=" + sPath : "");
+		},
+
+		hasItem: function (sKey) {
+			return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+		},
+
+		keys: function () {
+			var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+			for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = unescape(aKeys[nIdx]); }
+			return aKeys;
+		}
+	};
+
+	return {
+		get: function (key) {
+			return MdnCookies.getItem(key);
+		},
+		set: function (key, value) {
+			var reshow = parseInt(_wdsi_data.reshow.timeout, 10) || 0,
+				hide_all = _wdsi_data.reshow.all,
+				timeout = new Date((new Date()).getTime() + (reshow * 1000)),
+				path = _wdsi_data.reshow.path,
+				cookie_name = (hide_all ? key : key + encodeURIComponent(value))
+
+			;
+			return MdnCookies.setItem(cookie_name, value, timeout, path);
+		},
+		remove: function (key) {
+			return MdnCookies.removeItem(key);
+		},
+		has: function (key) {
+			return MdnCookies.hasItem(key);
+		},
+		keys: function () {
+			return MdnCookies.keys();
+		}
+	};
+})();
+
+function register_seen_uri () {
+	var cookie_name = _wdsi_data.reshow.name,
+		path = window.location.pathname
+	;
+	Cookies.set(cookie_name, path);
+}
+
+$(function () {
 
 	// First, if related posts content, fix the width
 	var $root = $("#wdsi-slide_in"),
@@ -40,7 +118,7 @@ jQuery(document).ready(function($){
 	{
 		var div = document.createElement('div');
 		var reg = new RegExp("(khtml|moz|ms|webkit|)"+property, "i");
-		for ( s in div.style ) {
+		for ( var s in div.style ) {
 			if ( s.match(reg) )
 				return true;
 		}
@@ -86,46 +164,46 @@ jQuery(document).ready(function($){
 			var end_at = 0;
 			// Get start position
 			if ( start.match(/^\d+%$/) )
-				start_pos = Math.round( parseInt(start.replace(/%$/, ''))/100*height );
+				start_pos = Math.round( parseInt(start.replace(/%$/, ''), 10)/100*height );
 			else if ( $(start).length > 0 )
 				start_pos = $(start).offset().top-$(window).height();
 			start_pos = ( start_pos < 0 ) ? 0 : start_pos;
 			// Get end position
 			if ( end ){
 				if ( end.match(/^\d+%$/) )
-					end_pos = Math.round( parseInt(end.replace(/%$/, ''))/100*height );
+					end_pos = Math.round( parseInt(end.replace(/%$/, ''), 10)/100*height );
 				else if ( $(end).length > 0 )
 					end_pos = $(end).offset().top+$(end).height();
 			}
 			else if ( len && len.match(/^\d+%$/) ){
-				end_pos = Math.round( parseInt(len.replace(/%$/, ''))/100*height + start_pos );
+				end_pos = Math.round( parseInt(len.replace(/%$/, ''), 10)/100*height + start_pos );
 			}
 			// Get start time
 			if ( start_after ){
 				if ( start_after.match(/^\d+s$/) )
-					start_at = Math.round( parseInt(start_after.replace(/s$/, '')) );
+					start_at = Math.round( parseInt(start_after.replace(/s$/, ''), 10) );
 				else if ( start_after.match(/^\d+m$/) )
-					start_at = Math.round( parseInt(start_after.replace(/m$/, ''))*60 );
+					start_at = Math.round( parseInt(start_after.replace(/m$/, ''), 10)*60 );
 				else if ( start_after.match(/^\d+h$/) )
-					start_at = Math.round( parseInt(start_after.replace(/h$/, ''))*3600 );
+					start_at = Math.round( parseInt(start_after.replace(/h$/, ''), 10)*3600 );
 			}
 			// Get end time
 			if ( timeout ){
 				if ( timeout.match(/^\d+s$/) )
-					end_at = Math.round( parseInt(timeout.replace(/s$/, '')) );
+					end_at = Math.round( parseInt(timeout.replace(/s$/, ''), 10) );
 				else if ( timeout.match(/^\d+m$/) )
-					end_at = Math.round( parseInt(timeout.replace(/m$/, ''))*60 );
+					end_at = Math.round( parseInt(timeout.replace(/m$/, ''), 10)*60 );
 				else if ( timeout.match(/^\d+h$/) )
-					end_at = Math.round( parseInt(timeout.replace(/h$/, ''))*3600 );
+					end_at = Math.round( parseInt(timeout.replace(/h$/, ''), 10)*3600 );
 				end_at += start_at;
 			}
 			//console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
 			if ( $(obj).hasClass('wdsi-slide-active') ){
 				// Check if the end position is reached
-				if ( 
+				if (
 					(current_pos <= height /* <-- catch imbecile mac behavior */ && current_pos > end_pos)
-					|| 
-					(current_pos >= 0 /* <-- catch imbecile mac behavior */ && current_pos < start_pos) 
+					||
+					(current_pos >= 0 /* <-- catch imbecile mac behavior */ && current_pos < start_pos)
 				)
 					slidein_hide(obj);
 			}
@@ -141,51 +219,54 @@ jQuery(document).ready(function($){
 	}
 
 	function slidein_hide(obj, timeout, closed) {
+		var $obj = $(obj);
 		if ( ! timeout )
 			timeout = 0;
-		if ( closed )
-			$(obj).data('slidein-closed', '1');
-		clearTimeout($(obj).data('slidein-temp-time-hide'));
-		$(obj).data( 'slidein-temp-time-hide', setTimeout(function(){
-			if ( legacy && $(obj).data('slidein-running') != '2' ){
-				$(obj).data('slidein-running', '2');
-				$(obj).removeClass('wdsi-slide-active');
-				if ( $(obj).hasClass('wdsi-slide-top') )
-					$(obj).stop(true).animate({top: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('wdsi-slide-left') )
-					$(obj).stop(true).animate({left: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('wdsi-slide-right') )
-					$(obj).stop(true).animate({right: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
-				else if ( $(obj).hasClass('wdsi-slide-bottom') )
-					$(obj).stop(true).animate({bottom: $(obj).data('slidein-pos')}, 1000, legacy_hide_after);
+		if ( closed ) {
+			$obj.data('slidein-closed', '1');
+		}
+		clearTimeout($obj.data('slidein-temp-time-hide'));
+		$obj.data( 'slidein-temp-time-hide', setTimeout(function(){
+			if ( legacy && $obj.data('slidein-running') != '2' ){
+				$obj.data('slidein-running', '2');
+				$obj.removeClass('wdsi-slide-active');
+				if ( $obj.hasClass('wdsi-slide-top') )
+					$obj.stop(true).animate({top: $obj.data('slidein-pos')}, 1000, legacy_hide_after);
+				else if ( $obj.hasClass('wdsi-slide-left') )
+					$obj.stop(true).animate({left: $obj.data('slidein-pos')}, 1000, legacy_hide_after);
+				else if ( $obj.hasClass('wdsi-slide-right') )
+					$obj.stop(true).animate({right: $obj.data('slidein-pos')}, 1000, legacy_hide_after);
+				else if ( $obj.hasClass('wdsi-slide-bottom') )
+					$obj.stop(true).animate({bottom: $obj.data('slidein-pos')}, 1000, legacy_hide_after);
 			}
 			else {
-				$(obj).removeClass('wdsi-slide-active');
+				$obj.removeClass('wdsi-slide-active');
 			}
 		}, timeout*1000) );
 	}
 
 	function slidein_show(obj, timeout) {
-		if ( $(obj).data('slidein-closed') == '1' )
+		var $obj = $(obj);
+		if ( $obj.data('slidein-closed') == '1' )
 			return;
 		if ( ! timeout )
 			timeout = 0;
 		clearTimeout($(obj).data('slidein-temp-time-show'));
-		$(obj).data( 'slidein-temp-time-show', setTimeout(function(){
-			if ( legacy && $(obj).data('slidein-running') != '1' ){
-				$(obj).data('slidein-running', '1');
-				$(obj).css('visibility', 'visible');
-				if ( $(obj).hasClass('wdsi-slide-top') )
-					$(obj).stop(true).animate({top: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('wdsi-slide-left') )
-					$(obj).stop(true).animate({left: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('wdsi-slide-right') )
-					$(obj).stop(true).animate({right: 0}, 1000, legacy_show_after);
-				else if ( $(obj).hasClass('wdsi-slide-bottom') )
-					$(obj).stop(true).animate({bottom: 0}, 1000, legacy_show_after);
+		$obj.data( 'slidein-temp-time-show', setTimeout(function(){
+			if ( legacy && $obj.data('slidein-running') != '1' ){
+				$obj.data('slidein-running', '1');
+				$obj.css('visibility', 'visible');
+				if ( $obj.hasClass('wdsi-slide-top') )
+					$obj.stop(true).animate({top: 0}, 1000, legacy_show_after);
+				else if ( $obj.hasClass('wdsi-slide-left') )
+					$obj.stop(true).animate({left: 0}, 1000, legacy_show_after);
+				else if ( $obj.hasClass('wdsi-slide-right') )
+					$obj.stop(true).animate({right: 0}, 1000, legacy_show_after);
+				else if ( $obj.hasClass('wdsi-slide-bottom') )
+					$obj.stop(true).animate({bottom: 0}, 1000, legacy_show_after);
 			}
 			else {
-				$(obj).addClass('wdsi-slide-active');
+				$obj.addClass('wdsi-slide-active');
 			}
 		}, timeout*1000) );
 	}
@@ -202,21 +283,21 @@ jQuery(document).ready(function($){
 
 	// if width defined in pixels on front-end, reset it when widnow width < slider and rely on 100%
 	function responsify( obj ) {
-		if ( obj.find('.wdsi-slide-wrap').attr('style').indexOf('width') >= 0 ) {
-			var $el = obj.find('.wdsi-slide-wrap'),
-				slidewidth = parseInt( $el.attr('style').replace(/\D/g,'') ),
-				winwidth = $(window).width();
-			
+		var $wrap = obj.find('.wdsi-slide-wrap');
+		if ( $wrap.length && $wrap.attr('style') && $wrap.attr('style').indexOf('width') >= 0 ) {
+			var slidewidth = parseInt( $wrap.attr('style').replace(/\D/g,''), 10 ),
+				winwidth = $(window).width()
+			;
+
 			if ( winwidth <= slidewidth ) {
-				$el.removeAttr('style');
+				$wrap.removeAttr('style');
 			}
 
 			$(window).resize(function() {
-  				if ( $(window).width() <= slidewidth ) {
-					$el.removeAttr('style');
+				if ( $(window).width() <= slidewidth ) {
+					$wrap.removeAttr('style');
 				} else if ( !$el.attr('style') ) {
-					$el.width( slidewidth );
-					console.log( slidewidth );
+					$wrap.width( slidewidth );
 				}
 			});
 		}
@@ -241,13 +322,15 @@ jQuery(document).ready(function($){
 			legacy = true;
 		$(window).scroll(slidein_scroll);
 		// Call the slidein_scroll first here, so we don't need to wait for scroll event before it show the slide in :))
-		slidein_scroll();	
+		slidein_scroll();
 	});
 
 	$('.wdsi-slide').on('click', '.wdsi-slide-close a', function(e){
 		e.preventDefault();
 		var obj = $(this).closest('.wdsi-slide');
 		slidein_hide(obj, 0, true);
+		register_seen_uri();
 	});
 
 });
+})(jQuery);
