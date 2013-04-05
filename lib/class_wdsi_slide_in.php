@@ -67,6 +67,11 @@ class Wdsi_SlideIn {
 		);
 	}
 
+	public static function get_default_injection_hook () {
+		$hook = defined('WDSI_INJECTION_HOOK') ? WDSI_INJECTION_HOOK : 'loop_end';
+		return apply_filters('wdsi-core-injection_hook', $hook);
+	}
+
 	
 /* ----- Handlers ----- */
 
@@ -216,11 +221,14 @@ class Wdsi_SlideIn {
 			'&nbsp;' .
 			'<label for="wdsi-content_type-related">' . __('Related posts', 'wdsi') . '</label>' .
 		'<br />';
-		echo '' .
-			'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-widgets" value="widgets" ' . ('widgets' == $type ? 'checked="checked"' : '') . ' />' .
-			'&nbsp;' .
-			'<label for="wdsi-content_type-widgets">' . __('Sidebar widgets', 'wdsi') . '</label>' .
-		'<br />';
+		$data = new Wdsi_Options;
+		if ($data->get_option('allow_widgets')) {
+			echo '' .
+				'<input type="radio" name="wdsi-type[content_type]" id="wdsi-content_type-widgets" value="widgets" ' . ('widgets' == $type ? 'checked="checked"' : '') . ' />' .
+				'&nbsp;' .
+				'<label for="wdsi-content_type-widgets">' . __('Sidebar widgets', 'wdsi') . '</label>' .
+			'<br />';
+		}
 
 		// --- Message
 		echo '<div id="wdsi-content_type-options-text" class="wdsi-content_type" style="display:none"></div>';
@@ -299,7 +307,9 @@ class Wdsi_SlideIn {
 		echo '</div>';
 
 		// --- Widgets
-		echo '<div id="wdsi-content_type-options-widgets" class="wdsi-content_type" style="display:none"></div>';
+		if ($data->get_option('allow_widgets')) {
+			echo '<div id="wdsi-content_type-options-widgets" class="wdsi-content_type" style="display:none"></div>';
+		}
 
 		echo '</div>';
 	}

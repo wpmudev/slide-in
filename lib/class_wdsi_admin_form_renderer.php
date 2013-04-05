@@ -137,7 +137,7 @@ class Wdsi_AdminFormRenderer {
 			'<label for="on_hide-all">' . __('Hide all messages for the visitor', 'wdsi') . '</label>' .
 		'</div>';
 
-		$_times = array_combine(range(1,59), range(1,59));
+		$_times = array_combine(range(1,31), range(1,31));
 		$_units = array(
 			'hours' => __('Hours', 'wdsi'),
 			'days' => __('Days', 'wdsi'),
@@ -378,6 +378,26 @@ class Wdsi_AdminFormRenderer {
 			'&nbsp;' .
 			'<label for="wdsi-allow_widgets">' . __('Allow widgets', 'wdsi') . '</label>' . 
 			$this->_create_hint(__('Enabling this option will add a new sidebar that you can populate with widgets in Appearance &gt; Widgets.', 'wdsi')) .
+		'';
+
+		if (class_exists('MarketPress')) {
+			echo '' .
+				'<input type="hidden" name="wdsi[show_on_marketpress_pages]" value="" />' .
+				'<input type="checkbox" name="wdsi[show_on_marketpress_pages]" id="wdsi-show_on_marketpress_pages" value="1" ' . ($this->_get_option('show_on_marketpress_pages') ? 'checked="checked"' : '') . ' />' .
+				'&nbsp;' .
+				'<label for="wdsi-show_on_marketpress_pages">' . __('Show on MarketPress pages (except products):', 'wdsi') . '</label>' . 
+				$this->_create_hint(__('Decide if you want your messages to appear on MarketPress virtual pages.', 'wdsi')) .
+			'';
+		}
+
+
+		$hook = $this->_get_option('custom_injection_hook');
+		$hook = $hook ? $hook : Wdsi_SlideIn::get_default_injection_hook();
+		echo '' .
+			'<label for="wdsi-custom_injection_hook">' . __('Custom injection hook', 'wdsi') . '</label>' . 
+			'&nbsp;' .
+			'<input type="text" class="long" name="wdsi[custom_injection_hook]" id="wdsi-custom_injection_hook" value="' . esc_attr($hook) . '" />' .
+			$this->_create_hint(__('Try a different injection hook if you experience problems with the default one. Leave empty for default.', 'wdsi')) .
 		'';
 	}
 }

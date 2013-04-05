@@ -49,10 +49,9 @@ var Cookies = (function () {
 		},
 		set: function (key, value) {
 			var reshow = parseInt(_wdsi_data.reshow.timeout, 10) || 0,
-				hide_all = _wdsi_data.reshow.all,
 				timeout = new Date((new Date()).getTime() + (reshow * 1000)),
 				path = _wdsi_data.reshow.path,
-				cookie_name = (hide_all ? key : key + encodeURIComponent(value))
+				cookie_name = this.create_page_key(key, value)
 
 			;
 			return MdnCookies.setItem(cookie_name, value, timeout, path);
@@ -65,6 +64,13 @@ var Cookies = (function () {
 		},
 		keys: function () {
 			return MdnCookies.keys();
+		},
+		create_page_key: function (key, value) {
+			hide_all = _wdsi_data.reshow.all;
+			return hide_all
+				? key
+				: (key + value.replace(/[^-_a-z0-9]/ig, '_'))
+			;
 		}
 	};
 })();
@@ -76,9 +82,26 @@ function register_seen_uri () {
 	Cookies.set(cookie_name, path);
 }
 
+function cache_cookie_exists () {
+	var cookie_name = _wdsi_data.reshow.name,
+		path = window.location.pathname,
+		cookie = false
+	;
+	if (_wdsi_data.reshow.all) { // Check all-cache
+		cookie = Cookies.get(cookie_name);
+	} else { // Check page chache
+		cookie_name = Cookies.create_page_key(cookie_name, path);
+		cookie = Cookies.get(cookie_name);
+	}
+	return cookie;
+}
+
 $(function () {
 
-	// First, if related posts content, fix the width
+	// First, check if we got tricked by the cache
+	if (!!cache_cookie_exists()) return false;
+
+	// Next, if related posts content, fix the width
 	var $root = $("#wdsi-slide_in"),
 		$content = $root.find(".wdsi-slide-content"),
 		$related = $root.find(".wdsi-slide-columns"),
@@ -292,11 +315,10 @@ $(function () {
 			if ( winwidth <= slidewidth ) {
 				$wrap.removeAttr('style');
 			}
-
 			$(window).resize(function() {
 				if ( $(window).width() <= slidewidth ) {
 					$wrap.removeAttr('style');
-				} else if ( !$el.attr('style') ) {
+				} else if (!$wrap.attr('style')) {
 					$wrap.width( slidewidth );
 				}
 			});

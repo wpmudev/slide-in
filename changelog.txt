@@ -5,6 +5,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.1.1 - 2013-04-05
+----------------------------------------------------------------------
+- Fix for caching plugins compatibility.
+- Stricter sidebar allowed checks.
+- Added injection hook utility method.
+- Added MarketPress virtual pages showing options.
+
 1.1 - 2013-03-27
 ----------------------------------------------------------------------
 - Allowing slide-in metabox to all public post types.

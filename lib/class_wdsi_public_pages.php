@@ -27,10 +27,12 @@ class Wdsi_PublicPages {
 	function add_hooks () {
 		add_action('init', array($this, 'init_cookies'));
 
-		add_action('wp_print_scripts', array($this, 'js_load_scripts'));
-		add_action('wp_print_styles', array($this, 'css_load_styles'));
+		add_action('wp_enqueue_scripts', array($this, 'css_load_styles'));
+		add_action('wp_enqueue_scripts', array($this, 'js_load_scripts'));
 
-		add_action('loop_end', array($this, 'add_message'));
+		$hook = trim($this->_data->get_option('custom_injection_hook'));
+		$hook = $hook ? $hook : Wdsi_SlideIn::get_default_injection_hook();
+		add_action($hook, array($this, 'add_message'));
 		
 		add_filter('wdsi_content', 'wpautop');
 		if ($this->_data->get_option('allow_shortcodes')) {
@@ -69,7 +71,7 @@ class Wdsi_PublicPages {
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1');
+		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.1');
 		
 		$on_hide = $this->_data->get_option('on_hide');
 		$cookie_name = $this->_get_cookie_name();
@@ -104,7 +106,7 @@ class Wdsi_PublicPages {
 	
 	function css_load_styles () {
 		if (!current_theme_supports('wdsi')) {
-			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1');
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.1');
 		}
 		$opts = get_option('wdsi');
 		if (empty($opts['css-custom_styles'])) return false;
@@ -113,8 +115,13 @@ class Wdsi_PublicPages {
 	}
 	
 	function add_message () {
-		//if (!is_singular()) return false;
 		if (defined('WDSI_BOX_RENDERED')) return false;
+
+		// MarketPress virtual subpages
+		if (class_exists('MarketPress') && !$this->_data->get_option('show_on_marketpress_pages')) {
+			global $mp;
+			if ($mp->is_shop_page && !is_singular('product')) return $markup;
+		}
 		
 		global $post, $current_user;
 		
@@ -141,6 +148,8 @@ class Wdsi_PublicPages {
 		$no_count = is_array($no_count) ? $no_count : array();
 
 		$content_type = wdsi_getval($type, 'content_type', 'text');
+		if ('widgets' == $content_type && !$this->_data->get_option('allow_widgets')) return false; // Break on this
+
 		$related_posts_count = wdsi_getval($type, 'related-posts_count', 3);
 		$related_has_thumbnails = wdsi_getval($type, 'related-has_thumbnails');
 
