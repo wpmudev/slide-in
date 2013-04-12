@@ -180,20 +180,40 @@ class Wdsi_SlideIn {
 		'<br />';
 		echo '</fieldset>';
 
+		echo '<h4>' . __('Show message on:', 'wdsi') . '</h4>';
+
 		$show_if = wdsi_getval($show_options, 'page');
 		echo '<fieldset id="wdsi-page_rules"><legend>' . __('Page rules', 'wdsi') . '</legend>';
 		echo '' .
 			'<input type="radio" name="show_if[page]" value="show_if_singular" id="show_if_singular-yes" ' .
 				('show_if_singular' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_singular-yes">' . __('on singular pages', 'wdsi') . '</label>' .
+			' <label for="show_if_singular-yes">' . __('any of my singular pages', 'wdsi') . '</label>' .
 		'<br />';
 		echo '' .
 			'<input type="radio" name="show_if[page]" value="show_if_not_singular" id="show_if_not_singular-yes" ' .
 				('show_if_not_singular' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
-			' <label for="show_if_not_singular-yes">' . __('on archive pages', 'wdsi') . '</label>' .
+			' <label for="show_if_not_singular-yes">' . __('any of my archive pages', 'wdsi') . '</label>' .
 		'<br />';
+		echo '' .
+			'<input type="radio" name="show_if[page]" value="show_if_home" id="show_if_not_singular-yes" ' .
+				('show_if_home' == $show_if ? 'checked="checked"' : '') .
+			'/ >' .
+			' <label for="show_if_home-yes">' . __('home page', 'wdsi') . '</label>' .
+		'<br />';
+		$types = get_post_types(array('public' => true), 'objects');
+		foreach ($types as $type => $obj) {
+			if ('attachment' == $type) continue;
+			$name = "show_if_{$type}";
+			echo '' .
+				'<input type="radio" name="show_if[page]" value="' . $name . '" id="' . $name . '-yes" ' .
+					($name == $show_if ? 'checked="checked"' : '') .
+				'/ >' .
+				' <label for="' . $name . '-yes">' . sprintf(__('&quot;%s&quot; post pages', 'wdsi'), $obj->label) . '</label>' .
+			'<br />';
+		}
+
 		echo '</fieldset>';
 		
 		echo '</div>';
@@ -297,6 +317,20 @@ class Wdsi_SlideIn {
 			echo '<option value="' . esc_attr($item) . '" ' . $selected . '>' . $item . '</option>';
 		}
 		echo '</select></div><br />';
+
+		$taxonomies = get_taxonomies(array(
+			'public' => true, 
+		), 'objects');
+		$related_tax = wdsi_getval($opts, 'related-taxonomy', 'post_tag');
+		echo '<label>' . __('Related taxonomy:', 'wdsi') . ' </label>';
+		echo '<div class="wpmudev-ui-select"><select name="wdsi-type[related-taxonomy]">';
+		foreach ($taxonomies as $tax => $item) {
+			$selected = $tax == $related_tax ? 'selected="selected"' : '';
+			echo '<option value="' . esc_attr($tax) . '" ' . $selected . '>' . $item->label . '</option>';
+		}
+		echo '</select></div><br />';
+		echo $this->_create_hint(__('Related posts will have common terms with displayed post from this taxonomy', 'wdsi'));
+
 		$has_thumbnails = wdsi_getval($opts, 'related-has_thumbnails');
 		echo '' .
 			'<input type="hidden" name="wdsi-type[related-has_thumbnails]" value="" />' .
@@ -660,11 +694,23 @@ class Wdsi_SlideIn {
 				$use = isset($_COOKIE['comment_author_'.COOKIEHASH]); break;
 		}
 		if (!$use) return $use;
-		switch (wdsi_getval($show, 'page')) {
+		
+		$page_condition = wdsi_getval($show, 'page');
+		if (empty($page_condition)) return true;
+
+		switch ($page_condition) {
 			case "show_if_singular":
 				$use = is_singular(); break;
 			case "show_if_not_singular":
 				$use = !(is_singular()); break;
+			case "show_if_home":
+				$use = is_front_page(); break;
+		}
+		if (!$use) return $use;
+		$types = get_post_types(array('public' => true), 'objects');
+		foreach ($types as $type => $obj) {
+			$name = "show_if_{$type}";
+			if ($name == $page_condition) $use = is_singular($type);
 		}
 		return $use; // In the pool, by default
 	}

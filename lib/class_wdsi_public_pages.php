@@ -71,7 +71,7 @@ class Wdsi_PublicPages {
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.1');
+		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.2');
 		
 		$on_hide = $this->_data->get_option('on_hide');
 		$cookie_name = $this->_get_cookie_name();
@@ -106,7 +106,7 @@ class Wdsi_PublicPages {
 	
 	function css_load_styles () {
 		if (!current_theme_supports('wdsi')) {
-			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.1');
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.2');
 		}
 		$opts = get_option('wdsi');
 		if (empty($opts['css-custom_styles'])) return false;
@@ -151,6 +151,7 @@ class Wdsi_PublicPages {
 		if ('widgets' == $content_type && !$this->_data->get_option('allow_widgets')) return false; // Break on this
 
 		$related_posts_count = wdsi_getval($type, 'related-posts_count', 3);
+		$related_taxonomy = wdsi_getval($type, 'related-taxonomy', 'post_tag');
 		$related_has_thumbnails = wdsi_getval($type, 'related-has_thumbnails');
 
 		$mailchimp_placeholder = wdsi_getval($type, 'mailchimp-placeholder', 'you@yourdomain.com');

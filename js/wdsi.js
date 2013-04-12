@@ -221,7 +221,7 @@ $(function () {
 				end_at += start_at;
 			}
 			//console.log('current_pos: '+current_pos+', height: '+height+', start: '+start+', start_pos: '+start_pos+', for: '+len+', end: '+end+', end_pos:'+end_pos+', start_at: '+start_at+', end_at: '+end_at);
-			if ( $(obj).hasClass('wdsi-slide-active') ){
+			if ( $(obj).hasClass('wdsi-slide-active') ) {
 				// Check if the end position is reached
 				if (
 					(current_pos <= height /* <-- catch imbecile mac behavior */ && current_pos > end_pos)
@@ -229,8 +229,7 @@ $(function () {
 					(current_pos >= 0 /* <-- catch imbecile mac behavior */ && current_pos < start_pos)
 				)
 					slidein_hide(obj);
-			}
-			else {
+			} else {
 				// Check if it is on position to show
 				if ( current_pos >= start_pos && current_pos <= end_pos ){
 					slidein_show(obj, start_at);
@@ -243,8 +242,7 @@ $(function () {
 
 	function slidein_hide(obj, timeout, closed) {
 		var $obj = $(obj);
-		if ( ! timeout )
-			timeout = 0;
+		if ( ! timeout ) timeout = 0;
 		if ( closed ) {
 			$obj.data('slidein-closed', '1');
 		}
@@ -340,9 +338,13 @@ $(function () {
 			slidein_obj.push(this);
 			responsify( $me );
 		});
+		var is_timed = $("#wdsi-slide_in").length
+			? !!parseInt($("#wdsi-slide_in").attr("data-slidein-after"), 10)
+			: false
+		;
 		if ( ! css_support('transition') )
 			legacy = true;
-		$(window).scroll(slidein_scroll);
+		if (!is_timed) $(window).scroll(slidein_scroll);
 		// Call the slidein_scroll first here, so we don't need to wait for scroll event before it show the slide in :))
 		slidein_scroll();
 	});

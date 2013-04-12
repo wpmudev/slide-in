@@ -1,6 +1,6 @@
 <?php
 $post_id = is_singular() ? get_the_ID() : false;
-$posts = wdsi_get_related_posts($post_id, $related_posts_count);
+$posts = wdsi_get_related_posts($post_id, $related_taxonomy, $related_posts_count);
 $show = apply_filters('wdsi-services-related_posts', !empty($posts), $post_id);
 if ($show) {
 	$out = '';

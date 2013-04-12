@@ -64,20 +64,26 @@ function wdsi_get_url ($post_id=false) {
 /**
  * Attempt to find related posts (by tags)
  */
-function wdsi_get_related_posts ($post_id, $limit=3) {
+function wdsi_get_related_posts ($post_id, $taxonomy, $limit=3) {
 	$post_id = (int)$post_id;
 	if (!$post_id) return apply_filters(
 		'wdsi-media-related_posts', array()
 	);
 	
-	$raw_tags = wp_get_post_tags($post_id, array('fields' => 'ids'));
+	//$raw_tags = wp_get_post_tags($post_id, array('fields' => 'ids'));
+	$raw_tags = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'ids'));
 	if (!$raw_tags) return apply_filters(
 		'wdsi-media-related_posts', array()
 	);
 	
 	$query = new WP_Query(array(
 		'post__not_in' => array($post_id),
-		'tag__in' => $raw_tags,
+		//'tag__in' => $raw_tags,
+		'tax_query' => array(array(
+			'taxonomy' => $taxonomy,
+			'terms' => $raw_tags,
+			'field' => 'id',
+		)),
 		'posts_per_page' => $limit,
 	));
 	return apply_filters(

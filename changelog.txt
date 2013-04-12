@@ -5,6 +5,12 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.1.2 - 2013-04-12
+----------------------------------------------------------------------
+- Fix for timed messages reappearing on scroll.
+- Added home page and custom post types to conditions list.
+- Introducing custom taxonomies for related posts.
+
 1.1.1 - 2013-04-05
 ----------------------------------------------------------------------
 - Fix for caching plugins compatibility.
