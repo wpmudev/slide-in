@@ -197,7 +197,7 @@ class Wdsi_SlideIn {
 			' <label for="show_if_not_singular-yes">' . __('any of my archive pages', 'wdsi') . '</label>' .
 		'<br />';
 		echo '' .
-			'<input type="radio" name="show_if[page]" value="show_if_home" id="show_if_not_singular-yes" ' .
+			'<input type="radio" name="show_if[page]" value="show_if_home" id="show_if_home-yes" ' .
 				('show_if_home' == $show_if ? 'checked="checked"' : '') .
 			'/ >' .
 			' <label for="show_if_home-yes">' . __('home page', 'wdsi') . '</label>' .
@@ -591,22 +591,43 @@ class Wdsi_SlideIn {
 
 	function add_custom_columns ($cols) {
 		return array_merge($cols, array(
-			'wdsi_pool' => __('Status', 'wdsm'),
-			'wdsi_conditions' => __('Conditions', 'wdsm'),
+			'wdsi_type' => __('Content Type', 'wdsi'),
+			'wdsi_pool' => __('Status', 'wdsi'),
+			'wdsi_conditions' => __('Conditions', 'wdsi'),
 		));
 	}
 
 	function fill_custom_columns ($col) {
 		global $post;
-		if ('wdsi_pool' != $col && 'wdsi_conditions' != $col) return $col;
+		if ('wdsi_pool' != $col && 'wdsi_conditions' != $col && 'wdsi_type' != $col) return $col;
 		
 		switch ($col) {
 			case 'wdsi_pool':
 				echo ('publish' == $post->post_status ? __('In the pool', 'wdsi') : __('Not in pool', 'wdsi'));
 				break;
+			case 'wdsi_type':
+				$all_content_types = array(
+					'text' => __('Text message', 'wdsi'),
+					'mailchimp' => __('MailChimp subscription form', 'wdsi'),
+					'related' => __('Related posts', 'wdsi'),
+					'widgets' => __('Sidebar widgets', 'wdsi'),
+				);
+				$type = get_post_meta($post->ID, 'wdsi-type', true);
+				$content_type = wdsi_getval($type, 'content_type', 'text');
+				if (!empty($all_content_types[$content_type])) echo $all_content_types[$content_type];
+				break;
 			case 'wdsi_conditions':
 				if (self::NOT_IN_POOL_STATUS == $post->post_status) {
-					_e("Not applicable", 'wdsi');
+					$post_links = array();
+					global $wpdb;
+					$appears_on = $wpdb->get_col($wpdb->prepare("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='wdsi_message_id' AND meta_value=%d", $post->ID));
+					if (empty($appears_on)) {
+						_e("Not applicable", 'wdsi');
+						break;
+					} else foreach ($appears_on as $target_id) {
+						$post_links[] = '<a href="' . admin_url('post.php?action=edit&post=' . $target_id) . '">' . get_the_title($target_id) . '</a>';
+					}
+					printf(__('Appears on %s', 'wdsi'), join('<br />', $post_links));
 					break;
 				}
 				$show = get_post_meta($post->ID, 'wdsi_show_if', true);
@@ -624,17 +645,30 @@ class Wdsi_SlideIn {
 						_e("Can appear for all users", 'wdsi');
 				}
 				echo '<br />';
-				switch (wdsi_getval($show, 'page')) {
+				$types = get_post_types(array('public' => true), 'objects');
+				$show_page = wdsi_getval($show, 'page');
+				switch ($show_page) {
 					case "show_if_singular":
 						_e("Shown on singular pages", 'wdsi');
 						break;
 					case "show_if_not_singular":
 						_e("Shown on archive pages", 'wdsi');
 						break;
+					case "show_if_home":
+						_e("Shown on home page", 'wdsi');
+						break;
 					default:
-						_e("Can appear on all pages", 'wdsi');
+						$shown_for_types = array();
+						foreach ($types as $type => $obj) {
+							if ("show_if_{$type}" == $show_page) $shown_for_types[] = sprintf(__('Shown on %s pages', 'wdsi'), $obj->labels->name);
+						}
+						if ($shown_for_types) {
+							echo join('<br />', $shown_for_types);
+						} else {
+							_e("Can appear on all pages", 'wdsi');
+						}
+						break;
 				}
-
 				break;
 		}
 	}

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Slide-In\n"
-"POT-Creation-Date: 2013-04-12 15:24+0100\n"
-"PO-Revision-Date: 2013-04-12 15:24+0100\n"
+"POT-Creation-Date: 2013-04-22 15:56+0100\n"
+"PO-Revision-Date: 2013-04-22 15:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -344,11 +344,11 @@ msgstr ""
 msgid "Edit Slide In Message"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:120 lib/class_wdsi_slide_in.php:595
+#: lib/class_wdsi_slide_in.php:120 lib/class_wdsi_slide_in.php:596
 msgid "Conditions"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:128
+#: lib/class_wdsi_slide_in.php:128 lib/class_wdsi_slide_in.php:594
 msgid "Content Type"
 msgstr ""
 
@@ -411,19 +411,19 @@ msgstr ""
 msgid "&quot;%s&quot; post pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:232
+#: lib/class_wdsi_slide_in.php:232 lib/class_wdsi_slide_in.php:610
 msgid "Text message"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:237
+#: lib/class_wdsi_slide_in.php:237 lib/class_wdsi_slide_in.php:611
 msgid "MailChimp subscription form"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:242
+#: lib/class_wdsi_slide_in.php:242 lib/class_wdsi_slide_in.php:612
 msgid "Related posts"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:249
+#: lib/class_wdsi_slide_in.php:249 lib/class_wdsi_slide_in.php:613
 msgid "Sidebar widgets"
 msgstr ""
 
@@ -492,47 +492,61 @@ msgstr ""
 msgid "Color Scheme"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:594
+#: lib/class_wdsi_slide_in.php:595
 msgid "Status"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:605
+#: lib/class_wdsi_slide_in.php:606
 msgid "In the pool"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:605
+#: lib/class_wdsi_slide_in.php:606
 msgid "Not in pool"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:609
+#: lib/class_wdsi_slide_in.php:625
 msgid "Not applicable"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:615
+#: lib/class_wdsi_slide_in.php:630
+#, php-format
+msgid "Appears on %s"
+msgstr ""
+
+#: lib/class_wdsi_slide_in.php:636
 msgid "Shown for logged in users"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:618
+#: lib/class_wdsi_slide_in.php:639
 msgid "Shown for visitors"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:621
+#: lib/class_wdsi_slide_in.php:642
 msgid "Shown for non-commenters"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:624
+#: lib/class_wdsi_slide_in.php:645
 msgid "Can appear for all users"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:629
+#: lib/class_wdsi_slide_in.php:652
 msgid "Shown on singular pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:632
+#: lib/class_wdsi_slide_in.php:655
 msgid "Shown on archive pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:635
+#: lib/class_wdsi_slide_in.php:658
+msgid "Shown on home page"
+msgstr ""
+
+#: lib/class_wdsi_slide_in.php:663
+#, php-format
+msgid "Shown on %s pages"
+msgstr ""
+
+#: lib/class_wdsi_slide_in.php:668
 msgid "Can appear on all pages"
 msgstr ""
 

@@ -71,7 +71,7 @@ class Wdsi_PublicPages {
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.2');
+		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.3');
 		
 		$on_hide = $this->_data->get_option('on_hide');
 		$cookie_name = $this->_get_cookie_name();
@@ -106,22 +106,36 @@ class Wdsi_PublicPages {
 	
 	function css_load_styles () {
 		if (!current_theme_supports('wdsi')) {
-			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.2');
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.3');
 		}
 		$opts = get_option('wdsi');
 		if (empty($opts['css-custom_styles'])) return false;
 		$style = wp_strip_all_tags($opts['css-custom_styles']);
 		echo "<style type='text/css'>{$style}</style>";
 	}
-	
-	function add_message () {
-		if (defined('WDSI_BOX_RENDERED')) return false;
 
+	private function _is_wrong_place () {
+		global $wp_current_filter;
+
+		if (is_feed()) return true; // Don't do this for feeds
+
+		$is_excerpt = array_reduce($wp_current_filter, create_function('$ret,$val', 'return $ret ? true : preg_match("/excerpt/", $val);'), false);
+		$is_head = array_reduce($wp_current_filter, create_function('$ret,$val', 'return $ret ? true : preg_match("/head\b|head[^w]/", $val);'), false);
+		$is_title = array_reduce($wp_current_filter, create_function('$ret,$val', 'return $ret ? true : preg_match("/title/", $val);'), false);
+		if ($is_excerpt || $is_head || $is_title) return true;
+		
 		// MarketPress virtual subpages
 		if (class_exists('MarketPress') && !$this->_data->get_option('show_on_marketpress_pages')) {
 			global $mp;
-			if ($mp->is_shop_page && !is_singular('product')) return $markup;
+			if ($mp->is_shop_page && !is_singular('product')) return true;
 		}
+
+		return false;
+	}
+	
+	function add_message () {
+		if (defined('WDSI_BOX_RENDERED')) return false;
+		if ($this->_is_wrong_place()) return false;
 		
 		global $post, $current_user;
 		
