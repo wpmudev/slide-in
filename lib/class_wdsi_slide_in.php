@@ -150,7 +150,8 @@ class Wdsi_SlideIn {
 				($post->post_status == self::NOT_IN_POOL_STATUS ? 'checked="checked"' : '') .
 			' />' .
 			'&nbsp;' .
-			'<label for="wdsi-not_in_the_pool">' . __('Not in the pool', 'wdsi') . '</label>' .
+			//'<label for="wdsi-not_in_the_pool">' . __('Not in the pool', 'wdsi') . '</label>' .
+			'<label for="wdsi-not_in_the_pool">' . __('This is a post-specific slide-in', 'wdsi') . '</label>' .
 			$this->_create_hint(__('Slide-In posts outside the pool can be assigned to your individual posts, overriding the defaults', 'wdsi')) .
 		'</div>';
 
@@ -563,7 +564,7 @@ class Wdsi_SlideIn {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
 			update_post_meta($post->ID, "wdsi_show_if", wdsi_getval($_POST, "show_if"));
-		}
+		} else if (empty($_POST['show_if'])) update_post_meta($post->ID, 'wdsi_show_if', false); // Thanks, Vinod Dalvi
 
 		if (wdsi_getval($_POST, 'wdsi')) {
 			// If we have Post Indexer present, remove the post save action for the moment.
@@ -603,7 +604,8 @@ class Wdsi_SlideIn {
 		
 		switch ($col) {
 			case 'wdsi_pool':
-				echo ('publish' == $post->post_status ? __('In the pool', 'wdsi') : __('Not in pool', 'wdsi'));
+				//echo ('publish' == $post->post_status ? __('In the pool', 'wdsi') : __('Not in pool', 'wdsi'));
+				echo ('publish' == $post->post_status ? __('Global', 'wdsi') : __('Specific', 'wdsi'));
 				break;
 			case 'wdsi_type':
 				$all_content_types = array(
@@ -628,6 +630,9 @@ class Wdsi_SlideIn {
 						$post_links[] = '<a href="' . admin_url('post.php?action=edit&post=' . $target_id) . '">' . get_the_title($target_id) . '</a>';
 					}
 					printf(__('Appears on %s', 'wdsi'), join('<br />', $post_links));
+					break;
+				} else if ('publish' != $post->post_status) {
+					printf(__('Not applicable, &quot;%s&quot; slide-ins will not be shown.', 'wdsi'), $post->post_status);
 					break;
 				}
 				$show = get_post_meta($post->ID, 'wdsi_show_if', true);

@@ -171,17 +171,21 @@ class Wdsi_AdminPages {
 	}
 	
 	function create_admin_menu_entry () {
-		if (@$_POST && isset($_POST['option_page'])) {
+		$page = "edit.php?post_type=" . Wdsi_SlideIn::POST_TYPE;
+		$perms = is_multisite() ? 'manage_network_options' : 'manage_options';
+		if (current_user_can($perms) && !empty($_POST) && isset($_POST['option_page'])) {
 			$changed = false;
 			if ('wdsi_options_page' == wdsi_getval($_POST, 'option_page')) {
-				$services = $_POST['wdsi']['services'];
+				$services = !empty($_POST['wdsi']['services']) ? $_POST['wdsi']['services'] : array();
 				$services = is_array($services) ? $services : array();
-				if (@$_POST['wdsi']['new_service']['name'] && @$_POST['wdsi']['new_service']['code']) {
+				if (!empty($_POST['wdsi']['new_service']['name']) && !empty($_POST['wdsi']['new_service']['code'])) {
 					$services[] = $_POST['wdsi']['new_service'];
 					unset($_POST['wdsi']['new_service']);
 				}
 				foreach ($services as $key=>$service) {
-					$services[$key]['code'] = stripslashes($service['code']);
+					if (!empty($service['code'])) {
+						$services[$key]['code'] = stripslashes($service['code']);
+					}
 				}
 				$_POST['wdsi']['services'] = $services;
 				update_option('wdsi', $_POST['wdsi']);
@@ -194,8 +198,6 @@ class Wdsi_AdminPages {
 				die;
 			}
 		}
-		$page = "edit.php?post_type=" . Wdsi_SlideIn::POST_TYPE;
-		$perms = is_multisite() ? 'manage_network_options' : 'manage_options';
 		add_submenu_page($page, __('Global Settings', 'wdsi'), __('Global Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
 	}
 	
