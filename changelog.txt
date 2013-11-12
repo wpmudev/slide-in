@@ -1,5 +1,5 @@
-Plugin Name: Slide-In
-Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
+Slide-In Plugin
+Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 
 Change Log:
 ----------------------------------------------------------------------
