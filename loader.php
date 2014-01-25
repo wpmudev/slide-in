@@ -5,12 +5,12 @@ Plugin URI: http://premium.wpmudev.org/project/slide-in/
 Description: Create and manage beautiful marketing messages, then convert your audience in a way that doesn’t annoy them.
 Version: 1.1.4-BETA-2
 Text Domain: wdsi
-Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
+Author: WPMU DEV
 Author URI: http://premium.wpmudev.org
 WDP ID: 694503
 
 Copyright 2009-2013 Incsub (http://incsub.com) 
-
+Authors: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
 the Free Software Foundation.
