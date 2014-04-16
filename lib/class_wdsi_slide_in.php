@@ -558,11 +558,13 @@ class Wdsi_SlideIn {
 	function save_meta () {
 		global $post;
 		if ($post && self::POST_TYPE != $post->post_type) return false;
+
 		if (wdsi_getval($_POST, 'show_if')) {
 			// If we have Post Indexer present, remove the post save action for the moment.
 			if (function_exists('post_indexer_post_insert_update')) {
 				remove_action('save_post', 'post_indexer_post_insert_update');
 			}
+			if (!empty($_POST['not_in_the_pool'])) $_POST['show_if'] = false; // Cleaning up the message conditions if switched to pool rendering
 			update_post_meta($post->ID, "wdsi_show_if", wdsi_getval($_POST, "show_if"));
 		} else if (empty($_POST['show_if'])) update_post_meta($post->ID, 'wdsi_show_if', false); // Thanks, Vinod Dalvi
 

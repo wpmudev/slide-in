@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Slide-In\n"
-"POT-Creation-Date: 2013-04-22 15:56+0100\n"
-"PO-Revision-Date: 2013-04-22 15:56+0100\n"
+"POT-Creation-Date: 2014-04-16 15:19+0100\n"
+"PO-Revision-Date: 2014-04-16 15:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -23,28 +23,28 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:72 lib/class_wdsi_slide_in.php:395
+#: lib/class_wdsi_admin_form_renderer.php:72 lib/class_wdsi_slide_in.php:396
 msgid "Show message after this much of my page has been viewed"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:81 lib/class_wdsi_slide_in.php:404
+#: lib/class_wdsi_admin_form_renderer.php:81 lib/class_wdsi_slide_in.php:405
 msgid "Show message after scrolling past element with this ID"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:90 lib/class_wdsi_slide_in.php:413
+#: lib/class_wdsi_admin_form_renderer.php:90 lib/class_wdsi_slide_in.php:414
 msgid "Show message after this many seconds"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:103 lib/class_wdsi_slide_in.php:427
+#: lib/class_wdsi_admin_form_renderer.php:103 lib/class_wdsi_slide_in.php:428
 msgid "Seconds"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:104 lib/class_wdsi_slide_in.php:428
+#: lib/class_wdsi_admin_form_renderer.php:104 lib/class_wdsi_slide_in.php:429
 msgid "Minutes"
 msgstr ""
 
 #: lib/class_wdsi_admin_form_renderer.php:105
-#: lib/class_wdsi_admin_form_renderer.php:142 lib/class_wdsi_slide_in.php:429
+#: lib/class_wdsi_admin_form_renderer.php:142 lib/class_wdsi_slide_in.php:430
 msgid "Hours"
 msgstr ""
 
@@ -80,24 +80,24 @@ msgstr ""
 msgid "This is where your message will appear."
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:189 lib/class_wdsi_slide_in.php:463
+#: lib/class_wdsi_admin_form_renderer.php:189 lib/class_wdsi_slide_in.php:464
 msgid "Full width"
 msgstr ""
 
 #: lib/class_wdsi_admin_form_renderer.php:195
-#: lib/class_wdsi_admin_pages.php:161 lib/class_wdsi_slide_in.php:469
+#: lib/class_wdsi_admin_pages.php:161 lib/class_wdsi_slide_in.php:470
 msgid "Message width"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:203 lib/class_wdsi_slide_in.php:478
+#: lib/class_wdsi_admin_form_renderer.php:203 lib/class_wdsi_slide_in.php:479
 msgid "Theme"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:209 lib/class_wdsi_slide_in.php:484
+#: lib/class_wdsi_admin_form_renderer.php:209 lib/class_wdsi_slide_in.php:485
 msgid "Variation"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:272 lib/class_wdsi_slide_in.php:535
+#: lib/class_wdsi_admin_form_renderer.php:272 lib/class_wdsi_slide_in.php:536
 msgid "Remove this service"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:325 lib/class_wdsi_slide_in.php:260
+#: lib/class_wdsi_admin_form_renderer.php:325 lib/class_wdsi_slide_in.php:261
 msgid "MailChimp API key:"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgstr ""
 msgid "Enter your API key here, then save the settings to continue"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:338 lib/class_wdsi_slide_in.php:271
+#: lib/class_wdsi_admin_form_renderer.php:338 lib/class_wdsi_slide_in.php:272
 msgid "Default subscription list:"
 msgstr ""
 
@@ -141,16 +141,16 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:349 lib/class_wdsi_slide_in.php:282
+#: lib/class_wdsi_admin_form_renderer.php:349 lib/class_wdsi_slide_in.php:283
 msgid "Select a default list you wish to subscribe your visitors to."
 msgstr ""
 
 #: lib/class_wdsi_admin_form_renderer.php:352
-#: lib/class_wdsi_admin_pages.php:69 lib/class_wdsi_slide_in.php:301
+#: lib/class_wdsi_admin_pages.php:69 lib/class_wdsi_slide_in.php:302
 msgid "All good, thank you!"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:355 lib/class_wdsi_slide_in.php:304
+#: lib/class_wdsi_admin_form_renderer.php:355 lib/class_wdsi_slide_in.php:305
 msgid "Successful subscription message:"
 msgstr ""
 
@@ -280,11 +280,11 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:199 lib/forms/plugin_settings.php:3
+#: lib/class_wdsi_admin_pages.php:201 lib/forms/plugin_settings.php:3
 msgid "Global Settings"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:216
+#: lib/class_wdsi_admin_pages.php:218
 msgid "<strong>&times;</strong> clear this set"
 msgstr ""
 
@@ -344,11 +344,11 @@ msgstr ""
 msgid "Edit Slide In Message"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:120 lib/class_wdsi_slide_in.php:596
+#: lib/class_wdsi_slide_in.php:120 lib/class_wdsi_slide_in.php:599
 msgid "Conditions"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:128 lib/class_wdsi_slide_in.php:594
+#: lib/class_wdsi_slide_in.php:128 lib/class_wdsi_slide_in.php:597
 msgid "Content Type"
 msgstr ""
 
@@ -356,220 +356,207 @@ msgstr ""
 msgid "Global Settings Override"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:153
-msgid "Not in the pool"
+#: lib/class_wdsi_slide_in.php:154
+msgid "This is a post-specific slide-in"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:154
+#: lib/class_wdsi_slide_in.php:155
 msgid ""
 "Slide-In posts outside the pool can be assigned to your individual posts, "
 "overriding the defaults"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:159
+#: lib/class_wdsi_slide_in.php:160
 msgid "Show message if:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:162
+#: lib/class_wdsi_slide_in.php:163
 msgid "User rules"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:167
+#: lib/class_wdsi_slide_in.php:168
 msgid "the user is logged in"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:173
+#: lib/class_wdsi_slide_in.php:174
 msgid "the user is <b>NOT</b> logged in"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:179
+#: lib/class_wdsi_slide_in.php:180
 msgid "the user never commented on your site before"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:183
+#: lib/class_wdsi_slide_in.php:184
 msgid "Show message on:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:186
+#: lib/class_wdsi_slide_in.php:187
 msgid "Page rules"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:191
+#: lib/class_wdsi_slide_in.php:192
 msgid "any of my singular pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:197
+#: lib/class_wdsi_slide_in.php:198
 msgid "any of my archive pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:203
+#: lib/class_wdsi_slide_in.php:204
 msgid "home page"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:213
+#: lib/class_wdsi_slide_in.php:214
 #, php-format
 msgid "&quot;%s&quot; post pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:232 lib/class_wdsi_slide_in.php:610
+#: lib/class_wdsi_slide_in.php:233 lib/class_wdsi_slide_in.php:614
 msgid "Text message"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:237 lib/class_wdsi_slide_in.php:611
+#: lib/class_wdsi_slide_in.php:238 lib/class_wdsi_slide_in.php:615
 msgid "MailChimp subscription form"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:242 lib/class_wdsi_slide_in.php:612
+#: lib/class_wdsi_slide_in.php:243 lib/class_wdsi_slide_in.php:616
 msgid "Related posts"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:249 lib/class_wdsi_slide_in.php:613
+#: lib/class_wdsi_slide_in.php:250 lib/class_wdsi_slide_in.php:617
 msgid "Sidebar widgets"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:264
+#: lib/class_wdsi_slide_in.php:265
 msgid "Enter your API key here, then save the post to continue"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:285
+#: lib/class_wdsi_slide_in.php:286
 msgid "Placeholder text:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:290
+#: lib/class_wdsi_slide_in.php:291
 msgid "Show my form:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:293
+#: lib/class_wdsi_slide_in.php:294
 msgid "After the message text"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:297
+#: lib/class_wdsi_slide_in.php:298
 msgid "Before the message text"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:313
+#: lib/class_wdsi_slide_in.php:314
 msgid "Show this many related posts:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:325
+#: lib/class_wdsi_slide_in.php:326
 msgid "Related taxonomy:"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:332
+#: lib/class_wdsi_slide_in.php:333
 msgid ""
 "Related posts will have common terms with displayed post from this taxonomy"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:339
+#: lib/class_wdsi_slide_in.php:340
 msgid "Show thumbnails?"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:378
+#: lib/class_wdsi_slide_in.php:379
 msgid "Override Global Settings"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:384
+#: lib/class_wdsi_slide_in.php:385
 msgid "Show after"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:421
+#: lib/class_wdsi_slide_in.php:422
 msgid "Show for"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:448
+#: lib/class_wdsi_slide_in.php:449
 msgid "Position"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:458
+#: lib/class_wdsi_slide_in.php:459
 msgid "Width"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:477
+#: lib/class_wdsi_slide_in.php:478
 msgid "Appearance"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:490
+#: lib/class_wdsi_slide_in.php:491
 msgid "Color Scheme"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:595
+#: lib/class_wdsi_slide_in.php:598
 msgid "Status"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:606
-msgid "In the pool"
+#: lib/class_wdsi_slide_in.php:610
+msgid "Global"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:606
-msgid "Not in pool"
+#: lib/class_wdsi_slide_in.php:610
+msgid "Specific"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:625
+#: lib/class_wdsi_slide_in.php:629
 msgid "Not applicable"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:630
+#: lib/class_wdsi_slide_in.php:634
 #, php-format
 msgid "Appears on %s"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:636
+#: lib/class_wdsi_slide_in.php:637
+#, php-format
+msgid "Not applicable, &quot;%s&quot; slide-ins will not be shown."
+msgstr ""
+
+#: lib/class_wdsi_slide_in.php:643
 msgid "Shown for logged in users"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:639
+#: lib/class_wdsi_slide_in.php:646
 msgid "Shown for visitors"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:642
+#: lib/class_wdsi_slide_in.php:649
 msgid "Shown for non-commenters"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:645
+#: lib/class_wdsi_slide_in.php:652
 msgid "Can appear for all users"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:652
+#: lib/class_wdsi_slide_in.php:659
 msgid "Shown on singular pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:655
+#: lib/class_wdsi_slide_in.php:662
 msgid "Shown on archive pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:658
+#: lib/class_wdsi_slide_in.php:665
 msgid "Shown on home page"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:663
+#: lib/class_wdsi_slide_in.php:670
 #, php-format
 msgid "Shown on %s pages"
 msgstr ""
 
-#: lib/class_wdsi_slide_in.php:668
+#: lib/class_wdsi_slide_in.php:675
 msgid "Can appear on all pages"
 msgstr ""
 
 #: lib/functions.php:106
 msgid "Read more"
-msgstr ""
-
-#: lib/external/wpmudev-dash-notification.php:57
-#, php-format
-msgid ""
-"Easily get updates, support, and one-click WPMU DEV plugin/theme "
-"installations right from in your dashboard - <strong><a href=\"%s\" title="
-"\"Install Now &raquo;\">install the free WPMU DEV Dashboard plugin</a></"
-"strong>. &nbsp;&nbsp;&nbsp;<small><a href=\"http://premium.wpmudev.org/wpmu-"
-"dev/update-notifications-plugin-information/\">(find out more)</a></small>"
-msgstr ""
-
-#: lib/external/wpmudev-dash-notification.php:61
-#, php-format
-msgid ""
-"Updates, Support, Premium Plugins, Community - <strong><a href=\"%s\" title="
-"\"Activate Now &raquo;\">activate the WPMU DEV Dashboard plugin now</a></"
-"strong>."
 msgstr ""
 
 #: lib/forms/box_output-content-mailchimp.php:9

@@ -1,9 +1,15 @@
-Slide-In Plugin
-Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
+Plugin Name: Slide-In
+Author: Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
+1.1.4 - 2014-04-16
+----------------------------------------------------------------------
+- Updating the help and usage strings.
+- Better permission checks.
+- Some cleanup.
 
 1.1.3 - 2013-04-22
 ----------------------------------------------------------------------
