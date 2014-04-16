@@ -9,7 +9,7 @@ Author: WPMU DEV
 Author URI: http://premium.wpmudev.org
 WDP ID: 694503
 
-Copyright 2009-2011 Incsub (http://incsub.com) 
+Copyright 2009-2014 Incsub (http://incsub.com) 
 Authors - Jeffri Hong (Incsub), Victor Ivanov (Incsub), Ve Bailovity (Incsub)
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
@@ -47,7 +47,7 @@ if (is_multisite() && defined('WPMU_PLUGIN_URL') && defined('WPMU_PLUGIN_DIR') &
 } else {
 	// No textdomain is loaded because we can't determine the plugin location.
 	// No point in trying to add textdomain to string and/or localizing it.
-	wp_die(__('There was an issue determining where Post Voting plugin is installed. Please reinstall.'));
+	wp_die(__('There was an issue determining where Slide In plugin is installed. Please reinstall.'));
 }
 $textdomain_handler('wdsi', false, WDSI_PLUGIN_SELF_DIRNAME . '/languages/');
 
