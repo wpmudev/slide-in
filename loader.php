@@ -25,8 +25,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+define ('WDSI_CURRENT_VERSION', '1.1.5-BETA-1', true);
 define ('WDSI_PLUGIN_SELF_DIRNAME', basename(dirname(__FILE__)), true);
-define ('WDSI_PROTOCOL', (@$_SERVER["HTTPS"] == 'on' ? 'https://' : 'http://'), true);
+define ('WDSI_PROTOCOL', (is_ssl() ? 'https://' : 'http://'), true);
 
 //Setup proper paths/URLs and load text domains
 if (is_multisite() && defined('WPMU_PLUGIN_URL') && defined('WPMU_PLUGIN_DIR') && file_exists(WPMU_PLUGIN_DIR . '/' . basename(__FILE__))) {

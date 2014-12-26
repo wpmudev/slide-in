@@ -71,7 +71,7 @@ class Wdsi_PublicPages {
 
 	function js_load_scripts () {
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), '1.1.3');
+		wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), WDSI_CURRENT_VERSION);
 		
 		$on_hide = $this->_data->get_option('on_hide');
 		$cookie_name = $this->_get_cookie_name();
@@ -106,7 +106,7 @@ class Wdsi_PublicPages {
 	
 	function css_load_styles () {
 		if (!current_theme_supports('wdsi')) {
-			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), '1.1.3');
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), WDSI_CURRENT_VERSION);
 		}
 		$opts = get_option('wdsi');
 		if (empty($opts['css-custom_styles'])) return false;
