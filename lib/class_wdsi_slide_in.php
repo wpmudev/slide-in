@@ -685,11 +685,8 @@ class Wdsi_SlideIn {
 
 
 	public function get_message_data ($post) {
-		$post_id = (is_object($post) && isset($post->ID)) ? $post->ID : (int)$post_id;
+		$post_id = (is_object($post) && !empty($post->ID)) ? $post->ID : false;
 		
-		// ...
-		
-		//$post_id = 2852;
 		$pool = $this->_get_active_messages_pool($post_id);
 		return $pool ? $pool[0] : false;
 	}
