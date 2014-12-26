@@ -700,9 +700,11 @@ class Wdsi_SlideIn {
 	 */
 	private function _get_active_messages_pool ($specific_post_id=false) {
 		$pool = array();
+
 		$query = new WP_Query(array(
 			'post_type' => self::POST_TYPE,
 			'posts_per_page' => -1,
+			'suppress_filters' => apply_filters('wdsi-pool_query-suppress_filters', class_exists('CoursePress_Virtual_Page')),
 		));
 		$pool = $query->posts ? $query->posts : array();
 
