@@ -324,6 +324,16 @@ $(function () {
 	}
 
 	$(window).load(function(){
+		$(document).trigger("wdsi-init");
+	});
+
+	$(document).on('click', '.wdsi-slide-close a', function(e){
+		e.preventDefault();
+		var obj = $(this).closest('.wdsi-slide');
+		slidein_hide(obj, 0, true);
+		register_seen_uri();
+	});
+	$(document).on("wdsi-init", function () {
 		// Initiate
 		$('.wdsi-slide').each(function(){
 			var $me = $(this);
@@ -347,13 +357,6 @@ $(function () {
 		if (!is_timed) $(window).scroll(slidein_scroll);
 		// Call the slidein_scroll first here, so we don't need to wait for scroll event before it show the slide in :))
 		slidein_scroll();
-	});
-
-	$('.wdsi-slide').on('click', '.wdsi-slide-close a', function(e){
-		e.preventDefault();
-		var obj = $(this).closest('.wdsi-slide');
-		slidein_hide(obj, 0, true);
-		register_seen_uri();
 	});
 
 });
