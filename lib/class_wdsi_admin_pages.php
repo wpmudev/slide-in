@@ -32,6 +32,8 @@ class Wdsi_AdminPages {
 		// AJAX actions
 		add_action('wp_ajax_wdsi_mailchimp_subscribe', array($this, 'json_mailchimp_subscribe'));
 		add_action('wp_ajax_nopriv_wdsi_mailchimp_subscribe', array($this, 'json_mailchimp_subscribe'));
+
+		add_action('wp_ajax_wdsi_preview_slide', array($this, 'json_preview'));
 	}
 
 	function json_mailchimp_subscribe () {
@@ -255,7 +257,21 @@ EoWdsiAdminCss;
 		if (is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type) {
 			wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
 		}
-		//wp_enqueue_style('jquery-ui-dialog', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+	}
+
+	public function json_preview () {
+		$data = stripslashes_deep($_POST);
+		$opts = $data['opts'];
+		$message = (object)array(
+			'ID' => true,
+			'post_title' => __('Slide-In Preview', 'wdsi'),
+			'post_content' => __('This preview message will demonstrate the current settings for position, width, theme, variation and color scheme. Please, don\'t forget to save your changes once you\'re happy with the result.', 'wdsi'),
+		);
+		$opts['show_for-time'] = DAY_IN_SECONDS;
+		$out = Wdsi_SlideIn::message_markup($message, $opts, false);
+		wp_send_json_success(array(
+			'out' => $out,
+		));
 	}
 
 }

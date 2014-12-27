@@ -222,6 +222,7 @@ class Wdsi_AdminFormRenderer {
 				//'<label for="scheme-' . esc_attr($theme) . '">' . esc_html($label) . '</label><br />' .
 			'';
 		}
+		echo '<p class="wdsi-preview_slide"><a href="#preview" data-working="' . esc_attr(__('Working... please, hold on', 'wdsi')) . '">' . __('Preview', 'wdsi') . '</a></p>';
 		echo '</div>';
 	}
 	

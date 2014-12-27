@@ -369,3 +369,11 @@ table.wdsi-position_box, table.wdsi-position_box tr, table.wdsi-position_box td 
 }
 
 #wdsi-mailchimp-api_key { width: 340px; }
+
+.wpmudev-ui .wdsi-preview_slide {
+	clear: both;
+	padding-top: 1em;
+}
+.wpmudev-ui .wdsi-preview_slide a {
+	text-decoration: none;
+}
