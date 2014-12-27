@@ -138,6 +138,7 @@ class Wdsi_AdminPages {
 		//if ('post' != $post->post_type) return false; // Deprecated
 		if (isset($_POST['wdsi-message_override'])) {
 			if ($_POST['wdsi-message_override']) update_post_meta($post->ID, 'wdsi_message_id', $_POST['wdsi-message_override']);
+			else update_post_meta($post->ID, 'wdsi_message_id', false);
 		}
 		if (isset($_POST['wdsi-do_not_show'])) {
 			$do_not_show = !empty($_POST['wdsi-do_not_show']);
