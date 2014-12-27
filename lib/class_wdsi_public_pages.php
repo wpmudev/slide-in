@@ -137,7 +137,7 @@ class Wdsi_PublicPages {
 		if (defined('WDSI_BOX_RENDERED')) return false;
 		if ($this->_is_wrong_place()) return false;
 		
-		global $post, $current_user;
+		global $post;
 		
 		// if is selected as no show, also return false
 		if (!empty($post->ID)) {
