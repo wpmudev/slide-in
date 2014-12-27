@@ -319,7 +319,7 @@ table.wdsi-position_box, table.wdsi-position_box tr, table.wdsi-position_box td 
 .wpmudev-ui th { width: 25%; text-align: right; padding-right: 30px; padding-top: 18px; }
 
 /* Typography */
-.wpmudev-ui h3 { color: #404040; padding-left: 45px; border-bottom: 1px solid hsl(0, 0%, 90%); padding-bottom: 15px; margin-bottom: 30px; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; font-family: Helvetica Neue, Helvetica Arial; -webkit-font-smoothing: antialiased; margin-top: 30px;}
+.wpmudev-ui h3 { color: #404040; padding-left: 45px; border-bottom: 1px solid hsl(0, 0%, 90%); padding-bottom: 15px; margin-bottom: 30px; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; font-family: Helvetica Neue, Helvetica, Arial; -webkit-font-smoothing: antialiased; margin-top: 30px;}
 
 /* Specifically for slide-in plugin */
 
