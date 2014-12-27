@@ -148,79 +148,8 @@ class Wdsi_PublicPages {
 		
 		$message = $this->_wdsi->get_message_data($post);
 		if (!$message) return false;
-		$msg = get_post_meta($message->ID, 'wdsi', true);
-		$type = get_post_meta($message->ID, 'wdsi-type', true);
-		
-		$services = wdsi_getval($msg, 'services');
-		$services = $services ? $services : wdsi_getval($opts, 'services');
-		$services = is_array($services) ? $services : array();
 
-		$skip_script = wdsi_getval($opts, 'skip_script');
-		$skip_script = is_array($skip_script) ? $skip_script : array();
-
-		$no_count = wdsi_getval($opts, 'no_count');
-		$no_count = is_array($no_count) ? $no_count : array();
-
-		$content_type = wdsi_getval($type, 'content_type', 'text');
-		if ('widgets' == $content_type && !$this->_data->get_option('allow_widgets')) return false; // Break on this
-
-		$related_posts_count = wdsi_getval($type, 'related-posts_count', 3);
-		$related_taxonomy = wdsi_getval($type, 'related-taxonomy', 'post_tag');
-		$related_has_thumbnails = wdsi_getval($type, 'related-has_thumbnails');
-
-		$mailchimp_placeholder = wdsi_getval($type, 'mailchimp-placeholder', 'you@yourdomain.com');
-		$mailchimp_position = wdsi_getval($type, 'mailchimp-position', 'after');
-
-		$position = wdsi_getval($msg, 'position') ? $msg['position'] : wdsi_getval($opts, 'position');
-		$position = $position ? $position : 'left';
-
-		$percentage = $selector = $timeout = false;
-		$condition =  wdsi_getval($msg, 'show_after-condition') ? $msg['show_after-condition'] :wdsi_getval($opts, 'show_after-condition');
-		$value = wdsi_getval($msg, 'show_after-rule') ? $msg['show_after-rule'] : wdsi_getval($opts, 'show_after-rule');
-		switch ($condition) {
-			case "selector":
-				$selector = "#{$value}";
-				$percentage = '0%';
-				$timeout = '0s';
-				break;
-			case "timeout":
-				$selector = false;
-				$percentage = '0%';
-				$timeout = sprintf('%ds', (int)$value);
-				break;
-			case "percentage":
-			default:
-				$selector = false;
-				$percentage = sprintf('%d%%', (int)$value);
-				$timeout = '0s';
-				break;
-		}
-
-		$_theme = wdsi_getval($msg, 'theme') ? $msg['theme'] : wdsi_getval($opts, 'theme');
-		$theme = $_theme && in_array($_theme, array_keys(Wdsi_SlideIn::get_appearance_themes())) ? $_theme : 'minimal';
-
-		$_variation = wdsi_getval($msg, 'variation') ? $msg['variation'] : wdsi_getval($opts, 'variation');
-		$variation = $_variation && in_array($_variation, array_keys(Wdsi_SlideIn::get_theme_variations())) ? $_variation : 'light';
-		
-		$_scheme = wdsi_getval($msg, 'scheme') ? $msg['scheme'] : wdsi_getval($opts, 'scheme');
-		$scheme = $_scheme && in_array($_scheme, array_keys(Wdsi_SlideIn::get_variation_schemes())) ? $_scheme : 'red';
-
-		$expire_after = wdsi_getval($msg, 'show_for-time') ? $msg['show_for-time'] : wdsi_getval($opts, 'show_for-time');
-		$expire_after = $expire_after ? $expire_after : 10;
-		$expire_unit = wdsi_getval($msg, 'show_for-unit') ? $msg['show_for-unit'] : wdsi_getval($opts, 'show_for-unit');
-		$expire_unit = $expire_unit ? $expire_unit : 's';
-		$expire_timeout = sprintf("%d%s", $expire_after, $expire_unit);
-
-		$full_width = $width = false;
-		$_width = wdsi_getval($msg, 'width') ? $msg['width'] : wdsi_getval($opts, 'width');
-		if (!(int)$_width || 'full' == $width) {
-			$full_width = 'slidein-full';
-		} else {
-			$width = 'style="width:' . (int)$_width . 'px;"';
-		}
-		
-		require_once (WDSI_PLUGIN_BASE_DIR . '/lib/forms/box_output.php');
-		//$this->_js_set_up_globals($message->ID);
+		Wdsi_SlideIn::message_markup($message, $opts);
 		define ('WDSI_BOX_RENDERED', true);
 	}
 }
