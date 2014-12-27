@@ -218,6 +218,18 @@ class Wdsi_AdminPages {
 			wp_localize_script('wdsi-admin', 'l10nWdsi', array(
 				'clear_set' => __('<strong>&times;</strong> clear this set', 'wdsi'),
 			));
+
+			// Preview scripts
+			wp_enqueue_script('wdsi', WDSI_PLUGIN_URL . '/js/wdsi.js', array('jquery'), WDSI_CURRENT_VERSION);
+			wp_localize_script('wdsi', '_wdsi_data', array(
+				'reshow' => array(
+					'timeout' => 0,
+					'name' => 'test',
+					'path' => null,
+					'all' => false,
+				),
+			));
+
 		}
 	}
 
@@ -236,6 +248,8 @@ EoWdsiAdminCss;
 		// The rest is slide in specific, enqueue only when needed
 		if (isset($_GET['page']) && 'wdsi' == $_GET['page']) {
 			wp_enqueue_style('wdsi-admin', WDSI_PLUGIN_URL . '/css/wdsi-admin.css');
+			// Preview scripts
+			wp_enqueue_style('wdsi', WDSI_PLUGIN_URL . '/css/wdsi.css', array(), WDSI_CURRENT_VERSION);
 		}
 		global $post;
 		if (is_object($post) && isset($post->post_type) && Wdsi_SlideIn::POST_TYPE == $post->post_type) {
