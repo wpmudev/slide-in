@@ -1,17 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Slide-In\n"
-"POT-Creation-Date: 2014-04-16 15:19+0100\n"
-"PO-Revision-Date: 2014-04-16 15:19+0100\n"
+"POT-Creation-Date: 2015-02-24 15:34+0100\n"
+"PO-Revision-Date: 2015-02-24 15:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: /Volumes/Trunk/xampp/htdocs/3.3-dev-1/wp-content/plugins/"
-"slide-in\n"
+"X-Poedit-Basepath: d:/xampp/htdocs/3.3-dev-1/wp-content/plugins/slide-in\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: lib\n"
 "X-Poedit-SearchPath-1: lib/forms\n"
 
@@ -85,7 +86,7 @@ msgid "Full width"
 msgstr ""
 
 #: lib/class_wdsi_admin_form_renderer.php:195
-#: lib/class_wdsi_admin_pages.php:161 lib/class_wdsi_slide_in.php:470
+#: lib/class_wdsi_admin_pages.php:164 lib/class_wdsi_slide_in.php:470
 msgid "Message width"
 msgstr ""
 
@@ -97,195 +98,214 @@ msgstr ""
 msgid "Variation"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:272 lib/class_wdsi_slide_in.php:536
+#: lib/class_wdsi_admin_form_renderer.php:225
+msgid "Working... please, hold on"
+msgstr ""
+
+#: lib/class_wdsi_admin_form_renderer.php:225
+msgid "Preview"
+msgstr ""
+
+#: lib/class_wdsi_admin_form_renderer.php:273 lib/class_wdsi_slide_in.php:536
 msgid "Remove this service"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:290
+#: lib/class_wdsi_admin_form_renderer.php:291
 msgid "Do not show counts"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:299
+#: lib/class_wdsi_admin_form_renderer.php:300
 msgid "My page already uses scripts from this service"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:308
+#: lib/class_wdsi_admin_form_renderer.php:309
 msgid "Add your own:"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:310
+#: lib/class_wdsi_admin_form_renderer.php:311
 msgid "Name"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:312
+#: lib/class_wdsi_admin_form_renderer.php:313
 msgid "Code"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:314
+#: lib/class_wdsi_admin_form_renderer.php:315
 msgid "Add"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:325 lib/class_wdsi_slide_in.php:261
+#: lib/class_wdsi_admin_form_renderer.php:326 lib/class_wdsi_slide_in.php:261
 msgid "MailChimp API key:"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:329
+#: lib/class_wdsi_admin_form_renderer.php:330
 msgid "Enter your API key here, then save the settings to continue"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:338 lib/class_wdsi_slide_in.php:272
+#: lib/class_wdsi_admin_form_renderer.php:339 lib/class_wdsi_slide_in.php:272
 msgid "Default subscription list:"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:348
+#: lib/class_wdsi_admin_form_renderer.php:349
 msgid "Refresh"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:349 lib/class_wdsi_slide_in.php:283
+#: lib/class_wdsi_admin_form_renderer.php:350 lib/class_wdsi_slide_in.php:283
 msgid "Select a default list you wish to subscribe your visitors to."
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:352
-#: lib/class_wdsi_admin_pages.php:69 lib/class_wdsi_slide_in.php:302
+#: lib/class_wdsi_admin_form_renderer.php:353
+#: lib/class_wdsi_admin_pages.php:71 lib/class_wdsi_slide_in.php:302
 msgid "All good, thank you!"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:355 lib/class_wdsi_slide_in.php:305
+#: lib/class_wdsi_admin_form_renderer.php:356 lib/class_wdsi_slide_in.php:305
 msgid "Successful subscription message:"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:362
+#: lib/class_wdsi_admin_form_renderer.php:363
 msgid "Additional CSS styles"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:364
+#: lib/class_wdsi_admin_form_renderer.php:365
 msgid "Add the additional CSS rules you wish to include"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:372
+#: lib/class_wdsi_admin_form_renderer.php:373
 msgid "Allow shortcodes"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:373
+#: lib/class_wdsi_admin_form_renderer.php:374
 msgid ""
 "Enabling this option will allow processing shortcodes in your slide-in "
 "messages."
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:379
+#: lib/class_wdsi_admin_form_renderer.php:380
 msgid "Allow widgets"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:380
+#: lib/class_wdsi_admin_form_renderer.php:381
 msgid ""
 "Enabling this option will add a new sidebar that you can populate with "
 "widgets in Appearance &gt; Widgets."
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:388
+#: lib/class_wdsi_admin_form_renderer.php:389
 msgid "Show on MarketPress pages (except products):"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:389
+#: lib/class_wdsi_admin_form_renderer.php:390
 msgid ""
 "Decide if you want your messages to appear on MarketPress virtual pages."
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:397
+#: lib/class_wdsi_admin_form_renderer.php:398
 msgid "Custom injection hook"
 msgstr ""
 
-#: lib/class_wdsi_admin_form_renderer.php:400
+#: lib/class_wdsi_admin_form_renderer.php:401
 msgid ""
 "Try a different injection hook if you experience problems with the default "
 "one. Leave empty for default."
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:47
+#: lib/class_wdsi_admin_pages.php:49
 msgid "MailChimp not configured"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:54
+#: lib/class_wdsi_admin_pages.php:56
 msgid "Unknown list"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:60
+#: lib/class_wdsi_admin_pages.php:62
 msgid "Invalid email"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:87
+#: lib/class_wdsi_admin_pages.php:89
 #: lib/forms/box_output-content-mailchimp.php:34
 msgid "Error"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:99
+#: lib/class_wdsi_admin_pages.php:101
 msgid "Slide-In Message Override"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:118
+#: lib/class_wdsi_admin_pages.php:120
 msgid ""
 "This post will not get a slide-in message from the pool - it will always use "
 "this message"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:132
+#: lib/class_wdsi_admin_pages.php:134
 msgid "Do not show a slide-in on this page"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:153
+#: lib/class_wdsi_admin_pages.php:156
 msgid "Behaviour settings"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:154
+#: lib/class_wdsi_admin_pages.php:157
 msgid "Show message"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:155
+#: lib/class_wdsi_admin_pages.php:158
 msgid "Hide message after"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:156
+#: lib/class_wdsi_admin_pages.php:159
 msgid "Closing the message"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:159
+#: lib/class_wdsi_admin_pages.php:162
 msgid "Appearance settings"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:160
+#: lib/class_wdsi_admin_pages.php:163
 msgid "Message position"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:162
+#: lib/class_wdsi_admin_pages.php:165
 msgid "Message style"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:163
+#: lib/class_wdsi_admin_pages.php:166
 msgid "Color scheme"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:165
+#: lib/class_wdsi_admin_pages.php:168
 msgid "Social media services"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:166
+#: lib/class_wdsi_admin_pages.php:169
 msgid "MailChimp subscriptions"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:168
+#: lib/class_wdsi_admin_pages.php:171
 msgid "Custom CSS"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:170
+#: lib/class_wdsi_admin_pages.php:173
 msgid "Advanced"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:201 lib/forms/plugin_settings.php:3
+#: lib/class_wdsi_admin_pages.php:204 lib/forms/plugin_settings.php:3
 msgid "Global Settings"
 msgstr ""
 
-#: lib/class_wdsi_admin_pages.php:218
+#: lib/class_wdsi_admin_pages.php:221
 msgid "<strong>&times;</strong> clear this set"
+msgstr ""
+
+#: lib/class_wdsi_admin_pages.php:267
+msgid "Slide-In Preview"
+msgstr ""
+
+#: lib/class_wdsi_admin_pages.php:268
+msgid ""
+"This preview message will demonstrate the current settings for position, "
+"width, theme, variation and color scheme. Please, don't forget to save your "
+"changes once you're happy with the result."
 msgstr ""
 
 #: lib/class_wdsi_slide_in.php:43
@@ -555,10 +575,6 @@ msgstr ""
 msgid "Can appear on all pages"
 msgstr ""
 
-#: lib/functions.php:106
-msgid "Read more"
-msgstr ""
-
 #: lib/forms/box_output-content-mailchimp.php:9
 msgid "Email:"
 msgstr ""
@@ -573,4 +589,8 @@ msgstr ""
 
 #: lib/forms/box_output-services.php:78
 msgid "Close"
+msgstr ""
+
+#: lib/functions.php:106
+msgid "Read more"
 msgstr ""
