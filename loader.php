@@ -3,7 +3,7 @@
 Plugin Name: Slide-In
 Plugin URI: http://premium.wpmudev.org/project/slide-in/
 Description: Create and manage beautiful marketing messages, then convert your audience in a way that doesn’t annoy them.
-Version: 1.1.5-BETA-2
+Version: 1.2
 Text Domain: wdsi
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org
@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-define ('WDSI_CURRENT_VERSION', '1.1.5-BETA-2', true);
+define ('WDSI_CURRENT_VERSION', '1.2', true);
 define ('WDSI_PLUGIN_SELF_DIRNAME', basename(dirname(__FILE__)), true);
 define ('WDSI_PROTOCOL', (is_ssl() ? 'https://' : 'http://'), true);
 
