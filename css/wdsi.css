@@ -99,6 +99,13 @@ Slide In plugin stylesheet
 	position: relative;
 	top: 4px;
 }
+.wdsi-slide-close a,
+.wdsi-slide-control *:before,
+.wdsi-slide-control *:after {
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+}
 .wdsi-slide-content {
 	clear: both;
 	padding: 10px 20px;
