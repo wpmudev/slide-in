@@ -791,7 +791,9 @@ class Wdsi_SlideIn {
 		$no_count = is_array($no_count) ? $no_count : array();
 
 		$content_type = wdsi_getval($type, 'content_type', 'text');
-		if ('widgets' == $content_type && !$this->_data->get_option('allow_widgets')) return false; // Break on this
+
+        $data = new Wdsi_Options;
+        if ('widgets' == $content_type && !$data->get_option('allow_widgets')) return false; // Break on this
 
 		$related_posts_count = wdsi_getval($type, 'related-posts_count', 3);
 		$related_taxonomy = wdsi_getval($type, 'related-taxonomy', 'post_tag');
