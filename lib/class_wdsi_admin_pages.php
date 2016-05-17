@@ -19,8 +19,7 @@ class Wdsi_AdminPages {
 
 	private function _add_hooks () {
 		add_action('admin_init', array($this, 'register_settings'));
-		$hook = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'network_admin_menu' : 'admin_menu';
-		add_action($hook, array($this, 'create_admin_menu_entry'));
+		add_action('admin_menu', array($this, 'create_admin_menu_entry'));
 
 		// Post meta boxes
 		add_action('admin_init', array($this, 'add_meta_boxes'));
@@ -175,7 +174,7 @@ class Wdsi_AdminPages {
 	
 	function create_admin_menu_entry () {
 		$page = "edit.php?post_type=" . Wdsi_SlideIn::POST_TYPE;
-		$perms = is_multisite() ? 'manage_network_options' : 'manage_options';
+		$perms = 'manage_options';
 		if (current_user_can($perms) && !empty($_POST) && isset($_POST['option_page'])) {
 			$changed = false;
 			if ('wdsi_options_page' == wdsi_getval($_POST, 'option_page')) {
@@ -201,7 +200,7 @@ class Wdsi_AdminPages {
 				die;
 			}
 		}
-		add_submenu_page($page, __('Global Settings', 'wdsi'), __('Global Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
+		add_submenu_page($page, __('Settings', 'wdsi'), __('Settings', 'wdsi'), $perms, 'wdsi', array($this, 'create_admin_page'));
 	}
 	
 	function create_admin_page () {
