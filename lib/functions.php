@@ -103,7 +103,7 @@ function wdsi_get_related_post_excerpt ($post) {
 		? preg_replace('/(.{0,152}).*/um', '$1', $string) . '...'
 		: $string
 	;
-	return $string . '&nbsp;' . '<a href="' . get_permalink($post->ID) . '">' . __('Read more', 'wdsi') . '<a>';
+	return $string . '&nbsp;' . '<a href="' . get_permalink($post->ID) . '">' . __('Read more', 'wdsi') . '</a>';
 }
 
 function wdsi_get_related_post_thumbnail ($post_id) {
