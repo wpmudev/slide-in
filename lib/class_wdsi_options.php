@@ -4,8 +4,6 @@
  */
 class Wdsi_Options {
 
-	function Wdsi_Options () { $this->__construct(); }
-
 	function __construct () {}
 
 	/**
