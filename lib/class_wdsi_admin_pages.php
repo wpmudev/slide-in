@@ -153,13 +153,13 @@ class Wdsi_AdminPages {
 		
 		register_setting('wdsi', 'wdsi');
 		
-		add_settings_section('wdsi_behavior', __('Behaviour settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
+		add_settings_section('wdsi_behavior', __('Behaviour settings', 'wdsi'), '', 'wdsi_options_page');
 		add_settings_field('wdsi_show_after', __('Show message', 'wdsi'), array($form, 'create_show_after_box'), 'wdsi_options_page', 'wdsi_behavior');
 		add_settings_field('wdsi_show_for', __('Hide message after', 'wdsi'), array($form, 'create_show_for_box'), 'wdsi_options_page', 'wdsi_behavior');
 		add_settings_field('wdsi_closing', __('Closing the message', 'wdsi'), array($form, 'create_closing_box'), 'wdsi_options_page', 'wdsi_behavior');
 
 
-		add_settings_section('wdsi_appearance', __('Appearance settings', 'wdsi'), create_function('', ''), 'wdsi_options_page');
+		add_settings_section('wdsi_appearance', __('Appearance settings', 'wdsi'), '', 'wdsi_options_page');
 		add_settings_field('wdsi_position', __('Message position', 'wdsi'), array($form, 'create_position_box'), 'wdsi_options_page', 'wdsi_appearance');
 		add_settings_field('wdsi_width', __('Message width', 'wdsi'), array($form, 'create_msg_width_box'), 'wdsi_options_page', 'wdsi_appearance');
 		add_settings_field('wdsi_appearance', __('Message style', 'wdsi'), array($form, 'create_appearance_box'), 'wdsi_options_page', 'wdsi_appearance');
