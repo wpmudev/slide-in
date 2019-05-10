@@ -40,7 +40,6 @@ Trigger the big reveal with behavior options that give you control over exactly 
 
 For help and information on installing plugins you can view our [Installing WordPress Plugins Manual](https://premium.wpmudev.org/manuals/wpmu-manual-2/installing-regular-plugins-on-wpmu/). Once you activate the plugin, you will see a menu appear on the left labeled **Slide In**. 
 
-![menu](https://premium.wpmudev.org/wp-content/uploads/2013/03/menu1.png)
 
  You will see three sub-menus appear when you click on the menu item.  We will tackle each separately.
 
@@ -62,11 +61,10 @@ Clicking this will show you all your current "Slide Ins," as we'll call them (i.
 
 ## Add New
 
-Adding a Slide In is as easy as creating a post. In fact, any information you enter in the Editor Box will show up in the Slide In, including formatting. You can use headers, lists, links, bold and italic styles and they will all work. You can even include images! [
+Adding a Slide In is as easy as creating a post. In fact, any information you enter in the Editor Box will show up in the Slide In, including formatting. You can use headers, lists, links, bold and italic styles and they will all work. You can even include images! 
 
 ![slide-in-settings](https://premium.wpmudev.org/wp-content/uploads/2013/03/slide-in-settings1-e1366112225102.png)
 
-](https://premium.wpmudev.org/wp-content/uploads/2013/03/slide-in-settings1-e1366112225102.png)
 
 ### Content Type
 
@@ -96,11 +94,10 @@ If you use MailChimp, we've built in a subscription form that automatically conn
 
 ##### **Related Posts**
 
-The last option is related posts. The related posts option uses WordPress's default tagging system to pull in posts. Simply select this, then choose the number of posts to show and whether to use thumbnails or not. [
+The last option is related posts. The related posts option uses WordPress's default tagging system to pull in posts. Simply select this, then choose the number of posts to show and whether to use thumbnails or not. 
 
 ![related-posts](https://premium.wpmudev.org/wp-content/uploads/2013/03/related-posts.jpg)
 
-](https://premium.wpmudev.org/wp-content/uploads/2013/03/related-posts.jpg)
 
  Your Related Posts Slide In should look something like this:   
 
@@ -131,11 +128,10 @@ These settings dictate at what point on a page your Slide In gets shown. There a
 *   Secondly, you can enter an ID that once scrolls past the top of the window (e.g. the #comments div), the Slide In shows itself.
 *   Finally, you can target people that have been on a page for X-amount of seconds. For example, if you want to target people that are truly reading your article top to bottom, you can enter 60 seconds so only readers that have read for a minute see your Slide In.
 
-After you set what should trigger the Slide In, you then choose the rules for closing the message. See below: [
+After you set what should trigger the Slide In, you then choose the rules for closing the message. See below: 
 
 ![hide-message](https://premium.wpmudev.org/wp-content/uploads/2013/03/hide-message.jpg)
 
-](https://premium.wpmudev.org/wp-content/uploads/2013/03/hide-message.jpg)
 
  
 
